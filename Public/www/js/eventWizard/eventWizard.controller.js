@@ -199,7 +199,7 @@
         };
     })
 
-        
+
 
     .controller('FavorsController', function(
       $scope,

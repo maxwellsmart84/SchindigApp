@@ -12,6 +12,7 @@
       EventWizardService
     ){
       var vm = this;
+      $scope.listCanSwipe = true;
       var rawUserID = +localStorage.getItem('userID')
       var userID = {
         userID: rawUserID
@@ -36,12 +37,6 @@
         ManagePartyService.deleteParty(partyDeleteData)
           .then(function(data){
             $scope.hostedParties = $scope.hostedParties;
-            console.log('data', data);
-            console.log('what is this', $scope.hostedParties);
-        }).then(function(data){
-          console.log('new page', $scope.hostedParties);
-          $state.go('manageLanding')
-
         });
       };
 
@@ -80,7 +75,7 @@
       $scope.loadInvitedPeople = function(){
         var rawPartyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
-          console.log('controller invites', data.data);
+          console.log('load invited people', data.data);
           $scope.inviteList = data.data;
         });
       };

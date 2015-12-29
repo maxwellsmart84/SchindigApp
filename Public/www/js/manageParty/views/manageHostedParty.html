@@ -30,7 +30,7 @@
         </div>
       </ion-item>
       <ion-item>
-        <div ng-show="!edit" class="item-icon-right">
+        <div ng-show="!edit" class="item-icon-right item-text-wrap">
             <strong>Description: <br></strong>{{oneParty.description}}
             <button
               ng-hide="edit"
@@ -138,14 +138,7 @@
           </strong>
         </div>
       </ion-toggle>
-      <ion-list show-delete="data.showDelete">
-        <ion-item>
-          <ion-delete-button
-              class="ion-minus-circled"
-              ng-click="onPartyDelete(oneParty, hostedParties);">
-          </ion-delete-button>
-        </ion-item>
-      </ion-list>
+
       <button
         ng-click="goToManageFavor()"
         class="button button-full button-assertive">

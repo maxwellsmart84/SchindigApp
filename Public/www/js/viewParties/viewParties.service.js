@@ -8,7 +8,11 @@
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
     var getOneInvitedPartyURL = ip +'/party';
+    var rsvpURL = ip + '/party/rsvp'
 
+    var postRsvp = function(userRsvp){
+      return $http.post(rsvpURL, userRsvp)
+    };
     var getHostedParties = function(userID){
       return $http.post(viewHostedPartiesURL, userID)
         .success(function(data){
@@ -51,7 +55,8 @@
       getInvitedParties: getInvitedParties,
       getOneParty: getOneParty,
       getPartyFavor : getPartyFavor,
-      favorClaim: favorClaim
+      favorClaim: favorClaim,
+      postRsvp: postRsvp
     };
   });
 
