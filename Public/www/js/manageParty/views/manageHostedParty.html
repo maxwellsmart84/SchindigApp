@@ -69,7 +69,7 @@
       </ion-item>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right">
-            <strong>When The Party At? <br></strong>{{oneParty.partyDate}}
+            <strong>When The Party At? <br></strong>{{oneParty.partyDate | date: 'short'}}
             <button
               ng-hide="edit"
               ng-click="edit = true"
@@ -86,12 +86,12 @@
       </ion-item>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right">
-            <strong>Parking: <br></strong>{{oneParty.parking}}
-            <button
-              ng-hide="edit"
-              ng-click="edit = true"
-              class="button-icon icon ion-ios-compose-outline">
-            </button>
+          <strong>Parking: <br></strong>{{oneParty.parking}}
+          <button
+            ng-hide="edit"
+            ng-click="edit = true"
+            class="button-icon icon ion-ios-compose-outline">
+          </button>
         </div>
         <div ng-show="edit" class="item-icon-right">
           <strong>Parking: <br></strong>
@@ -106,17 +106,13 @@
           </button>
         </div>
       </ion-item>
-<!--
-      <label class="item item-input">
-         <span class="input-label"><strong>Date and Time: </strong></span>
-         <input placeholder= "Pick a Date and Time" ng-model="partyDate" type="datetime-local">
-       </label> -->
       <ion-toggle
         ng-click="themeCheck = !themeCheck"
+        ng-checked="oneParty.themeCheck"
         toggle-class="toggle-calm">
         <div
-        ng-model="themeCheck"
-        ng-class="themeCheck ? 'theme' : 'noTheme'">
+          ng-model="themeCheck"
+          ng-class="themeCheck ? 'theme' : 'noTheme'">
           <strong>
             Themed Party?
           </strong>
@@ -126,9 +122,9 @@
         <input ng-model="themeVal" type="text"  placeholder="{{oneParty.theme}}">
       </div>
       <ion-toggle
-        ng-model="doggy"
         ng-checked="oneParty.byob"
-        ng-click="byobManageCheck = !byobManageCheck"
+        ng-click="byobManageCheck = !byobManageCheck; getByob(byobManageCheck); editData(partyName, description, local, themeVal, doggy, parking, partyDate)"
+        ng-model="doggy"
         toggle-class="toggle-calm">
         <div
           ng-model="byobManageCheck"
@@ -138,7 +134,6 @@
           </strong>
         </div>
       </ion-toggle>
-
       <button
         ng-click="goToManageFavor()"
         class="button button-full button-assertive">

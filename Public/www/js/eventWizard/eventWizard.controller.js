@@ -54,9 +54,10 @@
       item.party.partyDate = JSON.stringify(item.party.partyDate);
       item.party.partyDate = JSON.parse(item.party.partyDate);
       console.log('party post', item);
-      EventWizardService.newWizPartyPost(item).success(function(data){
-        localStorage.setItem('partyID', data.partyID);
-        $state.go('details');
+      EventWizardService.newWizPartyPost(item)
+        .success(function(data){
+          localStorage.setItem('partyID', data.partyID);
+          $state.go('details');
       });
     };
     })
@@ -199,8 +200,6 @@
         };
     })
 
-
-
     .controller('FavorsController', function(
       $scope,
       $http,
@@ -211,10 +210,16 @@
       var vm = this;
       ////GET FAVORS////
       var partyID = +localStorage.getItem('partyID');
+      console.log('party', partyID);
+      var partyObj = {
+          partyID: partyID
+      }
        EventWizardService
-        .getFavors(partyID).then(function(data){
-           $scope.favors = data.data;
-           console.log($scope.favors);
+        .getFavors()
+          .then(function(data){
+            console.log('data', data);
+             $scope.favors = data.data;
+             console.log($scope.favors);
        });
 
       /////FAVORS PATCH/////

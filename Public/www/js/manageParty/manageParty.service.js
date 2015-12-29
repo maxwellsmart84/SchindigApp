@@ -5,7 +5,7 @@
     .module('manageParty')
     .factory('ManagePartyService', function($http, $state){
       var vm = this;
-      var ip = 'http://localhost:8080';
+      var ip = 'http://192.168.0.174:8080';
       var viewHostedPartiesURL = ip + '/parties/host';
       var viewInvitedPartiesURL = ip +'/parties/user';
       var updatedHostedPartiesURL = ip + '/party/update';
@@ -45,12 +45,6 @@
         partyID = partyID;
         return $http.get(ip + '/party/'+ partyID +'/favors').success(function(data){
           console.log('favor data', data);
-        });
-      };
-      var getInvitedParties = function(userID){
-        return $http.get(viewInvitedPartiesURL, userID)
-          .success(function(data){
-            console.log('succes your', data);
         });
       };
       var updatedHostedParties = function (data){

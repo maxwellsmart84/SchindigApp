@@ -73,6 +73,7 @@
     //INVITED PARTIES GET
     ViewPartyService.getInvitedParties(userID)
       .success(function(invData){
+        console.log('parties success');
         $scope.invitedParties = invData;
       })
       .error(function(data){

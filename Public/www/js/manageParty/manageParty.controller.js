@@ -100,9 +100,12 @@
         $scope.local = locationValue;
         console.log('scoped location',$scope.local);
       };
+      $scope.getByob = function(doggy){
+        console.log('doggy value', doggy);
+      };
       $scope.editData = function(partyName, description, local, themeValue, doggy, parking, partyDate){
         var partyID = +localStorage.getItem('OnePartyID');
-        console.log('what is this', local);
+        console.log('what is this', doggy);
         var data = {
           party: {
             partyDate: partyDate,
@@ -116,10 +119,11 @@
           }
         };
         console.log(data.party.byob);
-        EventWizardService.updateWizData(data).success(function(updatedWizData){
-          console.log('new party', updatedWizData);
-          $scope.oneParty = updatedWizData;
-          // $state.go('home');
+        EventWizardService.updateWizData(data)
+          .success(function(updatedWizData){
+            console.log('new party', updatedWizData);
+            $scope.oneParty = updatedWizData;
+            // $state.go('home');
         });
       };
 

@@ -1,7 +1,5 @@
 <ion-view>
   <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
   </ion-nav-bar>
   <div class="bar bar-header bar-royal">
       <h1 class= "title">Where's This Party Going Down?</h1>
@@ -18,9 +16,9 @@
         <div
         ng-model="themeCheck"
         ng-class="themeCheck ? 'theme' : 'noTheme'">
-        <strong>
-          Themed Party?
-        </strong>
+          <strong>
+            Themed Party?
+          </strong>
         </div>
       </ion-toggle>
       <div ng-show="themeCheck" class="item">

@@ -4,7 +4,7 @@
   .module('viewParties')
   .factory('ViewPartyService', function($http, $state){
     var vm = this;
-    var ip = 'http://localhost:8080';
+    var ip = 'http://192.168.0.174:8080';
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
     var getOneInvitedPartyURL = ip +'/party';
@@ -25,7 +25,7 @@
         });
     };
     var getInvitedParties = function (userID){
-      return $http.post (viewInvitedPartiesURL, userID)
+      return $http.post(viewInvitedPartiesURL, userID)
         .success(function(data){
       });
     };
