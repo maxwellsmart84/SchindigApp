@@ -16,6 +16,6 @@ public interface FavorRepo extends CrudRepository<Favor, Integer> {
 
     Favor findOneByFavorName(String favor);
 
-    ArrayList<Favor> findAllByPartyType(String partyType);
+    ArrayList<Favor> findByPartyType(String partyType);
 
 }

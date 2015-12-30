@@ -110,17 +110,8 @@ public class MainController {
             for (String line : lines) {
                 Favor fav = new Favor();
                 String[] columns = line.split(",");
-                String favor = columns[0];
-                try {
-                    String partyType = columns[1];
-                    if (partyType!=null) {
-                        fav.partyType = partyType;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.getMessage();
-                }
-                fav.favorName = favor;
+                fav.favorName = columns[0];
+                fav.partyType = columns[1];
                 favors.save(fav);
             }
         }
@@ -244,6 +235,10 @@ public class MainController {
         User u = users.findOneByUsername(user.username);
         if (u == null) {
             users.save(user);
+        } else if (u!=null) {
+            response.sendError(400, "Username already chosen.");
+        } else if (u.username.length()<5) {
+            response.sendError(400, "Username must be at least five characters.");
         }
     }
 
@@ -274,22 +269,20 @@ public class MainController {
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
         User user = users.findOneByUsername(p.user.username);
-        try {
-            if (users.findOneByUsername(p.user.username) == null) {
-                response.sendError(401);
-            }
-            if (!user.password.equals(p.user.password)) {
-                response.sendError(403);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (user==null) {
+            response.sendError(401, "Username not found.");
+        } else if (!user.password.equals(p.user.password)) {
+            response.sendError(403, "Credentials do not match our records.");
+        } else {
+            return user.userID;
         }
+
 //        Auth a = auth.findByDevice(p.device);
 //        if (a==null) {
 //            Methods.newDevice(user, p.device, auth);
 //            return user.userID;
 //        }
-        return user.userID;
+        return null;
     }
 
     @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
@@ -374,32 +367,13 @@ public class MainController {
     }
 
     @RequestMapping(path = "/party/{id}/rsvp", method = RequestMethod.POST)
-    public void rsvp(@RequestBody Parameters parameters, @PathVariable("id") Integer id) {
+    public void rsvp(@RequestBody Parameters p, @PathVariable("id") Integer id) {
 
-        Party p = parties.findOne(parameters.partyID);
-        User user = parameters.user;
+        Party party = parties.findOne(p.partyID);
+        User user = p.user;
         user.invitedCount += 1;
-        switch (parameters.rsvpStatus) {
-            case "Yes": {
-                user.partyCount += 1;
-                Invite i = invites.findByPartyAndUser(p, user);
-                i.rsvpStatus = "Yes";
-                invites.save(i);
-                break;
-            }
-            case "Maybe": {
-                Invite i = invites.findByPartyAndUser(p, user);
-                i.rsvpStatus = "Maybe";
-                invites.save(i);
-                break;
-            }
-            case "No": {
-                Invite i = invites.findByPartyAndUser(p, user);
-                i.rsvpStatus = "Yes";
-                invites.save(i);
-                break;
-            }
-        }
+        Invite i = invites.findByPartyAndUser(party, user);
+        i.rsvpStatus = p.invites.rsvpStatus;
         users.save(user);
     }
 
@@ -561,16 +535,14 @@ public class MainController {
      * ALL FAVOR SPECIFIC ROUTES
      **/
 
-    @RequestMapping(path = "/favor", method = RequestMethod.GET)
-    public ArrayList<Favor> getFavorList(@RequestBody Parameters p) {
-        Party party = parties.findOne(p.partyID);
-        ArrayList<Favor> list = favors.findAllByPartyType(party.partyType);
-        ArrayList<Favor> filter = (ArrayList<Favor>) favors.findAll();
-        list.addAll(filter.stream()
-                .filter(fav -> fav.partyType == party.partyType)
-                .sorted(Comparator.comparing(Favor::getUseCount))
-                .collect(Collectors.toList()));
-        return list;
+    @RequestMapping(path = "/favor/{id}", method = RequestMethod.GET)
+    public ArrayList<Favor> getFavorList(@PathVariable("id") Integer id) {
+        Party party = parties.findOne(id);
+        ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
+        all = all.stream()
+                .filter(f -> f.partyType.equals("Generic") || f.partyType.equals(party.partyType))
+                .collect(Collectors.toCollection(ArrayList<Favor>::new));
+        return all;
     }
 
     @RequestMapping(path = "/favor/save", method = RequestMethod.POST)
@@ -582,7 +554,6 @@ public class MainController {
         } else {
             fav.favorName = p.favor.favorName;
             fav.partyType = party.partyType;
-//            fav.subType = party.subType;
             fav.useCount += 1;
             favors.save(fav);
             return fav;
