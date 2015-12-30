@@ -4,14 +4,19 @@
       <i class="ion-arrow-left-c"></i>
     </ion-nav-back-button>
   </ion-nav-bar>
-  <div class=" wizardHeader bar bar-header bar-royal">
-      <h1 class= "title">CHECK/UNCHECK YOUR FAVORS</h1>
+  <div class="bar bar-header">
+    <div class="wizardHeader">
+      <h1 class= "title-text-wrap"><span class="textViewHeader">Party FAVORS</span></h1>
+    </div>
    </div>
   <ion-content>
     <ul class="list">
-      <div class="item item-divider">
-        COMMONLY BOUGHT FAVORS FOR YOUR PARTY TYPE:
-      </div>
+      <label class= 'wizStretchExpl item-text-wrap'>
+        <span>
+        COMMONLY ASKED FOR FAVORS YOUR PARTY TYPE:
+      </span>
+    </label>
+    </div>
       <div class="list">
         <div class="item item-input-inset">
           <label class="item-input-wrapper">
@@ -21,16 +26,17 @@
               placeholder="Add Your Own">
           </label>
           <button
+            style="color: white"
             ng-click="addFavorToData(favorDoo)"
             class="button button-small">
-            Submit new Favor
+            ADD
           </button>
         </div>
       </div>
       <button
         ng-click="pushToFavorArray()"
-        class="button button-full button-positive">
-        SUBMIT YOUR FAVORS
+        class="button button-full button-assertive">
+        SUBMIT
       </button>
       <ion-checkbox
         ng-repeat="item in favors | filter: favorDoo"

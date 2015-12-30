@@ -8,7 +8,7 @@
 
 .wizard {
   font-family: "Showboat" serif;
-  background-color: white;
+  background-color: #F0EAD6;
   text-transform: uppercase;
 
     ion-google-place {
@@ -19,24 +19,34 @@
     font-size: 2rem;
     background-color: #680E34;
     text-transform: uppercase;
+    color:white;
 
   }
-
+  .button-small {
+    font-size:1.2rem;
+  }
+//THIS IS FOR DROPDOWNS
   select {
+    font-family: "Showboat";
+    text-transform: uppercase;
+    background-color: #F0EAD6;
+  }
+
+
+  input {
+    background-color: #F0EAD6;
     font-family: "Showboat";
     text-transform: uppercase;
   }
 
-  input {
-    background-color: white;
-  }
   .item-input {
     font-family: "Showboat";
-    background-color: white;
+    background-color: #F0EAD6;
     text-transform: uppercase;
     input {
       font-family: "Showboat";
       text-transform: uppercase;
+      background-color: #F0EAD6;
     }
     .wizardDateTime{
       color: gray;
@@ -45,26 +55,48 @@
   }
   .item {
     font-family: "Showboat";
-    background-color: white;
+    background-color: #F0EAD6;
+  }
+  .wizStretchExpl {
+    text-align: center;
+    font-family: "Showboat";
+    font-size: .85rem;
+    color:black;
+
+    span {
+      font-family: "Showboat";
+      font-size: .85rem;
+      color:black;
+      text-align: center;
+    }
+  }
+  progress{
+    appearance:none;
+    -webkit-appearance:none;
+    border-radius: 30px;
+    width:300px;
+    height:20px;
+  }
+  progress[value]{
+
   }
 }
 
 .wizardHeader {
-  // background-color: red;
   border:none;
-
+  background-image: url("../img/wineandcheese.jpg");
+  background-size: 125%;
+  background-repeat: none;
+  background-position: center;
+  background: linear-gradient(rgba(#0b0b0b, 0.49));
+  display: flex;
+  width:100%;
   h1 {
-    background-image: url("../img/wineandcheese.jpg");
-    background-size: 125%;
-    background-repeat: none;
-    background-position: center;
-    background: linear-gradient(rgba(#0b0b0b, 0.49));
-    align-content: center;
     margin: 0;
     text-align: center;
     border:none;
-    padding-top: 5vh;
-
+    align-self: center;
+    justify-content: center;
   }
   .textViewHeader {
     letter-spacing: 5px;

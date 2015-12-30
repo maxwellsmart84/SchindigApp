@@ -3,14 +3,16 @@
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
   </ion-nav-bar>
-  <div class=" wizardHeader bar bar-header bar-royal">
-      <h1 class= "title">INVITE YOUR FRIENDS</h1>
+  <div class="bar bar-header">
+    <div class="wizardHeader">
+      <h1 class= "title-text-wrap"><span class="textViewHeader">INVITE YOUR FRIENDS</span></h1>
+    </div>
    </div>
   <ion-content ng-init="getContactList()">
     <button
       ng-click="pushToContactArray();showConfirm()"
       class="button button-full button-positive">
-      INVITE CONTACTS
+      SEND INVITES
     </button>
     <ul class="list">
       <ion-checkbox
