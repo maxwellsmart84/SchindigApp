@@ -9169,14 +9169,14 @@ img {
 
 #manage {
   position: relative;
-  font-size: 2.3rem;
+  font-size: 2.2rem;
   letter-spacing: 2px;
   left: .5%;
   top: 20%; }
 
 #manageWordParty {
   position: relative;
-  font-size: 3rem;
+  font-size: 2.7rem;
   top: 25%;
   left: 1%;
   letter-spacing: 5px; }
@@ -9294,57 +9294,82 @@ img {
 
 .viewParties {
   font-family: "Monoton" serif;
-  background-color: #F0EAD6; }
+  background-image: url("../img/viewParties1.jpg");
+  background-size: 280%;
+  background-position: center; }
+  .viewParties .card {
+    background-color: rgba(0, 0, 0, 0.5);
+    font-family: "Monoton"; }
+    .viewParties .card h2 {
+      text-align: center; }
+    .viewParties .card p {
+      font-family: "Righteous";
+      font-size: 1.2em;
+      padding: 2px;
+      color: rgba(255, 255, 255, 0.9); }
   .viewParties ion-google-place {
     background-color: white; }
   .viewParties .button {
     font-family: "Monoton";
     font-size: 2rem;
     background-color: #680E34;
-    color: white; }
+    color: #ff94d7; }
   .viewParties .button-small {
     font-size: 1.2rem; }
   .viewParties select {
     font-family: "Monoton";
-    background-color: #F0EAD6; }
+    background-color: rgba(0, 0, 0, 0.7); }
   .viewParties input {
-    background-color: #F0EAD6;
+    background-color: rgba(0, 0, 0, 0.7);
     font-family: "Monoton"; }
   .viewParties .item-input {
     font-family: "Monoton";
-    background-color: #F0EAD6; }
+    background-color: rgba(0, 0, 0, 0.7); }
     .viewParties .item-input input {
       font-family: "Monoton";
-      background-color: #F0EAD6; }
+      background-color: rgba(0, 0, 0, 0.7); }
     .viewParties .item-input .wizardDateTime {
       color: gray; }
-  .viewParties .item {
-    font-family: "Monoton";
-    background-color: #F0EAD6; }
+  .viewParties .item-divider {
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-family: "Monoton"; }
+    .viewParties .item-divider h2 {
+      font-size: 1.8rem;
+      color: white;
+      text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
+  .viewParties .item-content {
+    background-color: rgba(0, 0, 0, 0.7); }
+  .viewParties .item-text-wrap {
+    background-color: rgba(0, 0, 0, 0.7); }
+    .viewParties .item-text-wrap .hostHeadCard {
+      font-size: 1.8rem;
+      color: white;
+      text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
+    .viewParties .item-text-wrap h2 {
+      font-family: "Monoton";
+      color: #ff94d7;
+      font-size: 1.2rem;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7; }
+    .viewParties .item-text-wrap h3 {
+      font-family: "Monoton";
+      color: #ff94d7;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7; }
   .viewParties .wizStretchExpl {
     text-align: center;
     font-family: "Monoton";
     font-size: .85rem;
-    color: black; }
+    color: #ff94d7; }
     .viewParties .wizStretchExpl span {
       font-family: "Monoton";
       font-size: .85rem;
-      color: black;
+      color: #ff94d7;
       text-align: center; }
-  .viewParties progress {
-    appearance: none;
-    -webkit-appearance: none;
-    border-radius: 30px;
-    width: 300px;
-    height: 20px; }
 
 .viewPartiesHeader {
   border: none;
-  background-image: url("../img/wineandcheese.jpg");
-  background-size: 125%;
-  background-repeat: none;
-  background-position: center;
-  background: linear-gradient(rgba(11, 11, 11, 0.49));
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   width: 100%; }
   .viewPartiesHeader h1 {
@@ -9354,8 +9379,8 @@ img {
     align-self: center;
     justify-content: center; }
   .viewPartiesHeader .viewPartiesTextViewHeader {
-    letter-spacing: 5px;
+    letter-spacing: 2px;
     font-family: "Monoton";
-    font-size: 2rem;
-    color: white;
-    margin: 0; }
+    font-size: 3rem;
+    color: #fffc00;
+    text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }

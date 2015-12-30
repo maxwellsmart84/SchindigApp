@@ -8,16 +8,35 @@
 
 .viewParties {
   font-family: "Monoton" serif;
-  background-color: #F0EAD6;
+  background-image: url("../img/viewParties1.jpg");
+  background-size: 280%;
+  background-position:center;
 
+  .card {
+    background-color: rgba(#000000, 0.50);
+    font-family: "Monoton";
+    h2 {
+      text-align: center;
+    }
+    p {
+      font-family: "Righteous";
+      font-size: 1.2em;
+      padding:2px;
+      color:rgba(#ffffff, 0.9);
+    }
+    h3 {
+
+    }
+  }
     ion-google-place {
     background-color: white;
   }
+
   .button {
     font-family: "Monoton";
     font-size: 2rem;
     background-color: #680E34;
-      color:white;
+      color:#ff94d7;
 
   }
   .button-small {
@@ -26,62 +45,93 @@
 //THIS IS FOR DROPDOWNS
   select {
     font-family: "Monoton";
-      background-color: #F0EAD6;
+      background-color: rgba(#000000, 0.70);
   }
 
 
   input {
-    background-color: #F0EAD6;
+    background-color: rgba(#000000, 0.70);
     font-family: "Monoton";
+
     }
 
   .item-input {
     font-family: "Monoton";
-    background-color: #F0EAD6;
+    background-color: rgba(#000000, 0.70);
       input {
       font-family: "Monoton";
-          background-color: #F0EAD6;
+      background-color: rgba(#000000, 0.70);
     }
     .wizardDateTime {
       color: gray;
       }
   }
-  .item {
+
+  .item-divider {
+    padding:20px;
+    text-align: center;
+    background-color: rgba(#000000, 0.70);
     font-family: "Monoton";
-    background-color: #F0EAD6;
+    h2 {
+      font-size: 1.8rem;
+      color: white;
+      text-shadow:
+      0 0 1px white,
+      0 0 3px #ffffff,
+      0 0 6px #5effd4;
+    }
+  }
+  .item-content {
+    background-color: rgba(#000000, 0.70);
+  }
+
+  .item-text-wrap {
+    background-color: rgba(#000000, 0.70);
+
+    .hostHeadCard {
+      font-size: 1.8rem;
+      color: white;
+      text-shadow:
+      0 0 1px white,
+      0 0 3px #ffffff,
+      0 0 6px #5effd4;
+      // 0 0 8px #5effd4;
+      // 0 0 10px #5effd4;
+      // 0 0 12px #ff5ea7;
+    }
+
+    h2 {
+      font-family: "Monoton";
+      color:#ff94d7;
+      font-size: 1.2rem;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+    }
+    h3 {
+      font-family: "Monoton";
+      color:#ff94d7;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+    }
   }
   .wizStretchExpl {
     text-align: center;
     font-family: "Monoton";
     font-size: .85rem;
-    color:black;
+    color:#ff94d7;
+
 
     span {
       font-family: "Monoton";
       font-size: .85rem;
-      color:black;
+      color:#ff94d7;
       text-align: center;
     }
   }
-  progress{
-    appearance:none;
-    -webkit-appearance:none;
-    border-radius: 30px;
-    width:300px;
-    height:20px;
-  }
-  progress[value]{
 
-  }
 }
 
 .viewPartiesHeader {
   border:none;
-  background-image: url("../img/wineandcheese.jpg");
-  background-size: 125%;
-  background-repeat: none;
-  background-position: center;
-  background: linear-gradient(rgba(#0b0b0b, 0.49));
+  background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
   h1 {
@@ -91,11 +141,18 @@
     align-self: center;
     justify-content: center;
   }
+
   .viewPartiesTextViewHeader {
-    letter-spacing: 5px;
+    letter-spacing: 2px;
     font-family: "Monoton";
-    font-size: 2rem;
-    color:white;
-    margin: 0;
+    font-size: 3rem;
+    color:#fffc00;
+    text-shadow:
+    0 0 1px #fffc00,
+    0 0 3px #ff5ea7,
+    0 0 6px #fffc00,
+    0 0 8px #fafafa,
+    0 0 10px #ff5ea7,
+    0 0 12px #ff5ea7;
   }
 }
