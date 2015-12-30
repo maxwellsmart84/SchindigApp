@@ -15,11 +15,59 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+// #7FCCFF (lightblue)
+// #452A1F (darkBrown)
+// #FF4C4C (80s slamon)
+// #FFE582 (80s gold)
+
+$fontMonoton:'Monoton';
+$fontMonofett: 'Monofett';
+$fontFredoka: 'Fredoka+One';
+$fontRighteous: 'Righteous';
+$fontDamion:'Damion';
+$fontMarker: "Permanent Marker";
+
+
+$popup-width:                     100% !default;
+
+$bar-footer-height:               75px!default;
+$bar-subheader-height:            75px!default;
+$bar-subfooter-height:            75px !default;
+
+$bar-height:                      200px !default;
+$base-background-color:           #fff !default;
+$base-color:                      #FF4C4C !default;
+$light:                           #ffffff !default;
+$stable:                          #ececec !default;
+$positive:                        #FF4C4C !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #f2cf1e !default;
+// $royal:                           #FF4C4C !default;
+$font-family-sans-serif:          "Righteous", "Roboto", "Segoe UI", sans-serif !default;
+
+$font-family-base:                $font-family-sans-serif !default;
+
+$font-family-sans-serif:          "Righteous", "Roboto", "Segoe UI", sans-serif !default;
+$font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", "Segoe UI-Light", sans-serif-light !default;
+$font-family-serif:               serif !default;
+$font-family-monospace:           monospace !default;
+
+$headings-font-family:            $font-family-base !default;
+$headings-font-weight:            500 !default;
+$headings-line-height:            1.2 !default;
+
+$base-background-color:           #fff !default;
+$base-color:                      #000 !default;
+
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-@import "navigation.scss"
+@import "navigation.scss";
+@import "eventWizard.scss";
 
 // @include font-face("Showboat", font-files("fonts/Showboat.ttf");

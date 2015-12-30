@@ -1,0 +1,76 @@
+.bar {
+  background-color: transparent;
+}
+.wizardDateTime {
+  font-family: serif;
+}
+
+
+.wizard {
+  font-family: "Showboat" serif;
+  background-color: white;
+  text-transform: uppercase;
+
+    ion-google-place {
+    background-color: white;
+  }
+  .button {
+    font-family: "Showboat";
+    font-size: 2rem;
+    background-color: #680E34;
+    text-transform: uppercase;
+
+  }
+
+  select {
+    font-family: "Showboat";
+    text-transform: uppercase;
+  }
+
+  input {
+    background-color: white;
+  }
+  .item-input {
+    font-family: "Showboat";
+    background-color: white;
+    text-transform: uppercase;
+    input {
+      font-family: "Showboat";
+      text-transform: uppercase;
+    }
+    .wizardDateTime{
+      color: gray;
+      text-transform: uppercase;
+    }
+  }
+  .item {
+    font-family: "Showboat";
+    background-color: white;
+  }
+}
+
+.wizardHeader {
+  // background-color: red;
+  border:none;
+
+  h1 {
+    background-image: url("../img/wineandcheese.jpg");
+    background-size: 125%;
+    background-repeat: none;
+    background-position: center;
+    background: linear-gradient(rgba(#0b0b0b, 0.49));
+    align-content: center;
+    margin: 0;
+    text-align: center;
+    border:none;
+    padding-top: 5vh;
+
+  }
+  .textViewHeader {
+    letter-spacing: 5px;
+    font-family: "Showboat";
+    font-size: 2rem;
+    color:white;
+    margin: 0;
+  }
+}

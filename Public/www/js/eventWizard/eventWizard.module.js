@@ -22,7 +22,7 @@
 
       })
       .state('details', {
-        url:"/wizard/whenwhere",
+        url:"/wizard/details",
         templateUrl: "js/eventWizard/views/partyDetails.html",
         controller: "EventWizardController as evtCtrl"
       })

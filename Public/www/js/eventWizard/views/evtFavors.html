@@ -1,16 +1,16 @@
-<ion-view>
+<ion-view class="wizard">
   <ion-nav-bar class="bar-stable">
     <ion-nav-back-button class="button-clear">
-      <i class="ion-arrow-left-c"></i> Back
+      <i class="ion-arrow-left-c"></i>
     </ion-nav-back-button>
   </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
-      <h1 class= "title">Check/Uncheck Your Favors</h1>
+  <div class=" wizardHeader bar bar-header bar-royal">
+      <h1 class= "title">CHECK/UNCHECK YOUR FAVORS</h1>
    </div>
   <ion-content>
     <ul class="list">
       <div class="item item-divider">
-        Commonly Bought Favors For Christmas Party:
+        COMMONLY BOUGHT FAVORS FOR YOUR PARTY TYPE:
       </div>
       <div class="list">
         <div class="item item-input-inset">
@@ -30,7 +30,7 @@
       <button
         ng-click="pushToFavorArray()"
         class="button button-full button-positive">
-        Submit Your Favors
+        SUBMIT YOUR FAVORS
       </button>
       <ion-checkbox
         ng-repeat="item in favors | filter: favorDoo"

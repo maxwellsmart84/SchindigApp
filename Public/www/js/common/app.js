@@ -17,11 +17,7 @@
   ])
     .run(function($ionicPlatform, $cordovaDevice, $http, $state) {
       var uuid;
-<<<<<<< HEAD
-      var ip = 'http://10.0.10.39:8080';
-=======
       var ip = 'http://localhost:8080';
->>>>>>> f03d1c170892c35f3a3f2c5d3261f1b0107cf806
       $ionicPlatform.ready(function() {
         //UUID STUFF- COMMENT OUT FOR DESIGN
         // var device = $cordovaDevice.getDevice();

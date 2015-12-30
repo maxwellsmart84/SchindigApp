@@ -11,6 +11,7 @@
       $ionicPlatform,
       $cordovaDevice,
       NavigationService
+
     ){
 
       var uuid;
