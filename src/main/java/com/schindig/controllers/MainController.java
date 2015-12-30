@@ -229,7 +229,10 @@ public class MainController {
         user.password = null;
         return user;
     }
-
+    // Username: no special chars besides a period
+    // Pass: 5 chars minimum / all chars except specifics
+    // Email: valid / not chosen
+    // Phone: 10 chars / not chosen
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
         User u = users.findOneByUsername(user.username);
@@ -237,8 +240,20 @@ public class MainController {
             users.save(user);
         } else if (u!=null) {
             response.sendError(400, "Username already chosen.");
-        } else if (u.username.length()<5) {
+        } else if (user.username.length()<5) {
             response.sendError(400, "Username must be at least five characters.");
+        } else if (user.password.length()<=5) {
+            response.sendError(400, "Password must be greater then five characters.");
+        } else if (!Methods.charCheck(user.password)) {
+            response.sendError(400, "Password may only contain letters or numbers.");
+        } else if (!Methods.charCheck(user.username)) {
+            response.sendError(400, "Username may only contain letters or numbers.");
+        } else if (!Methods.isValidEmailAddress(user.email)) {
+            response.sendError(400, "Please enter a valid email address.");
+        } else if (!Methods.phoneCheck(user.phone)) {
+            response.sendError(400, "Please enter a phone number containing only digits.");
+        } else if (user.phone.length()!=10) {
+            response.sendError(400, "Phone number must be ten digits in length.");
         }
     }
 
@@ -309,14 +324,25 @@ public class MainController {
     @RequestMapping(path = "/party/favor", method = RequestMethod.POST)
     public ArrayList<Favor> addPartyFavor(@RequestBody Parameters parameters) {
         ArrayList<Favor> newDump = new ArrayList<>();
+        Party party = parties.findOne(parameters.partyID);
         for (int i = 0; i < parameters.favorDump.size(); i++) {
-            Favor fav = favors.findOne(parameters.favorDump.get(i).favorID);
-            Party party = parties.findOne(parameters.partyID);
-            fav.useCount += 1;
-            FavorList favorList = new FavorList(fav, party, false);
-            favlists.save(favorList);
-            favors.save(fav);
-            newDump.add(fav);
+            if (parameters.favorDump.get(i).favorID!=null) {
+                Favor fav = favors.findOne(parameters.favorDump.get(i).favorID);
+                fav.useCount += 1;
+                FavorList favorList = new FavorList(fav, party, false);
+                favlists.save(favorList);
+                favors.save(fav);
+                newDump.add(fav);
+            } else {
+                Favor fav = new Favor();
+                fav.useCount += 1;
+                fav.favorName = parameters.favorDump.get(i).favorName;
+                fav.partyType = party.partyType;
+                FavorList favorList = new FavorList(fav, party, false);
+                favlists.save(favorList);
+                favors.save(fav);
+                newDump.add(fav);
+            }
         }
         return newDump;
     }
@@ -349,7 +375,16 @@ public class MainController {
             return null;
         }
         return newList;
+    }
 
+    @RequestMapping(path = "/party/{id}/filter", method = RequestMethod.GET)
+    public ArrayList<Favor> getUnusedFavors(@PathVariable("id") Integer id) {
+        Party party = parties.findOne(id);
+        ArrayList<FavorList> partyFavors = favlists.findAllByParty(party);
+        ArrayList<Favor> check = (ArrayList<Favor>) favors.findAll();
+        ArrayList<Favor> inParty = partyFavors.stream().map(fav -> fav.favor).collect(Collectors.toCollection(ArrayList::new));
+        check.stream().filter(fav -> !inParty.contains(fav)).forEach(inParty::add);
+        return inParty;
     }
 
     @RequestMapping(path = "/party/invite", method = RequestMethod.POST)
@@ -512,8 +547,11 @@ public class MainController {
 
     @RequestMapping(path = "/wizard", method = RequestMethod.GET)
     public ArrayList<Wizard> getPartyList() {
-
-        return (ArrayList<Wizard>) wizard.findAll();
+        ArrayList<Wizard> wiz = (ArrayList<Wizard>) wizard.findAll();
+        wiz = wiz.stream()
+                .sorted(Comparator.comparing(Wizard::getPartyType))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return wiz;
     }
 
     @RequestMapping(path = "/wizard/{id}", method = RequestMethod.POST)
@@ -541,7 +579,7 @@ public class MainController {
         ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
         all = all.stream()
                 .filter(f -> f.partyType.equals("Generic") || f.partyType.equals(party.partyType))
-                .sorted(Comparator.comparing(Favor::getUseCount))
+                .sorted(Comparator.comparing(Favor::getUseCount).reversed())
                 .collect(Collectors.toCollection(ArrayList<Favor>::new));
         return all;
     }

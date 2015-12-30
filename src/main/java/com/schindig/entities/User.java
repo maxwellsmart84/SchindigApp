@@ -1,5 +1,6 @@
 package com.schindig.entities;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.servlet.http.Cookie;
