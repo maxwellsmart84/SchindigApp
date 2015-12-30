@@ -1,32 +1,33 @@
-<ion-view>
+<ion-view class="wizard">
   <ion-nav-bar class="bar-stable">
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
   </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
-    <h1 class= "title">Stretchgoal</h1>
+  <div class="wizardHeader bar bar-header bar-royal">
+    <h1 class= "title">STRETCHGOAL</h1>
   </div>
   <ion-padding>
     <ion-content>
       <label class='item item-input item-floating-label'>
         <span>
-          <br>A Stretchgoal turns a party into THE party! 
-          <br> Set a Dream Goal that would set this party over the edge,
-          <br>and ask your friends to contribute!
+          <br>A STRETCHGOAL THAT TURNS THIS PARTY INTO THE PARTY!
+          <br> SET A DREAM-GOAL THAT WOULD PUSH THIS PARTY OVER THE EDGE,
+          <br>AND ASK YOUR FRIENDS TO CONTRIBUTE!
         </span>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">What would make this party awesome?</span>
+        <span class="input-label">WHAT WOULD MAKE THIS PARTY AWESOME?</span>
         <input placeholder="Dream Fund ex. Ice Louge, Band.." ng-model= "stretchName" type="text">
       </label>
       <label class="item item-input item-floating-label">
-        <span class= "input-label">How much is this going to cost?</span>
+        <span class= "input-label">HOW MUCH IS THIS GOING TO COST?</span>
         <input placeholder="How Much is This Going to Cost" ng-model="stretchGoal" type="number">
+        {{stretchGoal | currency}}
       </label>
       <button
         ng-click="stretchGoalData(stretchGoal, stretchName)"
         class="button button-full button-positive">
-       Submit Stretchgoooooooal
+       Submit StretchGOOOOOAAAALLLL!!!
       </button>
     </ion-content>
   </ion-padding>

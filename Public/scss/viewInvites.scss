@@ -1,0 +1,78 @@
+.bar {
+  background-color: transparent;
+}
+.invitedPartyDateTime {
+  font-family: serif;
+}
+
+
+.invitedParty {
+  font-family: "Monoton" serif;
+  background-color: white;
+  text-transform: uppercase;
+  display: flex;
+
+  ion-google-place {
+    background-color: white;
+  }
+  .button {
+    font-family: "Monoton";
+    font-size: 2rem;
+    background-color: #5079d5;
+    text-transform: uppercase;
+  }
+  .buttonWrap{
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+
+  }
+  select {
+    font-family: "Monoton";
+    text-transform: uppercase;
+  }
+  input {
+    background-color: white;
+  }
+  .item-input {
+    font-family: "Monoton";
+    background-color: white;
+    text-transform: uppercase;
+    input {
+      font-family: "Monoton";
+      text-transform: uppercase;
+    }
+    .invitedPartyDateTime{
+      color: gray;
+      text-transform: uppercase;
+    }
+  }
+  .item {
+    font-family: "Monoton";
+    background-color: white;
+  }
+}
+
+.invitedPartyHeader {
+  border:none;
+  background-image: url("../img/wineandcheese.jpg");
+  background-size: 125%;
+  background-repeat: none;
+  background-position: center;
+  background: linear-gradient(rgba(#0b0b0b, 0.49));
+  display: flex;
+  width: 100%;
+  h1 {
+    margin: 0;
+    text-align: center;
+    border:none;
+    align-self: center;
+  }
+  .textViewHeader {
+    letter-spacing: 5px;
+    font-family: "Monoton";
+    font-size: 2rem;
+    color:white;
+    margin: 0;
+  }
+}

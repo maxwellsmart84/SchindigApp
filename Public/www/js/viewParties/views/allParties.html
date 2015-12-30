@@ -11,19 +11,18 @@
       <div class="item item-divider">
         <h2>Parties You Are Hosting</h2>
       </div>
-        <ion-item
+        <div
         ui-sref="manageParty({partyID: party.partyID})"
         ng-repeat="hostParty in hostedParties track by $index"
         class="card"
         ng-model="hostParty"
         ng-click="getOneHostParty(hostParty)">
-        <div class= "item item-text-wrap item-icon-right">
+        <div class= "item item-text-wrap">
           <h2>{{hostParty.partyName}}</h2>
           <p>{{hostParty.description}}</p>
           <h3>{{hostParty.partyDate | date: 'short'}}</h3>
-          <i class="icon ion-chevron-right"></i>
         </div>
-      </ion-item>
+      </div>
       <div class="item item-divider">
         <h2>Parties You Are Invited To</h2>
       </div>

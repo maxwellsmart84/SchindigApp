@@ -10,11 +10,10 @@
       $stateParams,
       LoginRegisterService,
       $cordovaDevice,
-      $ionicPlatform
+      $ionicPlatform,
+      $cordovaToast
     )
       {
-
-
         // CORDOVA DEVICE//
         var uuid;
       //   $ionicPlatform.ready(function() {
@@ -35,13 +34,7 @@
           },
           device : uuid
         };
-        LoginRegisterService.login(loginData).then(function(data){
-            localStorage.setItem('userID', data.data);
-            $state.go('home');
-        });
-
-        // LoginRegisterService.login(loginData);
-
+        LoginRegisterService.login(loginData)
       };
 
       $scope.signUp = function(){
@@ -55,7 +48,9 @@
       };
 
       //DELETE TO TOP COMMENT
-
+      $scope.createNewUserToast = function(){
+        $cordovaToast.show('               Please use accurate information,                                      as this will be a primary means of communcation.','long','bottom')
+      };
       $scope.createNewUser = function(username, password, firstName, lastName, email, phone){
         var userData = {
           username: username,
@@ -65,12 +60,8 @@
           email: email,
           phone: phone
         };
-
-        LoginRegisterService.createUser(userData).success(function(data){
-          console.log('create new user',data);
-          $state.go('login');
-        });
-    };
+        LoginRegisterService.createUser(userData)
+      };
     });
 
 }());
