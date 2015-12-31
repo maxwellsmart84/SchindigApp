@@ -224,7 +224,7 @@ public class MainController {
         }
         users.save(user);
         user.password = null;
-        response.sendError(200, "User profile updated!");
+        response.sendError(200, "Your profile has been updated!");
         return user;
     }
 
@@ -247,8 +247,13 @@ public class MainController {
             response.sendError(400, "Please enter a phone number containing only digits.");
         } else if (user.phone.length()!=10) {
             response.sendError(400, "Phone number must be ten digits in length.");
+        } else if (users.findByPhone(user.phone) != null) {
+            response.sendError(400, "Phone number is already associated to an account.");
+        } else if (users.findByEmail(user.email) != null) {
+            response.sendError(400, "Email is already associated to an account.");
         }
 
+        response.sendError(200, "Account successfully created.");
         User newUser = new User();
         newUser.username = user.username.toLowerCase();
         newUser.phone = user.phone;
@@ -256,7 +261,6 @@ public class MainController {
         newUser.email = user.email.toLowerCase();
         newUser.firstName = user.firstName;
         newUser.lastName = user.lastName;
-        response.sendError(200, "Account successfully created.");
         users.save(newUser);
     }
 
@@ -354,6 +358,9 @@ public class MainController {
             }
         }
         response.sendError(200, "Favors added to " + party.partyName+"!");
+        newDump = newDump.stream()
+                .sorted(Comparator.comparing(Favor::getFavorName))
+                .collect(Collectors.toCollection(ArrayList::new));
         return newDump;
     }
 
@@ -413,28 +420,46 @@ public class MainController {
         host.inviteCount += 1;
         Invite invite = new Invite(
                 user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name);
+        response.sendError(200, invite.name + " is now invited to " + invite.party.partyName + "!");
         users.save(host);
         invites.save(invite);
-        response.sendError(200, invite.name + " is now invited to " + invite.party.partyName + "!");
+
     }
 
     /**NEED TO CONFIRM**/
-    @RequestMapping(path = "/party/{id}/rsvp", method = RequestMethod.POST)
-    public void rsvp(@RequestBody Parameters p, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
+    @RequestMapping(path = "/party/rsvp", method = RequestMethod.POST)
+    public void rsvp(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
 
         Party party = parties.findOne(p.partyID);
-        User user = p.user;
+        User user = users.findOne(p.userID);
         user.invitedCount += 1;
-        Invite i = invites.findByPartyAndUser(party, user);
+        ArrayList<Invite> list = invites.findByParty(party);
+        Invite i = new Invite();
+        for (Invite inv : list) {
+            if (inv.phone.equals(user.phone) || inv.email.equals(user.email)) {
+                i = inv;
+                break;
+            }
+        }
+        i.user = user;
         i.rsvpStatus = p.invites.rsvpStatus;
-        users.save(user);
         response.sendError(200, "Thanks for RSVPing to " + party.partyName);
+        invites.save(i);
+        users.save(user);
     }
 
-    @RequestMapping(path = "/party/{id}", method = RequestMethod.GET)
-    public Party getParty(@PathVariable("id") int id) {
-
-        return parties.findOne(id);
+    @RequestMapping(path = "/party/{id}/{userID}", method = RequestMethod.GET)
+    public Party getParty(@PathVariable("id") Integer id, @PathVariable("userID") Integer userID) {
+        Party party = parties.findOne(id);
+        User u = users.findOne(userID);
+        ArrayList<Invite> i = invites.findByParty(party);
+        for (Invite inv : i) {
+            if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
+                party.rsvpStatus = inv.rsvpStatus;
+                break;
+            }
+        }
+        return party;
     }
 
     @RequestMapping(path = "/party/{id}/invites", method = RequestMethod.GET)
@@ -474,6 +499,9 @@ public class MainController {
             if (parameters.party.stretchName != null) {
                 check.stretchName = parameters.party.stretchName;
             }
+            if (parameters.party.stretchStatus != null) {
+                check.stretchName += parameters.party.stretchStatus;
+            }
             if (parameters.party.theme != null) {
                 check.theme = parameters.party.theme;
             }
@@ -484,7 +512,6 @@ public class MainController {
                 check.parking = parameters.party.parking;
             }
             if (parameters.inviteDump != null) {
-                response.sendError(200, "You sent " + parameters.inviteDump.size() + " invites out!");
                 for (int i = 0; i < parameters.inviteDump.size(); i++) {
                     Invite invite = parameters.inviteDump.get(i);
                     Methods.newInvite(invite, invites, check);
@@ -500,7 +527,13 @@ public class MainController {
             parties.save(check);
             return check;
         }
-        response.sendError(200, "No updates added.");
+        if (parameters.inviteDump!=null) {
+            response.sendError(200, "You sent " + parameters.inviteDump.size() + " invites out!");
+        } else if (parameters!=null) {
+            response.sendError(200, "Updated " + check.partyName + "'s details.");
+        } else {
+            response.sendError(200, "No updates added.");
+        }
         return null;
     }
 
@@ -555,9 +588,9 @@ public class MainController {
         }
 
         u.hostCount -= 1;
+        response.sendError(200, p.partyName + " has been cancelled.");
         users.save(u);
         parties.delete(p);
-        response.sendError(200, p.partyName + " has been cancelled.");
 
         // } else {
         //     response.sendError(400, "You're not authorized to delete this party.")
@@ -572,9 +605,9 @@ public class MainController {
 //        if (f.party.host.userID == parameters.userID) {
             Favor fav = f.favor;
             fav.useCount -= 1;
+            response.sendError(200, fav.favorName + " has been removed from this party.");
             favors.save(fav);
             favlists.delete(f);
-            response.sendError(200, fav.favorName + " has been removed from this party.");
             return f;
 //        } else {
 //            response.sendError(400, "You're not authorized to remove favors from this party.");
@@ -597,7 +630,7 @@ public class MainController {
     }
 
     @RequestMapping(path = "/wizard/{id}", method = RequestMethod.POST)
-    public Party wizardPosition(@RequestBody Party p, @PathVariable("id") int id) {
+    public Party wizardPosition(@RequestBody Party p, @PathVariable("id") Integer id) {
 
         Party party = parties.findOne(p.partyID);
         party.wizPosition = id + 1;
@@ -646,7 +679,11 @@ public class MainController {
     @RequestMapping(path = "/favor/remove", method = RequestMethod.POST)
     public ArrayList<Favor> deleteFavorItem(@RequestBody Favor item) {
         favors.delete(item);
-        return (ArrayList<Favor>) favors.findAll();
+        ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
+        all = all.stream()
+                .sorted(Comparator.comparing(Favor::getFavorName))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return all;
     }
 
     @RequestMapping(path = "/party/stats", method = RequestMethod.GET)
