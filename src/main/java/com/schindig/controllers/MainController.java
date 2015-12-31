@@ -358,6 +358,9 @@ public class MainController {
             }
         }
         response.sendError(200, "Favors added to " + party.partyName+"!");
+        newDump = newDump.stream()
+                .sorted(Comparator.comparing(Favor::getFavorName))
+                .collect(Collectors.toCollection(ArrayList::new));
         return newDump;
     }
 
