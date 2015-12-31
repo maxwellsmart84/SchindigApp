@@ -11,9 +11,8 @@
       ViewPartyService,
       ionicMaterialMotion,
       $ionicPopup,
-      ManagePartyService,
-      $cordovaToast
-
+      $cordovaToast,
+      ManagePartyService
     ){
 
       var vm = this;
@@ -44,9 +43,33 @@
     $scope.rsvpShowMainBool = true;
     $scope.rsvpShowBool = false;
     $scope.rsvpShow = function(){
-      $scope.rsvpShowBool = true;
-      $scope.rsvpShowMainBool = false;
-    }
+      var rsvpPopup = $ionicPopup.show ({
+        title: 'Are You Going?',
+        buttons: [
+          {
+          text: 'Yes',
+          onTap: function(){
+              return $scope.rsvp('Yes');
+          }
+          },
+          {
+          text: 'No',
+          onTap: function(){
+                return $scope.rsvp('No');
+            }
+          },
+          {
+          text: 'Maybe',
+          onTap: function(){
+                return $scope.rsvp('Maybe');
+            }
+          },
+        ]
+      });
+      // $scope.rsvpShowBool = true;
+      // $scope.rsvpShowMainBool = false;
+    };
+
     $scope.rsvp = function(rsvpStatus){
       $scope.rsvpShowMainBool = true;
       $scope.rsvpShowBool = false;
@@ -73,6 +96,14 @@
         });
     };
 
+
+    //PARKING TOAST//
+     $scope.parkingButton= function (parkingInfo){
+       console.log("park", parkingInfo);
+       $cordovaToast.show(parkingInfo, 'short', 'center');
+     };
+
+
     //INVITED PARTIES GET
     ///////////TURN INTO FUNCTION INIT/////
     $scope.getAllInvitedParties = function(){
@@ -97,17 +128,17 @@
           console.log('invite data',data.data);
           if(data.data.byob === true){
             console.log('true');
-            data.data.byob = "BYOB"
+            data.data.byob = "BYOB";
           } else {
             console.log('false');
-            data.data.byob = "Booze Included"
+            data.data.byob = "Booze Included";
           }
           if(data.data.themeCheck === true){
             console.log('theme true');
-            data.data.theme = data.data.theme
+            data.data.theme = data.data.theme;
           } else {
             console.log('theme false');
-            data.data.theme = 'does not have a theme'
+            data.data.theme = 'does not have a theme';
           }
           console.log('byob statsu', data.data.byob);
           $scope.invPartyOne = data.data;
@@ -198,8 +229,8 @@
             });
           }
           else {
-            return
-            }
+            return;
+          }
           });
         };
     });

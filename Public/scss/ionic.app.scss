@@ -42,7 +42,7 @@ $stable:                          #ececec !default;
 $positive:                        #FF4C4C !default;
 $calm:                            #11c1f3 !default;
 $balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
+$energized:                       #000000 !default;
 $assertive:                       #f2cf1e !default;
 // $royal:                           #FF4C4C !default;
 $font-family-sans-serif:          "Righteous", "Roboto", "Segoe UI", sans-serif !default;
@@ -60,6 +60,11 @@ $headings-line-height:            1.2 !default;
 
 $base-background-color:           #fff !default;
 $base-color:                      #000 !default;
+
+
+$card-header-bg:                  rgba(#000000, 0.60) !default;
+$card-body-bg:                    rgba(#000000, 0.60)!default;
+$card-footer-bg:                  rgba(#000000, 0.60) !default
 
 
 // The path for our ionicons font files, relative to the built CSS in www/css

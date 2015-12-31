@@ -61,7 +61,7 @@
             // $cordovaToast.show('Party Created.'+' Finish the details here, or edit your party in Manage Parties', 'short', 'bottom')
             $state.go('details');
         });
-      };
+      }
     };
     })
 
@@ -84,12 +84,12 @@
       var themeElements = document.getElementsByClassName('theme');
       var byobStatus;
       var themeStatus;
-      if(byobElements.length != 0){
+      if(byobElements.length !== 0){
         byobStatus = true;
       } else{
         byobStatus = false;
-      };
-      if(themeElements.length != 0){
+      }
+      if(themeElements.length !== 0){
         themeStatus = true;
       } else {
         themeStatus = false;
@@ -132,4 +132,5 @@
        });
      };
     })
+   });
 }());

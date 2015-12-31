@@ -2,108 +2,78 @@
   <ion-nav-bar>
   </ion-nav-bar>
   <div class="bar bar-header">
-    <div class="viewPartiesHeader">
-      <h1 class= "title-text-wrap">{{invPartyOne.partyName}}</h1>
+    <div class="invitedPartiesHeader">
+      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyName}}</span></h1>
+      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">@</span></h1>
+      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyDate | date: 'short'}}</span></h1>
     </div>
   </div>
   <ion-content ng-init="loadOneInvParty();loadOneFavor()">
-    <ion-list class="list card">
-      <div class="row center">
-        <div class="col">
-          <ion-item class="item-text-wrap">
-            <h2>{{invPartyOne.partyName}}</h2>
-          </ion-item>
+  <br>
+  <div class="button-bar">
+    <button
+      ng-click="rsvpShow()"
+      class="button button-energized button-small">RSVP</button>
+    <button class="button button-energized button-small">{{invPartyOne.byob}}</button>
+    <button ng-click="parkingButton(invPartyOne.parking)" class="button button-energized button-small">Park</button>
+  </div>
+      <ion-item class="card">
+        <div class= "invitePartyCard item item-text-wrap item">
+          <h2>{{invPartyOne.local}}</h2>
+          <br>
+          <h3>{{invPartyOne.partyDate | date: 'short'}}</h3>
+          <p>{{invPartyOne.description}}</p>
         </div>
-      </div>
       <div class="row center">
         <div class="col">
-          <ion-item class="item-text-wrap">
             <h2>{{invPartyOne.stretchName}}</h2>
-            <progress max= "invPartyOne.stretchGoal"a value="1000"></progress>
-          </ion-item>
+            <progress max= "invPartyOne.stretchGoal"value="invPartyOne.stretchStatus"></progress>
         </div>
       </div>
-      <div class="row center">
-        <div class="col">
-          <ion-item class="item-text-wrap">
-            <p>{{invPartyOne.partyDate | date: 'short'}}</p>
-            <p>{{invPartyOne.local}}</p>
-          </ion-item>
-        </div>
-        <div class="col text-right">
-         <button
-          ng-show="rsvpShowMainBool"
-          ng-click="rsvpShow()"
-          class="button button-positive">
-           RSVP
-         </button>
-         <div
-           ng-click="rsvpShowMain()"
-           ng-show="rsvpShowBool">
-           <button ng-click="rsvp('Yes')" class="button button-positive">Yes</button>
-           <button ng-click="rsvp('No')" class="button button-assertive">No</button>
-           <button ng-click="rsvp('Maybe')" class="button button-royal">Maybe</button>
-         </div>
-        </div>
-      </div>
-      <div class="row center">
-        <div class="col">
-          <ion-item class="item-text-wrap">
-            <p>{{invPartyOne.description}}</p>
-          </ion-item>
-        </div>
-        <div ng-show="invPartyOne.byob" class="col text-right">
-         <button class="button button-assertive">
-           {{invPartyOne.byob}}
-         </button>
-        </div>
-      </div>
-      <div class="row center">
-        <div class="col">
-          <ion-item class="item-text-wrap">
-            <div ng-hide="invPartyOne.themeCheck" class="noTheme"><p>This <strong>{{invPartyOne.partyType}} Party</strong>  {{invPartyOne.theme}} </p></div>
-            <div ng-show="invPartyOne.themeCheck"><p>This <strong>{{invPartyOne.partyType}} Party</strong> party has a theme: <strong>{{invPartyOne.theme}}</strong></p></div>
-          </ion-item>
-        </div>
-        <div class="col text-right">
-          <button class="button button-royal">
-            Parking: {{invPartyOne.parking}}
-          </button>
-        </div>
+      <!-- <div
+        ng-click="rsvpShowMain()"
+        ng-show="rsvpShowBool">
+        <button ng-click="rsvp('Yes')" class="button button-small button-energized">Yes</button>
+        <button ng-click="rsvp('No')" class="button button-assertive">No</button>
+        <button ng-click="rsvp('Maybe')" class="button button-royal">Maybe</button>
+      </div> -->
+
+      <div>
+        <ion-item class="item-text-wrap">
+          <div ng-hide="invPartyOne.themeCheck" class="noTheme"><p>This <strong>{{invPartyOne.partyType}} Party</strong>  {{invPartyOne.theme}} </p></div>
+          <div ng-show="invPartyOne.themeCheck"><p>This <strong>{{invPartyOne.partyType}} Party</strong> party has a theme: <strong>{{invPartyOne.theme}}</strong></p></div>
+        </ion-item>
       </div>
     </ion-list>
     <div class="button-bar">
       <button
-        class="button button-royal"
+        class="button button-small button-energized"
         ng-click="showFavor()">
         Favors
       </button>
       <button
         ng-click="showInvite();loadInvitedPeople();"
-        class="button button-assertive">
+        class="button button-small button-energized">
         Invites
       </button>
     </div>
     <ion-list
       ng-model="showFavorVar"
-      ng-show="showFavorVar"
-      class="list card">
+      ng-show="showFavorVar">
+
       <ion-item class="item">
         <h2><strong>Help out the party - pick a favor!</strong></h2>
       </ion-item>
       <ion-item
-        style="background-color:rgb(87, 218, 100)"
         ng-repeat="favor in onePartyFavor"
         ng-model="favor">
         <div
-          style="background-color:rgb(218, 142, 87)"
           ng-click="showFavorConfirm(favor)"
           class="item favorUnclaimed"
           ng-show= "favor.claimed != true">
           <h3>{{favor.favor.favorName}}</h3>
         </div>
         <div
-          style="background-color:rgb(95, 154, 120)"
           class="item favorClaimed"
           ng-show="favor.claimed == true"
           ng-click="showFavorUnclaim(favor)">
