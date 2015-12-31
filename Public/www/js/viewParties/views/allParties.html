@@ -1,24 +1,33 @@
-<ion-view view-title="All Your Parties">
-  <ion-content>
-    <div class= "list">
-      <div class="item item-divider">
-        <h2>Parties You Are Hosting</h2>
+<ion-view class="viewParties">
+  <ion-nav-bar>
+  </ion-nav-bar>
+    <div class="bar bar-header">
+      <div class="viewPartiesHeader">
+        <h1 class= "title-text-wrap"><span class="viewPartiesTextViewHeader">All Your Parties</span></h1>
       </div>
-        <ion-item
+    </div>
+    <ion-content>
+    <div class= "list">
+      <div class="item-text-wrap item-divider">
+        <ion-padding>
+          <h2><span class="hostHeadCard">Parties You Are Hosting</span></h2>
+        <ion-padding>
+      </div>
+        <div
         ui-sref="manageParty({partyID: party.partyID})"
         ng-repeat="hostParty in hostedParties track by $index"
         class="card"
         ng-model="hostParty"
         ng-click="getOneHostParty(hostParty)">
-        <div class= "item item-text-wrap item-icon-right">
+        <div class= "hostedPartyCard item item-text-wrap">
           <h2>{{hostParty.partyName}}</h2>
-          <p>{{hostParty.description}}</p>
           <h3>{{hostParty.partyDate | date: 'short'}}</h3>
-          <i class="icon ion-chevron-right"></i>
         </div>
-      </ion-item>
-      <div class="item item-divider">
-        <h2>Parties You Are Invited To</h2>
+      </div>
+      <div class="item-text-wrap item-divider">
+        <ion-padding>
+          <h2><span class="hostHeadCard">Parties You Are Invited To</span></h2>
+        </ion-padding>
       </div>
       <ion-item
           ui-sref= "invitedParty({partyID: invParty.partyID})"
@@ -26,18 +35,11 @@
           ng-model="invParty"
           ng-click="getOneInvParty(invParty)"
           class="card">
-          <div class= "item item-text-wrap item-icon-right">
+          <div class= "item item-text-wrap item">
             <h2>{{invParty.partyName}}</h2>
             <p>{{invParty.description}}</p>
             <h3>{{invParty.partyDate | date: 'short'}}</h3>
-            <i class="icon ion-chevron-right"></i>
-          </div>
-          <div class= "item item-text-wrap">
-            {{invParty.partyDate | date}}
-            {{invParty.street1}}
-            {{invParty.street2}}
-            {{invParty.city}}
-            {{invParty.zip}}
+            <h3>{{invParty.local}}</h3>
           </div>
       </ion-item>
     </div>

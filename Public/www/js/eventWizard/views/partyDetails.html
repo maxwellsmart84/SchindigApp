@@ -4,7 +4,7 @@
     </ion-nav-back-button>
   </ion-nav-bar>
   <div class="wizardHeader bar bar-header">
-      <h1 class= "title-text-wrap"><span class="textViewHeader">SOME EXTRAS</span></h1>
+      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">SOME EXTRAS</span></h1>
   </div>
   <ion-padding>
     <ion-content>
@@ -30,9 +30,7 @@
         <div
           ng-model="byobCheck"
           ng-class="byobCheck ? 'byob' : 'supplied'">
-
             BYOB
-
         </div>
       </ion-toggle>
       <ion-item class="item-input item-select">
@@ -47,7 +45,7 @@
      </ion-item>
       <button
         ng-click="partyDeetsPatch(description, themeVal, parking)"
-        class="button button-full button-positive">
+        class="bar bar-footer button button-full button-assertive">
        Submit
       </button>
     </ion-content>

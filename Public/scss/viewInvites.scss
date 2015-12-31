@@ -1,1 +1,174 @@
+.bar {
+  background-color: transparent;
+}
+.viewPartiesDateTime {
+  font-family: serif;
+}
 
+
+.viewParties {
+  font-family: "Righteous" serif;
+  background:
+  linear-gradient(
+     rgba(0, 0, 0, 0.1),
+     rgba(0, 0, 0, 0.2)
+   ),
+   url("../img/viewParties1.jpg");
+  // background-image: url("../img/viewParties1.jpg");
+  background-size: 280%;
+  background-position:center;
+
+  .card {
+    background-color: rgba(#000000, 0.60);
+    font-family: "Monoton";
+    h2 {
+      text-align: center;
+    }
+    p {
+      font-family: "Righteous";
+      font-size: 1.2em;
+      padding:2px;
+      color:rgba(#ffffff, 0.9);
+    }
+    h3 {
+      text-align:center;
+    }
+  }
+    ion-google-place {
+    background-color: white;
+  }
+
+  .button {
+    font-family: "Monoton";
+    font-size: 2rem;
+    background-color: #680E34;
+      color:#ff94d7;
+
+  }
+  .button-small {
+    font-size:1.2rem;
+  }
+//THIS IS FOR DROPDOWNS
+  select {
+    font-family: "Monton";
+      background-color: rgba(#000000, 0.60);
+  }
+
+
+  input {
+    background-color: rgba(#000000, 0.60);
+    font-family: "Righteous";
+
+    }
+
+  .item-input {
+    font-family: "Righteous";
+    background-color: rgba(#000000, 0.60);
+      input {
+      font-family: "Righteous";
+      background-color: rgba(#000000, 0.60);
+    }
+    .wizardDateTime {
+      color: gray;
+      }
+  }
+
+  .item-divider {
+    padding:20px;
+    text-align: center;
+    background-color: rgba(#000000, 0.60);
+    font-family: "Righteous";
+    h2 {
+      font-size: 1.8rem;
+      color: white;
+      text-shadow:
+      0 0 1px white,
+      0 0 3px #ffffff,
+      0 0 6px #5effd4;
+    }
+  }
+  .item-content {
+    background-color: rgba(#000000, 0.60);
+  }
+
+  .item-text-wrap {
+    background-color: rgba(#000000, 0.60);
+    border: solid rgba(#f7bef3, 0.6) 5px;
+    border-radius: 20px;
+
+    .hostHeadCard {
+      font-size: 1.8rem;
+      color: white;
+      text-shadow:
+      0 0 1px white,
+      0 0 3px #ffffff,
+      0 0 6px #5effd4;
+      // 0 0 8px #5effd4;
+      // 0 0 10px #5effd4;
+      // 0 0 12px #ff5ea7;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      font-family: "Monoton";
+      color:#ff94d7;
+      font-size: 1.2rem;
+      text-shadow: 0 0 1px #ff94d7;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    ///DATE IN CARDS//
+    h3 {
+      font-family: "Righteous";
+      color:white;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+      font-size: 1.3rem;
+      padding-top: 2vh;
+      font-weight: bold;
+    }
+  }
+  .wizStretchExpl {
+    text-align: center;
+    font-family: "Righteous";
+    font-size: .85rem;
+    color:#ff94d7;
+
+
+    span {
+      font-family: "Monoton";
+      font-size: .85rem;
+      color:#ff94d7;
+      text-align: center;
+    }
+  }
+
+}
+
+.viewPartiesHeader {
+  border:solid rgba(#f7bef3, 0.6) 5px;
+  border-radius: 20px;
+  background-color: rgba(#000000, 0.60);
+  display: flex;
+  width:100%;
+  h1 {
+    margin: 0;
+    text-align: center;
+    border:none;
+    align-self: center;
+    justify-content: center;
+  }
+
+  .viewPartiesTextViewHeader {
+    letter-spacing: 2px;
+    font-family: "Monoton";
+    font-size: 3rem;
+    color:#fffc00;
+    text-shadow:
+    0 0 1px #fffc00,
+    0 0 3px #ff5ea7,
+    0 0 6px #fffc00,
+    0 0 8px #fafafa,
+    0 0 10px #ff5ea7,
+    0 0 12px #ff5ea7;
+  }
+}
