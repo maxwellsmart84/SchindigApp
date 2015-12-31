@@ -13,7 +13,6 @@
      rgba(0, 0, 0, 0.2)
    ),
    url("../img/viewParties1.jpg");
-  // background-image: url("../img/viewParties1.jpg");
   background-size: 280%;
   background-position:center;
 
@@ -39,10 +38,24 @@
   }
 
   .button {
+    border: solid white 1px;
     font-family: "Monoton";
     font-size: 2rem;
-    background-color: #680E34;
-    color:#ff94d7;
+    background-color: rgba(#000000, 0.70);
+    color: white;
+    text-shadow:
+    0 0 1px white,
+    0 0 3px #ffffff,
+    0 0 6px #5effd4;
+    :target {
+      color: white;
+      text-shadow:
+      0 0 1px white,
+      0 0 3px #ffffff,
+      0 0 6px #5effd4,
+      0 0 8px #fff,
+      0 0 12px #5effd4;
+    }
 
   }
   .button-small {
