@@ -9213,32 +9213,18 @@ img {
 
 .wizard {
   font-family: "Showboat" serif;
-<<<<<<< HEAD
-  background-color: white;
-  text-transform: uppercase;
-  display: flex; }
-=======
   background-color: #F0EAD6;
   text-transform: uppercase; }
->>>>>>> ad286e3cf27770f6f651812019c3db695e53456b
   .wizard ion-google-place {
     background-color: white; }
   .wizard .button {
     font-family: "Showboat";
     font-size: 2rem;
     background-color: #680E34;
-<<<<<<< HEAD
-    text-transform: uppercase; }
-  .wizard .buttonWrap {
-    display: flex;
-    align-self: flex-end;
-    justify-content: flex-end; }
-=======
     text-transform: uppercase;
     color: white; }
   .wizard .button-small {
     font-size: 1.2rem; }
->>>>>>> ad286e3cf27770f6f651812019c3db695e53456b
   .wizard select {
     font-family: "Showboat";
     text-transform: uppercase;
@@ -9291,14 +9277,9 @@ img {
     margin: 0;
     text-align: center;
     border: none;
-<<<<<<< HEAD
-    align-self: center; }
-  .wizardHeader .textViewHeader {
-=======
     align-self: center;
     justify-content: center; }
   .wizardHeader .wizardTextViewHeader {
->>>>>>> ad286e3cf27770f6f651812019c3db695e53456b
     letter-spacing: 5px;
     font-family: "Showboat";
     font-size: 2rem;
@@ -9308,66 +9289,6 @@ img {
 .bar {
   background-color: transparent; }
 
-<<<<<<< HEAD
-.invitedPartyDateTime {
-  font-family: serif; }
-
-.invitedParty {
-  font-family: "Monoton" serif;
-  background-color: white;
-  text-transform: uppercase;
-  display: flex; }
-  .invitedParty ion-google-place {
-    background-color: white; }
-  .invitedParty .button {
-    font-family: "Monoton";
-    font-size: 2rem;
-    background-color: #5079d5;
-    text-transform: uppercase; }
-  .invitedParty .buttonWrap {
-    display: flex;
-    align-self: flex-end;
-    justify-content: flex-end; }
-  .invitedParty select {
-    font-family: "Monoton";
-    text-transform: uppercase; }
-  .invitedParty input {
-    background-color: white; }
-  .invitedParty .item-input {
-    font-family: "Monoton";
-    background-color: white;
-    text-transform: uppercase; }
-    .invitedParty .item-input input {
-      font-family: "Monoton";
-      text-transform: uppercase; }
-    .invitedParty .item-input .invitedPartyDateTime {
-      color: gray;
-      text-transform: uppercase; }
-  .invitedParty .item {
-    font-family: "Monoton";
-    background-color: white; }
-
-.invitedPartyHeader {
-  border: none;
-  background-image: url("../img/wineandcheese.jpg");
-  background-size: 125%;
-  background-repeat: none;
-  background-position: center;
-  background: linear-gradient(rgba(11, 11, 11, 0.49));
-  display: flex;
-  width: 100%; }
-  .invitedPartyHeader h1 {
-    margin: 0;
-    text-align: center;
-    border: none;
-    align-self: center; }
-  .invitedPartyHeader .textViewHeader {
-    letter-spacing: 5px;
-    font-family: "Monoton";
-    font-size: 2rem;
-    color: white;
-    margin: 0; }
-=======
 .viewPartiesDateTime {
   font-family: serif; }
 
@@ -9474,4 +9395,3 @@ img {
     font-size: 3rem;
     color: #fffc00;
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
->>>>>>> ad286e3cf27770f6f651812019c3db695e53456b

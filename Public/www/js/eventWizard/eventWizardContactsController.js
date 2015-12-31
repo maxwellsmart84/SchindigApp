@@ -38,37 +38,45 @@
         ///CONTACT DOM STUFF
         vm.contactDataArray=[];
         $scope.showConfirm = function() {
-          var confirmPopup = $ionicPopup.confirm({
-            title: 'Send Invitations',
-            template: 'Are you ready to send out Invites and Create your Party?'
-          });
-          confirmPopup.then(function(res){
-            if(res){
-              var partyID = +localStorage.getItem('partyID');
-              var contactData;
-              var data;
-              _.each(vm.contactArray, function(el,idx,array){
-               contactData = {
-                 name: el.name.formatted,
-                 phone: el.phoneNumbers[0].value
-              };
-              vm.contactDataArray.push(contactData);
-              data = {
-                inviteDump: vm.contactDataArray,
-                party: {
-                  partyID: partyID
-                }
-              };
+          if(vm.contactArray === []){
+            $state.go('home');
+
+            return
+          } else{
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Send Invitations',
+              template: 'Are you ready to send out Invites and Create your Party?'
             });
-              EventWizardService
-                .updateWizData(data).then(function(data){
-                   $state.go('home');
+            confirmPopup.then(function(res){
+              if(res){
+                var partyID = +localStorage.getItem('partyID');
+                var contactData;
+                var data;
+                _.each(vm.contactArray, function(el,idx,array){
+                 contactData = {
+                   name: el.name.formatted,
+                   phone: el.phoneNumbers[0].value
+                };
+                vm.contactDataArray.push(contactData);
+                data = {
+                  inviteDump: vm.contactDataArray,
+                  party: {
+                    partyID: partyID
+                  }
+                };
               });
-            }
-            else {
-              alert("There was an error");
-            }
-          });
+                EventWizardService
+                  .updateWizData(data).then(function(data){
+                     $state.go('home');
+                });
+              }
+              else {
+                alert("There was an error");
+              }
+            });
+          }
+          console.log('whats going on');
+
         };
       })
 }());

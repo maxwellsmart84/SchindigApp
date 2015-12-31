@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view ng-init="loadOneFavorBrowse()">
     <ion-nav-bar class="bar-stable">
       <ion-nav-back-button class="button-clear">
         <i class="ion-arrow-left-c"></i>
@@ -7,7 +7,7 @@
     <div class=" wizardHeader bar bar-header bar-royal">
         <h1 class= "title">CHECK/UNCHECK YOUR FAVORS</h1>
      </div>
-     <ion-content ng-init="loadOneFavorBrowse()">
+     <ion-content>
       <ul class="list">
         <div class="item item-divider">
           COMMONLY BOUGHT FAVORS FOR YOUR PARTY TYPE:
@@ -21,14 +21,14 @@
                 placeholder="Add Your Own">
             </label>
             <button
-              ng-click="addFavorToData(favorDoo)"
+              ng-click="addFavorToData(favorDoo);"
               class="button button-small">
               Submit new Favor
             </button>
           </div>
         </div>
         <button
-          ng-click="pushToFavorArray()"
+          ng-click="pushToFavorArray();loadOneFavorBrowse();"
           class="button button-full button-positive">
           SUBMIT YOUR NEW FAVORS
         </button>

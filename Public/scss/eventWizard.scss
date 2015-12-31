@@ -10,9 +10,8 @@
   font-family: "Showboat" serif;
   background-color: #F0EAD6;
   text-transform: uppercase;
-  display: flex;
 
-  ion-google-place {
+    ion-google-place {
     background-color: white;
   }
   .button {
@@ -21,6 +20,7 @@
     background-color: #680E34;
     text-transform: uppercase;
     color:white;
+
   }
   .button-small {
     font-size:1.2rem;
@@ -31,6 +31,8 @@
     text-transform: uppercase;
     background-color: #F0EAD6;
   }
+
+
   input {
     background-color: #F0EAD6;
     font-family: "Showboat";

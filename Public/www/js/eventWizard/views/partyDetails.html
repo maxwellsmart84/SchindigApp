@@ -1,14 +1,13 @@
 <ion-view class="wizard">
   <ion-nav-bar class="bar-stable">
+    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
+    </ion-nav-back-button>
   </ion-nav-bar>
-  <div class="wizardHeader bar bar-header">
-      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">SOME EXTRAS</span></h1>
-  </div>
   <div class="bar bar-header">
     <div class="wizardHeader">
-      <h1 class= "title-text-wrap"><span class="textViewHeader">SOME EXTRAS</span></h1>
+      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">SOME EXTRAS</span></h1>
     </div>
-   </div>
+  </div>
   <ion-padding>
     <ion-content>
       <label class="item item-input item-floating-label">
@@ -19,10 +18,9 @@
         ng-click="themeCheck = !themeCheck"
         toggle-class="toggle-calm">
         <div
-          class="toggleCat"
-          ng-model="themeCheck"
-          ng-class="themeCheck ? 'theme' : 'noTheme'">
-            THEMED PARTY?
+        ng-model="themeCheck"
+        ng-class="themeCheck ? 'theme' : 'noTheme'">
+          THEMED PARTY?
         </div>
       </ion-toggle>
       <div ng-show="themeCheck" class="item">

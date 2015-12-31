@@ -48,6 +48,7 @@
         ManagePartyService.deleteFavorFromParty(listDelete)
           .then(function(data){
             console.log('deleted',data);
+            $scope.loadOneFavorBrowse();
           })
         };
       $scope.data = {
@@ -133,6 +134,7 @@
         var partyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.oneFavorBrowse(partyID)
           .success(function(data){
+            $scope.loadOneFavor();
             $scope.browseFavors = data;
             console.log('data', data);
         });
@@ -152,8 +154,11 @@
           partyID: partyID,
           favorDump: vm.favorArray
         };
-        EventWizardService.updatePartyFavorList(data).success(function(data){
-          $state.go('manageFavor');
+        EventWizardService.updatePartyFavorList(data)
+          .success(function(data){
+            vm.favorArray = [];
+            $scope.loadOneFavorBrowse();
+            $state.go('manageFavor');
         });
       };
       $scope.addFavorToData = function(favorDoo){
@@ -174,7 +179,7 @@
               console.log(newDataBlue.data.favorName);
               if(newDataBlue.data.favorName == null){
                 console.log('if');
-               return;
+                return;
             }
               else if(newDataBlue.data.favorName.length == 0 ){
                 console.log('else if');
@@ -182,8 +187,7 @@
             }
               else {
                 console.log('else', newDataBlue.data);
-                console.log('this ishte array', $scope.favors);
-              $scope.browseFavors.unshift(newDataBlue.data);
+                $scope.browseFavors.unshift(newDataBlue.data);
             }
           });
         } else {

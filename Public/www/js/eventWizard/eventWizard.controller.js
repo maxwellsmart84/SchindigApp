@@ -199,8 +199,11 @@
               };
             });
               EventWizardService
-                .updateWizData(data).then(function(data){
+                .updateWizData(data).success(function(data){
                    $state.go('home');
+              }).error(function(data){
+                console.log('erororororror', data);
+                $scope.go('home');
               });
             }
             else {

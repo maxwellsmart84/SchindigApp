@@ -52,6 +52,7 @@
         // $cordovaToast.show('               Please use accurate information,                                      as this will be a primary means of communcation.','long','bottom')
       };
       $scope.createNewUser = function(username, password, firstName, lastName, email, phone){
+        console.log('bluecat');
         var userData = {
           username: username,
           password: password,

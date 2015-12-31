@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view ng-init="loadOneFavor()">
   <ion-nav-bar class="bar-stable">
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
@@ -10,11 +10,11 @@
           ng-click="data.showDelete = !data.showDelete"></button>
       </div>
    </div>
-   <ion-content ng-init="loadOneFavor()">
+   <ion-content >
      <div class="list" >
        <div class="item item-input-inset">
          <button
-           ng-click="goToFavorBrowse()"
+           ng-click="goToFavorBrowse();"
            class="button button-full button-assertive">
            Add More Favors
          </button>

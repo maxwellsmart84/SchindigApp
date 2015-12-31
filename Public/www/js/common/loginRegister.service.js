@@ -6,7 +6,7 @@
     .module('schindig')
     .factory('LoginRegisterService', function($http, $state, $q, $cordovaDevice, $cordovaToast){
 
-      var ip = 'http://10.0.10.29:8080';
+      var ip = 'http://10.0.10.72:8080';
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
 
@@ -37,6 +37,7 @@
             console.log('success',data);
             $state.go('login');
           }).error(function(data){
+            console.log('error', data);
             // $cordovaToast.show(data.message, 'long', 'bottom')
           });
       };
