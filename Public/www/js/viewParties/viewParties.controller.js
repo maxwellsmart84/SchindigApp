@@ -11,7 +11,8 @@
       ViewPartyService,
       ionicMaterialMotion,
       $ionicPopup,
-      ManagePartyService
+      ManagePartyService,
+      $cordovaToast
 
     ){
 
@@ -63,22 +64,27 @@
       ViewPartyService.postRsvp(userRsvp)
         .success(function(data){
           ManagePartyService.getInvitedPeeps(partyID).then(function(data){
-            console.log('load invited people', data.data);
+            console.log('load invited people', data);
             $scope.inviteList = data.data;
           });
           console.log('success', data);
+          // $cordovaToast.show(data.message, 'short', 'bottom')
+
         });
     };
 
     //INVITED PARTIES GET
-    ViewPartyService.getInvitedParties(userID)
-      .success(function(invData){
-        console.log('parties success', invData);
-        $scope.invitedParties = invData;
-      })
-      .error(function(data){
-        console.log('error', data);
-      });
+    ///////////TURN INTO FUNCTION INIT/////
+    $scope.getAllInvitedParties = function(){
+      ViewPartyService.getInvitedParties(userID)
+        .success(function(invData){
+          console.log('parties success', invData);
+          $scope.invitedParties = invData;
+        })
+        .error(function(data){
+          console.log('error', data);
+        });
+    }
 
       $scope.getOneInvParty = function (party){
         localStorage.setItem('oneInvPartyID', party.partyID);
@@ -86,7 +92,8 @@
 
       $scope.loadOneInvParty = function(){
         var partyIdItem = +localStorage.getItem('oneInvPartyID');
-        ViewPartyService.getOneParty(partyIdItem).then(function(data){
+        var userID = +localStorage.getItem('userID');
+        ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
           console.log('invite data',data.data);
           if(data.data.byob === true){
             console.log('true');
@@ -114,20 +121,23 @@
         });
       };
       //HOSTED PARTIES GET
-      ViewPartyService.getHostedParties(userID)
-        .success(function(hostData){
-          $scope.hostedParties = hostData;
-          console.log(hostData);
-        })
-        .error(function(data){
-          console.log('error', rawUserID);
-        });
+      ///turn into init FUNCTION
+      $scope.getAllHostedParties = function(){
+        ViewPartyService.getHostedParties(userID)
+          .success(function(hostData){
+            $scope.hostedParties = hostData;
+            console.log('host success',hostData);
+          })
+          .error(function(data){
+            console.log('error', rawUserID);
+          });
+      }
       $scope.getOneHostParty = function (party) {
         localStorage.setItem('oneHostPartyID', party.partyID);
       };
       $scope.loadOneHostParty = function(){
         var partyIdItem = +localStorage.getItem('oneHostPartyID');
-        ViewPartyService.getOneParty(partyIdItem).then(function(data){
+        ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
           console.log('hostpartyData', data.data);
           $scope.hostPartyOne = data.data;
         });
@@ -142,7 +152,31 @@
             $scope.onePartyFavor = data.data;
         });
       };
-
+      $scope.showFavorUnclaim = function(favor){
+        var favorClaimPopup = $ionicPopup.confirm ({
+          title: 'Unclaim Party Favor?',
+          template: 'Are you REALLY NOT going to bring this?'
+        });
+        favorClaimPopup.then(function(res){
+          console.log('que?',res);
+          if(res){
+            var data = {
+              userID: rawUserID,
+              listID: favor.listID
+            };
+            console.log('postFavor', data);
+            ViewPartyService.favorClaim(data)
+              .then(function(data){
+                favor.claimed = false;
+                favor.user = null;
+                // $cordovaToast.show(data.data.message, 'short', 'bottom')
+            });
+          }
+          else {
+            return
+            }
+          });
+      }
       $scope.showFavorConfirm = function(favor){
         var favorClaimPopup = $ionicPopup.confirm ({
           title: 'Claim Party Favor?',
@@ -152,9 +186,6 @@
           console.log('que?',res);
           if(res){
             var data = {
-              favor: {
-              favorID: favor.favor.favorID
-              },
               userID: rawUserID,
               listID: favor.listID
             };
@@ -163,6 +194,7 @@
               .then(function(data){
                 favor.claimed = true;
                 favor.user = data.data.user;
+                // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }
           else {

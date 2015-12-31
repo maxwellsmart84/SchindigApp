@@ -15,12 +15,10 @@
       ////GET WIZARD DATA////
       EventWizardService.getWizard().then(function(data){
         $scope.wizardItems = data;
-        console.log($scope.wizardItems);
         $scope.get = function(nameId) {
           var id = parseInt(nameId.nameId);
           for (var i = 0; i < data.data.length; i++) {
             if (i === id) {
-              console.log('wizard data',data.data[i]);
               return data.data[i-1];
             }
           }
@@ -44,10 +42,8 @@
     $scope.newWizPartyPost = function(partyType, local, partyName, partyDate){
       var rawUserID = +localStorage.getItem('userID');
       if(local === undefined){
-        console.log('undefined party ');
         // $cordovaToast.show('All Fields Required', 'short', 'bottom')
       } else {
-        console.log('this should be null',local);
         var item = {
           party: {
             partyDate: partyDate,
@@ -108,7 +104,6 @@
           themeCheck: themeStatus
         }
       };
-      console.log('first check', data);
       EventWizardService.updateWizData(data)
         .success(function(updatedWizData){
           $state.go('stretchgoal');
@@ -131,166 +126,10 @@
            partyID: partyID
          }
        };
-       console.log('party creation',data);
        EventWizardService.updateWizData(data)
         .success(function(updatedWizData){
-         console.log(data);
          $state.go('favors');
        });
      };
     })
-
-    .controller('ContactsController', function(
-      $scope,
-      $http,
-      $state,
-      $stateParams,
-      EventWizardService,
-      $cordovaContacts,
-      $ionicPopup
-    ){
-      var vm = this;
-       //CORDOVA CONTACTS AND INVITATIONS //
-       $scope.getContactList = function() {
-                 $cordovaContacts
-                 .find({})
-                 .then(function(result) {
-                   var stringData = JSON.stringify(result);
-                   var parseData = JSON.parse(stringData);
-                   $scope.contactName = parseData;
-                }, function(error){
-                  console.log('error', error);
-                });
-            };
-        $scope.isChecked = false;
-
-        ////PUSH TO CONTACT ARRAY////
-        vm.contactArray = [];
-        $scope.pushToContactArray = function(){
-           var myElements = document.getElementsByClassName('true');
-            _.each(myElements, function(el,idx,array){
-              var parsed = JSON.parse(el.id);
-              vm.contactArray.push(parsed);
-            });
-        };
-        ///CONTACT DOM STUFF
-        vm.contactDataArray=[];
-        $scope.showConfirm = function() {
-          var confirmPopup = $ionicPopup.confirm({
-            title: 'Send Invitations',
-            template: 'Are you ready to send out Invites and Create your Party?'
-          });
-          confirmPopup.then(function(res){
-            if(res){
-              var partyID = +localStorage.getItem('partyID');
-              var contactData;
-              var data;
-              _.each(vm.contactArray, function(el,idx,array){
-               contactData = {
-                 name: el.name.formatted,
-                 phone: el.phoneNumbers[0].value
-              };
-              vm.contactDataArray.push(contactData);
-              data = {
-                inviteDump: vm.contactDataArray,
-                party: {
-                  partyID: partyID
-                }
-              };
-            });
-              EventWizardService
-                .updateWizData(data).success(function(data){
-                   $state.go('home');
-              }).error(function(data){
-                console.log('erororororror', data);
-                $scope.go('home');
-              });
-            }
-            else {
-              alert("There was an error");
-            }
-          });
-        };
-    })
-
-    .controller('FavorsController', function(
-      $scope,
-      $http,
-      $state,
-      $stateParams,
-      EventWizardService
-    ){
-      var vm = this;
-      ////GET FAVORS////
-      var partyID = +localStorage.getItem('partyID');
-      console.log('party', partyID);
-       EventWizardService
-        .getFavors(partyID).then(function(data){
-            console.log('return', data);
-            $scope.favors = data.data
-        });
-
-
-      /////FAVORS PATCH/////
-      vm.favorArray = [];
-      $scope.favorCheck = false;
-      $scope.pushToFavorArray = function(data){
-       var myElements = document.getElementsByClassName('yes');
-        _.each(myElements, function(el,idx,array){
-          var parsed = JSON.parse(el.id);
-          vm.favorArray.push(parsed);
-        });
-        var partyID = +localStorage.getItem('partyID');
-        var rawUserID = +localStorage.getItem('userID');
-        var data = {
-          userID: rawUserID,
-          partyID: partyID,
-          favorDump: vm.favorArray
-        };
-        EventWizardService.updatePartyFavorList(data).success(function(data){
-          $state.go('invites');
-        });
-      };
-
-      /////ADD FAVOR TO DATA/////
-      $scope.addFavorToData = function(favorDoo){
-        var partyID = +localStorage.getItem('partyID');
-        var userID = +localStorage.getItem('userID');
-        console.log('partyid', partyID);
-        console.log('user', userID);
-        var favorData = {
-          favor: {
-            favorName: favorDoo
-          },
-          partyID: partyID
-        };
-        if (favorData != null || favorData.favor.favorName != "") {
-            var newDataBlue;
-            EventWizardService.addFavorToData(favorData)
-              .then(function(data){
-                newDataBlue = data;
-            }).then(function(){
-              console.log(newDataBlue.data.favorName);
-              if(newDataBlue.data.favorName == null){
-                console.log('if');
-
-               return;
-            }
-              else if(newDataBlue.data.favorName.length == 0 ){
-                console.log('else if');
-
-                return;
-            }
-              else {
-                console.log('else', newDataBlue.data);
-                console.log('this ishte array', $scope.favors);
-              $scope.favors.unshift(newDataBlue.data);
-            }
-          });
-        } else {
-          console.log('doodad');
-          return;
-        }
-      };
-    });
 }());

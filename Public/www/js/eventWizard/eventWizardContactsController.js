@@ -40,7 +40,6 @@
         $scope.showConfirm = function() {
           if(vm.contactArray === []){
             $state.go('home');
-
             return
           } else{
             var confirmPopup = $ionicPopup.confirm({
@@ -75,8 +74,6 @@
               }
             });
           }
-          console.log('whats going on');
-
         };
       })
 }());

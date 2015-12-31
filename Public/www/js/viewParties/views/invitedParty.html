@@ -105,7 +105,8 @@
         <div
           style="background-color:rgb(95, 154, 120)"
           class="item favorClaimed"
-          ng-show="favor.claimed == true">
+          ng-show="favor.claimed == true"
+          ng-click="showFavorUnclaim(favor)">
           <h2><strong>{{favor.favor.favorName}}</strong> Claimed by: {{favor.user.username}}</h2>
         </div>
       </ion-item>
@@ -123,7 +124,7 @@
         <div
           class="item"
           ng-click="">
-          <h3>{{invite.user.username}}</h3>
+          <h2>{{invite.name}}</h2>
           <h2>{{invite.rsvpStatus}}</h2>
         </div>
       </ion-item>

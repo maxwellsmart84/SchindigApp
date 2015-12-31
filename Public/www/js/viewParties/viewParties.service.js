@@ -7,7 +7,6 @@
     var ip = 'http://10.0.10.72:8080';
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
-    var getOneInvitedPartyURL = ip +'/party';
     var rsvpURL = ip + '/party/rsvp'
 
     var postRsvp = function(userRsvp){
@@ -29,10 +28,12 @@
         .success(function(data){
       });
     };
-    var getOneParty = function (partyID){
-      partyID= partyID;
-      return $http.get(ip + '/party/'+partyID)
+    var getOneParty = function (partyID, userID){
+      partyID = partyID;
+      userID = userID;
+      return $http.get(ip + '/party/' + partyID + '/' + userID)
         .success(function(data){
+          console.log('what is this data', data);
       });
     };
     var getPartyFavor = function(partyID){
@@ -45,9 +46,13 @@
         favorData = favorData;
         return $http.post(ip + '/party/claim', favorData)
           .success(function(data){
-            console.log(data);
+            console.log(data.message);
         });
       };
+      // var favorUnclaim = function(favorData){
+      //   favorData = favorData;
+      //   return $http.post(ip + '/party/claim', favorData)
+      // }
 
     return {
       getHostedParties: getHostedParties,

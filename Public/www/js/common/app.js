@@ -14,6 +14,8 @@
     'ionic-material',
     'underscore',
     'ion-google-place',
+    'ion-alpha-scroll'
+
   ])
     .run(function($ionicPlatform, $cordovaDevice, $http, $state) {
       var uuid;

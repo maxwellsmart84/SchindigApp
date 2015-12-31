@@ -8,18 +8,17 @@
         $http,
         $state,
         $stateParams,
-        EventWizardService
+        EventWizardService,
+        $cordovaToast
+
       ){
         var vm = this;
         ////GET FAVORS////
         var partyID = +localStorage.getItem('partyID');
-        console.log('party', partyID);
          EventWizardService
           .getFavors(partyID).then(function(data){
-              console.log('return', data);
               $scope.favors = data.data
           });
-
 
         /////FAVORS PATCH/////
         vm.favorArray = [];
@@ -38,6 +37,7 @@
             favorDump: vm.favorArray
           };
           EventWizardService.updatePartyFavorList(data).success(function(data){
+            // $cordovaToast.show(data.message, 'short', 'bottom')
             $state.go('invites');
           });
         };
@@ -46,8 +46,6 @@
         $scope.addFavorToData = function(favorDoo){
           var partyID = +localStorage.getItem('partyID');
           var userID = +localStorage.getItem('userID');
-          console.log('partyid', partyID);
-          console.log('user', userID);
           var favorData = {
             favor: {
               favorName: favorDoo
@@ -60,25 +58,17 @@
                 .then(function(data){
                   newDataBlue = data;
               }).then(function(){
-                console.log(newDataBlue.data.favorName);
                 if(newDataBlue.data.favorName == null){
-                  console.log('if');
-
                  return;
               }
                 else if(newDataBlue.data.favorName.length == 0 ){
-                  console.log('else if');
-
                   return;
               }
                 else {
-                  console.log('else', newDataBlue.data);
-                  console.log('this ishte array', $scope.favors);
                 $scope.favors.unshift(newDataBlue.data);
               }
             });
           } else {
-            console.log('doodad');
             return;
           }
         };
