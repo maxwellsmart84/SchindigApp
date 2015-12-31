@@ -152,6 +152,8 @@ public class MainController {
                         Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
                                 LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
                                 0, true, true, theme, "Valet");
+                        user.hostCount += 1;
+                        users.save(user);
                         parties.save(P);
                         for (int fa = 1; fa < 10; fa++) {
                             Favor f = favors.findOne(fa);
@@ -165,6 +167,10 @@ public class MainController {
                             ArrayList<Invite> inviteList = invites.findByParty(P);
                             if (inviteList.size() < 10) {
                                 Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "Maybe", invUser.firstName + invUser.lastName);
+                                invUser.invitedCount += 1;
+                                users.save(invUser);
+                                P.host.inviteCount += 1;
+                                users.save(P.host);
                                 invites.save(inv);
                                 u += 3;
                             }
@@ -186,7 +192,7 @@ public class MainController {
             return 0;
         } else {
             User u = auth.findByDevice(device).user;
-            response.sendError(400, "Welcome back " + u.username + "!");
+            response.sendError(200, "Welcome back " + u.username + "!");
             return u.userID;
         }
     }
@@ -218,7 +224,7 @@ public class MainController {
         }
         users.save(user);
         user.password = null;
-        response.sendError(400, "User profile updated!");
+        response.sendError(200, "User profile updated!");
         return user;
     }
 
@@ -241,12 +247,17 @@ public class MainController {
             response.sendError(400, "Please enter a phone number containing only digits.");
         } else if (user.phone.length()!=10) {
             response.sendError(400, "Phone number must be ten digits in length.");
-        } else {
-            u.username = user.username.toLowerCase();
-            u.password = user.password.toLowerCase();
-            u.email = user.email.toLowerCase();
-            users.save(user);
         }
+
+        User newUser = new User();
+        newUser.username = user.username.toLowerCase();
+        newUser.phone = user.phone;
+        newUser.password = user.password.toLowerCase();
+        newUser.email = user.email.toLowerCase();
+        newUser.firstName = user.firstName;
+        newUser.lastName = user.lastName;
+        response.sendError(200, "Account successfully created.");
+        users.save(newUser);
     }
 
     @RequestMapping(path = "/user/delete", method = RequestMethod.POST)
@@ -300,7 +311,7 @@ public class MainController {
     public void logout(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         Auth a = auth.findByDevice(p.device);
         auth.delete(a);
-        response.sendError(400, "You've successfully been logged out.");
+        response.sendError(200, "You've successfully been logged out.");
 
     }
 
@@ -342,7 +353,7 @@ public class MainController {
                 newDump.add(fav);
             }
         }
-        response.sendError(400, "Favors added to " + party.partyName+"!");
+        response.sendError(200, "Favors added to " + party.partyName+"!");
         return newDump;
     }
 
@@ -357,10 +368,10 @@ public class MainController {
             favItem.user = u;
             if (favItem.claimed) {
                 favItem.claimed = false;
-                response.sendError(400, "You're no longer bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
+                response.sendError(200, "You're no longer bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
             } else {
                 favItem.claimed = true;
-                response.sendError(400, "You're now bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
+                response.sendError(200, "You're now bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
             }
             favlists.save(favItem);
         }
@@ -386,25 +397,25 @@ public class MainController {
         ArrayList<Favor> inParty = list.stream()
                 .map(fav -> fav.favor)
                 .collect(Collectors.toCollection(ArrayList::new));
-        check.stream()
+        check = check.stream()
                 .filter(fav -> !inParty.contains(fav))
-                .filter(fav -> fav.partyType.equals("Generic") || fav.partyType.equals(party.partyType))
-                .forEach(inParty::add);
-        return inParty;
+                .filter(f -> f.partyType.equals("Generic") || f.partyType.equals(party.partyType))
+                .sorted(Comparator.comparing(Favor::getUseCount).reversed())
+                .collect(Collectors.toCollection(ArrayList<Favor>::new));
+        return check;
     }
 
     @RequestMapping(path = "/party/invite", method = RequestMethod.POST)
     public void addInvite(@RequestBody Parameters parameters, HttpServletResponse response) throws Exception {
-
         Party party = parties.findOne(parameters.party.partyID);
         User user = users.findOne(parameters.user.userID);
         User host = party.host;
-        host.invitedCount += 1;
+        host.inviteCount += 1;
         Invite invite = new Invite(
                 user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name);
         users.save(host);
         invites.save(invite);
-        response.sendError(400, invite.name + " is now invited to " + invite.party.partyName + "!");
+        response.sendError(200, invite.name + " is now invited to " + invite.party.partyName + "!");
     }
 
     /**NEED TO CONFIRM**/
@@ -417,7 +428,7 @@ public class MainController {
         Invite i = invites.findByPartyAndUser(party, user);
         i.rsvpStatus = p.invites.rsvpStatus;
         users.save(user);
-        response.sendError(400, "Thanks for RSVPing to " + party.partyName);
+        response.sendError(200, "Thanks for RSVPing to " + party.partyName);
     }
 
     @RequestMapping(path = "/party/{id}", method = RequestMethod.GET)
@@ -437,55 +448,60 @@ public class MainController {
     public Party updateParty(@RequestBody Parameters parameters, HttpServletResponse response) throws MessagingException, IOException {
 
         Party check = parties.findOne(parameters.party.partyID);
+        if (parameters!=null) {
 
-        if (parameters.party.description != null) {
-            check.description = parameters.party.description;
-        }
-        if (parameters.party.partyName != null) {
-            check.partyName = parameters.party.partyName;
-        }
-        if (parameters.party.partyDate != null) {
-            check.partyDate = parameters.party.partyDate;
-        }
-        if (parameters.party.partyType != null) {
-            check.partyType = parameters.party.partyType;
-        }
-        if (parameters.party.subType != null) {
-            check.subType = parameters.party.subType;
-        }
-        if (parameters.party.local != null) {
-            check.local = parameters.party.local;
-        }
-        if (parameters.party.stretchGoal != null) {
-            check.stretchGoal = parameters.party.stretchGoal;
-        }
-        if (parameters.party.stretchName != null) {
-            check.stretchName = parameters.party.stretchName;
-        }
-        if (parameters.party.theme != null) {
-            check.theme = parameters.party.theme;
-        }
-        if (parameters.party.byob) {
-            check.byob = true;
-        }
-        if (parameters.party.parking != null) {
-            check.parking = parameters.party.parking;
-        }
-        if (parameters.inviteDump != null) {
-            for (int i = 0; i < parameters.inviteDump.size(); i++) {
-                Invite invite = parameters.inviteDump.get(i);
-                Methods.newInvite(invite, invites, check);
-                Methods.sendInvite(invite, check.host, check);
-                invite.sent = true;
-                check.host.invitedCount += 1;
+            if (parameters.party.description != null) {
+                check.description = parameters.party.description;
             }
+            if (parameters.party.partyName != null) {
+                check.partyName = parameters.party.partyName;
+            }
+            if (parameters.party.partyDate != null) {
+                check.partyDate = parameters.party.partyDate;
+            }
+            if (parameters.party.partyType != null) {
+                check.partyType = parameters.party.partyType;
+            }
+            if (parameters.party.subType != null) {
+                check.subType = parameters.party.subType;
+            }
+            if (parameters.party.local != null) {
+                check.local = parameters.party.local;
+            }
+            if (parameters.party.stretchGoal != null) {
+                check.stretchGoal = parameters.party.stretchGoal;
+            }
+            if (parameters.party.stretchName != null) {
+                check.stretchName = parameters.party.stretchName;
+            }
+            if (parameters.party.theme != null) {
+                check.theme = parameters.party.theme;
+            }
+            if (parameters.party.byob) {
+                check.byob = true;
+            }
+            if (parameters.party.parking != null) {
+                check.parking = parameters.party.parking;
+            }
+            if (parameters.inviteDump != null) {
+                response.sendError(200, "You sent " + parameters.inviteDump.size() + " invites out!");
+                for (int i = 0; i < parameters.inviteDump.size(); i++) {
+                    Invite invite = parameters.inviteDump.get(i);
+                    Methods.newInvite(invite, invites, check);
+//                Methods.sendInvite(invite, check.host, check);
+                    invite.sent = true;
+                    check.host.inviteCount += 1;
+                    users.save(check.host);
+                }
+            }
+            if (parameters.party.wizPosition != null) {
+                check.wizPosition = parameters.party.wizPosition;
+            }
+            parties.save(check);
+            return check;
         }
-        if (parameters.party.wizPosition != null) {
-            check.wizPosition = parameters.party.wizPosition;
-        }
-        parties.save(check);
-        response.sendError(400, "Successfully updated " + check.partyName + "!");
-        return check;
+        response.sendError(200, "No updates added.");
+        return null;
     }
 
     @RequestMapping(path = "/parties/host", method = RequestMethod.POST)
@@ -541,7 +557,7 @@ public class MainController {
         u.hostCount -= 1;
         users.save(u);
         parties.delete(p);
-        response.sendError(400, p.partyName + " has been cancelled.");
+        response.sendError(200, p.partyName + " has been cancelled.");
 
         // } else {
         //     response.sendError(400, "You're not authorized to delete this party.")
@@ -558,7 +574,7 @@ public class MainController {
             fav.useCount -= 1;
             favors.save(fav);
             favlists.delete(f);
-            response.sendError(400, fav.favorName + " has been removed from this party.");
+            response.sendError(200, fav.favorName + " has been removed from this party.");
             return f;
 //        } else {
 //            response.sendError(400, "You're not authorized to remove favors from this party.");
