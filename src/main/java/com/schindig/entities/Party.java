@@ -3,6 +3,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Created by Agronis on 12/9/15.
@@ -49,6 +51,8 @@ public class Party {
     public String theme;
 
     public String parking;
+
+    public String rsvpStatus;
 
     public Party(){}
 
@@ -221,5 +225,13 @@ public class Party {
     public void setParking(String parking) {
 
         this.parking = parking;
+    }
+    public String getRsvpStatus() {
+
+        return rsvpStatus;
+    }
+    public void setRsvpStatus(String rsvpStatus) {
+
+        this.rsvpStatus = rsvpStatus;
     }
 }

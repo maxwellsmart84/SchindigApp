@@ -253,6 +253,7 @@ public class MainController {
             response.sendError(400, "Email is already associated to an account.");
         }
 
+        response.sendError(200, "Account successfully created.");
         User newUser = new User();
         newUser.username = user.username.toLowerCase();
         newUser.phone = user.phone;
@@ -260,7 +261,6 @@ public class MainController {
         newUser.email = user.email.toLowerCase();
         newUser.firstName = user.firstName;
         newUser.lastName = user.lastName;
-        response.sendError(200, "Account successfully created.");
         users.save(newUser);
     }
 
@@ -438,6 +438,7 @@ public class MainController {
         for (Invite inv : list) {
             if (inv.phone.equals(user.phone) || inv.email.equals(user.email)) {
                 i = inv;
+                break;
             }
         }
         i.user = user;
@@ -447,10 +448,18 @@ public class MainController {
         users.save(user);
     }
 
-    @RequestMapping(path = "/party/{id}", method = RequestMethod.GET)
-    public Party getParty(@PathVariable("id") int id) {
-
-        return parties.findOne(id);
+    @RequestMapping(path = "/party/{id}/{userID}", method = RequestMethod.GET)
+    public Party getParty(@PathVariable("id") Integer id, @PathVariable("userID") Integer userID) {
+        Party party = parties.findOne(id);
+        User u = users.findOne(userID);
+        ArrayList<Invite> i = invites.findByParty(party);
+        for (Invite inv : i) {
+            if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
+                party.rsvpStatus = inv.rsvpStatus;
+                break;
+            }
+        }
+        return party;
     }
 
     @RequestMapping(path = "/party/{id}/invites", method = RequestMethod.GET)
@@ -618,7 +627,7 @@ public class MainController {
     }
 
     @RequestMapping(path = "/wizard/{id}", method = RequestMethod.POST)
-    public Party wizardPosition(@RequestBody Party p, @PathVariable("id") int id) {
+    public Party wizardPosition(@RequestBody Party p, @PathVariable("id") Integer id) {
 
         Party party = parties.findOne(p.partyID);
         party.wizPosition = id + 1;
