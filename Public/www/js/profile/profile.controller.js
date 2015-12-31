@@ -30,6 +30,16 @@
             // error
           });
 
+          //LOGOUT USER//
+      $scope.logOut = function (){
+        var deviceData = {
+          device: uuid
+        };
+        console.log("logout data", deviceData);
+        NavigationService.logOutUser(deviceData);
+        $state.go("login");
+      };
+
 
 //TAKE PICTURE AND SET IT TO {{PROFILEPICTURE}}//
       var url = 'http://tiny-tiny.herokuapp.com/collections/ng-shoppingcart4';

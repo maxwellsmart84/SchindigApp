@@ -2,35 +2,36 @@
   <ion-nav-bar>
   </ion-nav-bar>
   <div class="bar bar-header">
-    <div class="viewPartiesHeader">
-      <h1 class= "title-text-wrap">{{invPartyOne.partyName}}</h1>
+    <div class="invitedPartiesHeader">
+      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyName}}</span></h1>
     </div>
   </div>
   <ion-content ng-init="loadOneInvParty();loadOneFavor()">
     <ion-list class="list card">
-
       <div class="row center">
         <div class="col">
           <ion-item class="item-text-wrap">
-            <h2>{{invPartyOne.partyName}}</h2>
           </ion-item>
         </div>
       </div>
       <div class="row center">
         <div class="col">
-          <ion-item class="item-text-wrap">
             <h2>{{invPartyOne.stretchName}}</h2>
-            <progress max= "invPartyOne.stretchGoal"a value="1000"></progress>
-          </ion-item>
+            <progress max= "invPartyOne.stretchGoal"value="invPartyOne.stretchStatus"></progress>
         </div>
       </div>
-      <div class="row center">
-        <div class="col">
-          <ion-item class="item-text-wrap">
-            <p>{{invPartyOne.partyDate | date: 'short'}}</p>
-            <p>{{invPartyOne.local}}</p>
+      <div class="button-bar">
+        <button class="button button-positive">RSVP</button>
+        <button class="button button-positive">{{invPartyOne.byob}}</button>
+        <button class="button button-positive">Parking: {{invPartyOne.parking}}</button>
+      </div>
+          <ion-item class="card">
+            <div class= "invitePartyCard item item-text-wrap item">
+              <p>{{invParty.description}}</p>
+              <h2>{{invParty.partyDate | date: 'short'}}</h2>
+              <h2>{{invParty.local}}</h2>
+            </div>
           </ion-item>
-        </div>
         <div class="col text-right">
          <button class="button button-positive">
            RSVP

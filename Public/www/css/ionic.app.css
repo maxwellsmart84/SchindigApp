@@ -6469,7 +6469,7 @@ button.item.item-button-right {
   overflow: hidden;
   margin: 20px 10px;
   border-radius: 2px;
-  background-color: #fff; }
+  background-color: rgba(0, 0, 0, 0.6); }
 
 .card {
   padding-top: 1px;
@@ -9170,7 +9170,7 @@ img {
 #manage {
   position: relative;
   font-size: 2.2rem;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   left: .5%;
   top: 20%; }
 
@@ -9342,11 +9342,13 @@ img {
       color: white;
       text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
   .viewParties .item-content {
-    background-color: rgba(0, 0, 0, 0.6); }
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-right: 16px;
+    margin-right: 20px; }
   .viewParties .item-text-wrap {
     background-color: rgba(0, 0, 0, 0.6);
     border: solid rgba(247, 190, 243, 0.6) 5px;
-    border-radius: 20px; }
+    border-radius: 10px; }
     .viewParties .item-text-wrap .hostHeadCard {
       font-size: 1.8rem;
       color: white;
@@ -9393,5 +9395,24 @@ img {
     letter-spacing: 2px;
     font-family: "Monoton";
     font-size: 3rem;
+    color: #fffc00;
+    text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
+
+.invitedPartiesHeader {
+  border: solid rgba(247, 190, 243, 0.6) 5px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  width: 100%; }
+  .invitedPartiesHeader h1 {
+    margin: 0;
+    text-align: center;
+    border: none;
+    align-self: center;
+    justify-content: center; }
+  .invitedPartiesHeader .invitedPartiesTextViewHeader {
+    letter-spacing: 2px;
+    font-family: "Monoton";
+    font-size: 2.1rem;
     color: #fffc00;
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }

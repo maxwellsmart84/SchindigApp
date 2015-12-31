@@ -21,6 +21,7 @@
   .card {
     background-color: rgba(#000000, 0.60);
     font-family: "Monoton";
+
     h2 {
       text-align: center;
     }
@@ -42,7 +43,7 @@
     font-family: "Monoton";
     font-size: 2rem;
     background-color: #680E34;
-      color:#ff94d7;
+    color:#ff94d7;
 
   }
   .button-small {
@@ -89,12 +90,16 @@
   }
   .item-content {
     background-color: rgba(#000000, 0.60);
-  }
+    padding-right: 16px;
+    margin-right: 20px;
+
+   }
 
   .item-text-wrap {
     background-color: rgba(#000000, 0.60);
     border: solid rgba(#f7bef3, 0.6) 5px;
-    border-radius: 20px;
+    border-radius: 10px;
+    // align-self: center;
 
     .hostHeadCard {
       font-size: 1.8rem;
@@ -171,4 +176,34 @@
     0 0 10px #ff5ea7,
     0 0 12px #ff5ea7;
   }
+}
+
+.invitedPartiesHeader {
+  border:solid rgba(#f7bef3, 0.6) 5px;
+  border-radius: 20px;
+  background-color: rgba(#000000, 0.60);
+  display: flex;
+  width:100%;
+  h1 {
+    margin: 0;
+    text-align: center;
+    border:none;
+    align-self: center;
+    justify-content: center;
+  }
+
+  .invitedPartiesTextViewHeader {
+    letter-spacing: 2px;
+    font-family: "Monoton";
+    font-size: 2.1rem;
+    color:#fffc00;
+    text-shadow:
+    0 0 1px #fffc00,
+    0 0 3px #ff5ea7,
+    0 0 6px #fffc00,
+    0 0 8px #fafafa,
+    0 0 10px #ff5ea7,
+    0 0 12px #ff5ea7;
+  }
+
 }
