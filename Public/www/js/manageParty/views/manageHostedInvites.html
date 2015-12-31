@@ -8,8 +8,22 @@
    </div>
    <ion-content ng-init="loadInvitedPeople()">
     <ion-list>
+      <ion-item>
+        <div class="row center">
+          <div class="col">Username:</div>
+          <div class="col">RSVP Status:</div>
+
+        </div>
+      </ion-item>
       <ion-item ng-repeat="invite in inviteList">
-        {{invite}}
+        <div class="row center">
+          <div class="col">
+            {{invite.user.username}}
+          </div>
+          <div class="col">
+            {{invite.rsvpStatus}}
+          </div>
+        </div>
       </ion-item>
     </ion-list>
    </ion-content>

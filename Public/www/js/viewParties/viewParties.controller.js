@@ -10,12 +10,24 @@
       $stateParams,
       ViewPartyService,
       ionicMaterialMotion,
-      $ionicPopup
+      $ionicPopup,
+      ManagePartyService
 
     ){
 
       var vm = this;
-
+      $scope.showInviteVar = false;
+      $scope.showFavorVar = true;
+      $scope.showInvite = function(){
+        console.log('invite var', $scope.showInviteVar);
+        $scope.showInviteVar = true;
+        $scope.showFavorVar = false;
+      };
+      $scope.showFavor = function(){
+        console.log('invite var', $scope.showInviteVar);
+        $scope.showInviteVar = false;
+        $scope.showFavorVar = true;
+      };
       $scope.hostedParties = 'hostData';
       $scope.invitedParties='invData';
       $scope.favorData = 'favorData;';
@@ -23,15 +35,49 @@
       var rawUserID = +localStorage.getItem('userID');
       var userID = {
       userID: rawUserID
-    };//THIS IS PROBABLY USED, BLAKE IS STUPID
+    };
+    //THIS IS PROBABLY USED, BLAKE IS STUPID
+    //THIS IS DEFINITELY NOT USED, MAX..
+
+    ///RSVP///
+    $scope.rsvpShowMainBool = true;
+    $scope.rsvpShowBool = false;
+    $scope.rsvpShow = function(){
+      $scope.rsvpShowBool = true;
+      $scope.rsvpShowMainBool = false;
+    }
+    $scope.rsvp = function(rsvpStatus){
+      $scope.rsvpShowMainBool = true;
+      $scope.rsvpShowBool = false;
+      console.log('what rsvp', rsvpStatus);
+      var partyID = +localStorage.getItem('oneInvPartyID');
+      var userID = +localStorage.getItem('userID');
+      var userRsvp = {
+        partyID: partyID,
+        userID: userID,
+        invites: {
+          rsvpStatus: rsvpStatus
+        }
+      };
+      console.log('userrsvp', userRsvp);
+      ViewPartyService.postRsvp(userRsvp)
+        .success(function(data){
+          ManagePartyService.getInvitedPeeps(partyID).then(function(data){
+            console.log('load invited people', data.data);
+            $scope.inviteList = data.data;
+          });
+          console.log('success', data);
+        });
+    };
 
     //INVITED PARTIES GET
     ViewPartyService.getInvitedParties(userID)
       .success(function(invData){
+        console.log('parties success', invData);
         $scope.invitedParties = invData;
       })
       .error(function(data){
-        console.log('error');
+        console.log('error', data);
       });
 
       $scope.getOneInvParty = function (party){
@@ -60,7 +106,13 @@
           $scope.invPartyOne = data.data;
         });
       };
-
+      $scope.loadInvitedPeople = function(){
+        var rawPartyID = +localStorage.getItem('oneInvPartyID');
+        ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
+          console.log('load invited people', data.data);
+          $scope.inviteList = data.data;
+        });
+      };
       //HOSTED PARTIES GET
       ViewPartyService.getHostedParties(userID)
         .success(function(hostData){
@@ -96,7 +148,8 @@
           title: 'Claim Party Favor?',
           template: 'Are you REALLY going to bring this?'
         });
-        favorClaimPopup.then (function(res){
+        favorClaimPopup.then(function(res){
+          console.log('que?',res);
           if(res){
             var data = {
               favor: {
@@ -106,30 +159,16 @@
               listID: favor.listID
             };
             console.log('postFavor', data);
-            ViewPartyService.favorClaim(data).then(function(data){
-              console.log(data);
-              favor.claimed = true;
+            ViewPartyService.favorClaim(data)
+              .then(function(data){
+                favor.claimed = true;
+                favor.user = data.data.user;
             });
           }
           else {
-            alert("Alrighty Then...");
+            return
             }
           });
         };
-
-      // $scope.postOneFavorID = function(favor){
-      //   var rawPartyID = +localStorage.getItem('oneInvPartyID');
-      //   console.log(favor);
-      //   var data = {
-      //     favor: {
-      //     favorID: favor.favorID
-      //     },
-      //     userID: rawUserID
-      //   };
-      //   console.log('postFavor', data);
-      //   ViewPartyService.favorClaim(rawPartyID, data).then(function(data){
-      //     console.log('return from claim', data);
-      //   });
-      // };
     });
 }());

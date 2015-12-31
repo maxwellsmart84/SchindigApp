@@ -28,6 +28,11 @@
           templateUrl: 'js/manageParty/views/manageHostedFavors.html',
           controller: 'ManagePartyController'
         })
+        .state('manageFavorBrowse', {
+          url: '/manageParty/manageFavor/Browse',
+          templateUrl: 'js/manageParty/views/manageBrowseFavor.html',
+          controller: 'ManagePartyController'
+        })
         .state('manageInvites', {
           url: '/manageParty/manageInvites',
           templateUrl: 'js/manageParty/views/manageHostedInvites.html',

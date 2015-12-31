@@ -1,5 +1,4 @@
 package com.schindig.controllers;
-import com.schindig.PasswordHash;
 import com.schindig.entities.*;
 import com.schindig.services.*;
 import com.schindig.utils.Methods;
@@ -16,14 +15,12 @@ import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -110,17 +107,8 @@ public class MainController {
             for (String line : lines) {
                 Favor fav = new Favor();
                 String[] columns = line.split(",");
-                String favor = columns[0];
-                try {
-                    String partyType = columns[1];
-                    if (partyType!=null) {
-                        fav.partyType = partyType;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    e.getMessage();
-                }
-                fav.favorName = favor;
+                fav.favorName = columns[0];
+                fav.partyType = columns[1];
                 favors.save(fav);
             }
         }
@@ -128,6 +116,10 @@ public class MainController {
 
         ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
         if (userBuild.size() < 10) {
+
+            User admin = new User("admin", "pass", "schindig.app@gmail.com", "1234567890", "The", "Admin");
+            users.save(admin);
+
             String fileContent = Methods.readFile("users.csv");
 
             String[] lines = fileContent.split("\n");
@@ -190,9 +182,11 @@ public class MainController {
 
         Auth a = auth.findByDevice(device);
         if (a == null) {
+            response.sendError(400, "You must log in to continue.");
             return 0;
         } else {
             User u = auth.findByDevice(device).user;
+            response.sendError(400, "Welcome back " + u.username + "!");
             return u.userID;
         }
     }
@@ -201,17 +195,17 @@ public class MainController {
      * ALL USER RELATED ROUTES
      **/
     @RequestMapping(path = "/user/update", method = RequestMethod.POST)
-    public User updateUser(@RequestBody User u) {
+    public User updateUser(@RequestBody User u, HttpServletResponse response) throws IOException {
 
         User user = users.findOne(u.userID);
         if (u.username != null) {
-            user.username = u.username;
+            user.username = u.username.toLowerCase();
         }
         if (u.password != null) {
-            user.password = u.password;
+            user.password = u.password.toLowerCase();
         }
         if (u.email != null) {
-            user.email = u.email;
+            user.email = u.email.toLowerCase();
         }
         if (u.phone != null) {
             user.phone = u.phone;
@@ -222,34 +216,46 @@ public class MainController {
         if (u.lastName != null) {
             user.lastName = u.lastName;
         }
-        if (u.hostCount != null) {
-            user.hostCount = u.hostCount;
-        }
-        if (u.inviteCount != null) {
-            user.inviteCount = u.inviteCount;
-        }
-        if (u.invitedCount != null) {
-            user.invitedCount = u.invitedCount;
-        }
-        if (u.partyCount != null) {
-            user.partyCount = u.partyCount;
-        }
         users.save(user);
         user.password = null;
+        response.sendError(400, "User profile updated!");
         return user;
     }
 
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
-        User u = users.findOneByUsername(user.username);
-        if (u == null) {
+        User u = users.findOneByUsername(user.username.toLowerCase());
+        if (u!=null) {
+            response.sendError(400, "Username already exists.");
+        } else if (user.username.length()<5) {
+            response.sendError(400, "Username must be at least five characters.");
+        } else if (user.password.length()<=5) {
+            response.sendError(400, "Password must be greater then five characters.");
+        } else if (!Methods.charCheck(user.password)) {
+            response.sendError(400, "Password may only contain letters or numbers.");
+        } else if (!Methods.charCheck(user.username)) {
+            response.sendError(400, "Username may only contain letters or numbers.");
+        } else if (!Methods.isValidEmailAddress(user.email)) {
+            response.sendError(400, "Please enter a valid email address.");
+        } else if (!Methods.phoneCheck(user.phone)) {
+            response.sendError(400, "Please enter a phone number containing only digits.");
+        } else if (user.phone.length()!=10) {
+            response.sendError(400, "Phone number must be ten digits in length.");
+        } else {
+            u.username = user.username.toLowerCase();
+            u.password = user.password.toLowerCase();
+            u.email = user.email.toLowerCase();
             users.save(user);
         }
     }
 
     @RequestMapping(path = "/user/delete", method = RequestMethod.POST)
-    public void deleteUser(@RequestBody User user) {
-        users.delete(user);
+    public void deleteUser(@RequestBody User user, HttpServletResponse response) throws IOException {
+        if (user.username.equals("admin")) {
+            users.delete(user);
+        } else {
+            response.sendError(400, "Not authorized");
+        }
     }
 
     @RequestMapping(path = "/user/all", method = RequestMethod.GET)
@@ -273,29 +279,29 @@ public class MainController {
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
-        User user = users.findOneByUsername(p.user.username);
-        try {
-            if (users.findOneByUsername(p.user.username) == null) {
-                response.sendError(401);
-            }
-            if (!user.password.equals(p.user.password)) {
-                response.sendError(403);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        User user = users.findOneByUsername(p.user.username.toLowerCase());
+        if (user==null) {
+            response.sendError(401, "Username not found.");
+        } else if (!user.password.equals(p.user.password.toLowerCase())) {
+            response.sendError(403, "Credentials do not match our records.");
+        } else {
+            return user.userID;
         }
+
 //        Auth a = auth.findByDevice(p.device);
 //        if (a==null) {
 //            Methods.newDevice(user, p.device, auth);
 //            return user.userID;
 //        }
-        return user.userID;
+        return null;
     }
 
     @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
-    public void logout(@RequestBody Parameters p) {
+    public void logout(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         Auth a = auth.findByDevice(p.device);
         auth.delete(a);
+        response.sendError(400, "You've successfully been logged out.");
+
     }
 
     /**
@@ -314,17 +320,29 @@ public class MainController {
     }
 
     @RequestMapping(path = "/party/favor", method = RequestMethod.POST)
-    public ArrayList<Favor> addPartyFavor(@RequestBody Parameters parameters) {
+    public ArrayList<Favor> addPartyFavor(@RequestBody Parameters parameters, HttpServletResponse response) throws IOException {
         ArrayList<Favor> newDump = new ArrayList<>();
+        Party party = parties.findOne(parameters.partyID);
         for (int i = 0; i < parameters.favorDump.size(); i++) {
-            Favor fav = favors.findOne(parameters.favorDump.get(i).favorID);
-            Party party = parties.findOne(parameters.partyID);
-            fav.useCount += 1;
-            FavorList favorList = new FavorList(fav, party, false);
-            favlists.save(favorList);
-            favors.save(fav);
-            newDump.add(fav);
+            if (parameters.favorDump.get(i).favorID!=null) {
+                Favor fav = favors.findOne(parameters.favorDump.get(i).favorID);
+                fav.useCount += 1;
+                FavorList favorList = new FavorList(fav, party, false);
+                favlists.save(favorList);
+                favors.save(fav);
+                newDump.add(fav);
+            } else {
+                Favor fav = new Favor();
+                fav.useCount += 1;
+                fav.favorName = parameters.favorDump.get(i).favorName;
+                fav.partyType = party.partyType;
+                FavorList favorList = new FavorList(fav, party, false);
+                favlists.save(favorList);
+                favors.save(fav);
+                newDump.add(fav);
+            }
         }
+        response.sendError(400, "Favors added to " + party.partyName+"!");
         return newDump;
     }
 
@@ -339,8 +357,10 @@ public class MainController {
             favItem.user = u;
             if (favItem.claimed) {
                 favItem.claimed = false;
+                response.sendError(400, "You're no longer bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
             } else {
                 favItem.claimed = true;
+                response.sendError(400, "You're now bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
             }
             favlists.save(favItem);
         }
@@ -356,51 +376,48 @@ public class MainController {
             return null;
         }
         return newList;
+    }
 
+    @RequestMapping(path = "/party/{id}/filter", method = RequestMethod.GET)
+    public ArrayList<Favor> getUnusedFavors(@PathVariable("id") Integer id) {
+        Party party = parties.findOne(id);
+        ArrayList<FavorList> list = favlists.findAllByParty(party);
+        ArrayList<Favor> check = (ArrayList<Favor>) favors.findAll();
+        ArrayList<Favor> inParty = list.stream()
+                .map(fav -> fav.favor)
+                .collect(Collectors.toCollection(ArrayList::new));
+        check.stream()
+                .filter(fav -> !inParty.contains(fav))
+                .filter(fav -> fav.partyType.equals("Generic") || fav.partyType.equals(party.partyType))
+                .forEach(inParty::add);
+        return inParty;
     }
 
     @RequestMapping(path = "/party/invite", method = RequestMethod.POST)
-    public void addInvite(@RequestBody Parameters parameters) throws Exception {
+    public void addInvite(@RequestBody Parameters parameters, HttpServletResponse response) throws Exception {
 
         Party party = parties.findOne(parameters.party.partyID);
         User user = users.findOne(parameters.user.userID);
         User host = party.host;
         host.invitedCount += 1;
         Invite invite = new Invite(
-                user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name
-        );
+                user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name);
         users.save(host);
         invites.save(invite);
+        response.sendError(400, invite.name + " is now invited to " + invite.party.partyName + "!");
     }
 
+    /**NEED TO CONFIRM**/
     @RequestMapping(path = "/party/{id}/rsvp", method = RequestMethod.POST)
-    public void rsvp(@RequestBody Parameters parameters, @PathVariable("id") Integer id) {
+    public void rsvp(@RequestBody Parameters p, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
 
-        Party p = parties.findOne(parameters.partyID);
-        User user = parameters.user;
+        Party party = parties.findOne(p.partyID);
+        User user = p.user;
         user.invitedCount += 1;
-        switch (parameters.rsvpStatus) {
-            case "Yes": {
-                user.partyCount += 1;
-                Invite i = invites.findByPartyAndUser(p, user);
-                i.rsvpStatus = "Yes";
-                invites.save(i);
-                break;
-            }
-            case "Maybe": {
-                Invite i = invites.findByPartyAndUser(p, user);
-                i.rsvpStatus = "Maybe";
-                invites.save(i);
-                break;
-            }
-            case "No": {
-                Invite i = invites.findByPartyAndUser(p, user);
-                i.rsvpStatus = "Yes";
-                invites.save(i);
-                break;
-            }
-        }
+        Invite i = invites.findByPartyAndUser(party, user);
+        i.rsvpStatus = p.invites.rsvpStatus;
         users.save(user);
+        response.sendError(400, "Thanks for RSVPing to " + party.partyName);
     }
 
     @RequestMapping(path = "/party/{id}", method = RequestMethod.GET)
@@ -417,7 +434,7 @@ public class MainController {
     }
 
     @RequestMapping(path = "/party/update", method = RequestMethod.PATCH)
-    public Party updateParty(@RequestBody Parameters parameters) throws MessagingException {
+    public Party updateParty(@RequestBody Parameters parameters, HttpServletResponse response) throws MessagingException, IOException {
 
         Party check = parties.findOne(parameters.party.partyID);
 
@@ -467,6 +484,7 @@ public class MainController {
             check.wizPosition = parameters.party.wizPosition;
         }
         parties.save(check);
+        response.sendError(400, "Successfully updated " + check.partyName + "!");
         return check;
     }
 
@@ -497,11 +515,14 @@ public class MainController {
         return partyList;
     }
 
+    /**NEED VALIDATOR**/
     @RequestMapping(path = "/party/delete", method = RequestMethod.POST)
     public void deleteParty(@RequestBody Party party, HttpServletResponse response) throws IOException {
 
-        //User u = users.findOne(parameters.userID);
         Party p = parties.findOne(party.partyID);
+        User u = p.host;
+        // if (u.userID==p.userID) {
+        //
         ArrayList<FavorList> f = favlists.findAllByParty(p);
         ArrayList<Invite> i = invites.findByParty(party);
 
@@ -517,19 +538,33 @@ public class MainController {
             }
         }
 
-        //u.hostCount -= 1;
-        //users.save(u);
-            parties.delete(p);
+        u.hostCount -= 1;
+        users.save(u);
+        parties.delete(p);
+        response.sendError(400, p.partyName + " has been cancelled.");
+
+        // } else {
+        //     response.sendError(400, "You're not authorized to delete this party.")
+        // }
     }
 
+    /**NEED VALIDATION**/
     @RequestMapping(path = "/party/favor/delete", method = RequestMethod.POST)
     public FavorList deletePartyFavor(@RequestBody Parameters parameters, HttpServletResponse response) throws IOException {
         FavorList f = favlists.findOne(parameters.listID);
-        Favor fav = f.favor;
-        fav.useCount -= 1;
-        favors.save(fav);
-        favlists.delete(f);
-        return f;
+//        User u = f.party.host;
+//        if (f.party.host.userID == parameters.userID) {
+            Favor fav = f.favor;
+            fav.useCount -= 1;
+            favors.save(fav);
+            favlists.delete(f);
+            response.sendError(400, fav.favorName + " has been removed from this party.");
+            return f;
+//        } else {
+//            response.sendError(400, "You're not authorized to remove favors from this party.");
+//        }
+
+
     }
 
     /**
@@ -538,8 +573,11 @@ public class MainController {
 
     @RequestMapping(path = "/wizard", method = RequestMethod.GET)
     public ArrayList<Wizard> getPartyList() {
-
-        return (ArrayList<Wizard>) wizard.findAll();
+        ArrayList<Wizard> wiz = (ArrayList<Wizard>) wizard.findAll();
+        wiz = wiz.stream()
+                .sorted(Comparator.comparing(Wizard::getPartyType))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return wiz;
     }
 
     @RequestMapping(path = "/wizard/{id}", method = RequestMethod.POST)
@@ -561,37 +599,36 @@ public class MainController {
      * ALL FAVOR SPECIFIC ROUTES
      **/
 
-    @RequestMapping(path = "/favor", method = RequestMethod.GET)
-    public ArrayList<Favor> getFavorList(@RequestBody Parameters p) {
-        Party party = parties.findOne(p.partyID);
-        ArrayList<Favor> list = favors.findAllByPartyType(party.partyType);
-        ArrayList<Favor> filter = (ArrayList<Favor>) favors.findAll();
-        list.addAll(filter.stream()
-                .filter(fav -> fav.partyType == party.partyType)
-                .sorted(Comparator.comparing(Favor::getUseCount))
-                .collect(Collectors.toList()));
-        return list;
+    @RequestMapping(path = "/favor/{id}", method = RequestMethod.GET)
+    public ArrayList<Favor> getFavorList(@PathVariable("id") Integer id) {
+        Party party = parties.findOne(id);
+        ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
+        all = all.stream()
+                .filter(f -> f.partyType.equals("Generic") || f.partyType.equals(party.partyType))
+                .sorted(Comparator.comparing(Favor::getUseCount).reversed())
+                .collect(Collectors.toCollection(ArrayList<Favor>::new));
+        return all;
     }
 
     @RequestMapping(path = "/favor/save", method = RequestMethod.POST)
-    public Favor addFavorItem(@RequestBody Parameters p) {
+    public Favor addFavorItem(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         Favor fav = new Favor();
         Party party = parties.findOne(p.partyID);
         if (p.favor.favorName==null || p.favor.favorName.isEmpty()){
+            response.sendError(400, "Please give this party favor a name.");
             return null;
         } else {
             fav.favorName = p.favor.favorName;
             fav.partyType = party.partyType;
-//            fav.subType = party.subType;
             fav.useCount += 1;
             favors.save(fav);
             return fav;
         }
     }
 
+    /**VALIDATION!?**/
     @RequestMapping(path = "/favor/remove", method = RequestMethod.POST)
     public ArrayList<Favor> deleteFavorItem(@RequestBody Favor item) {
-
         favors.delete(item);
         return (ArrayList<Favor>) favors.findAll();
     }

@@ -8,7 +8,8 @@
       $state,
       $stateParams,
       $ionicPlatform,
-      EventWizardService
+      EventWizardService,
+      $cordovaToast
     ){
       var vm = this;
       ////GET WIZARD DATA////
@@ -42,22 +43,29 @@
     // };
     $scope.newWizPartyPost = function(partyType, local, partyName, partyDate){
       var rawUserID = +localStorage.getItem('userID');
-      var item = {
-        party: {
-          partyDate: partyDate,
-          local: local.formatted_address,
-          partyType: partyType,
-          partyName: partyName
-        },
-        userID: rawUserID
+      if(local === undefined){
+        console.log('undefined party ');
+        // $cordovaToast.show('All Fields Required', 'short', 'bottom')
+      } else {
+        console.log('this should be null',local);
+        var item = {
+          party: {
+            partyDate: partyDate,
+            local: local.formatted_address,
+            partyType: partyType,
+            partyName: partyName
+          },
+          userID: rawUserID
+        };
+        item.party.partyDate = JSON.stringify(item.party.partyDate);
+        item.party.partyDate = JSON.parse(item.party.partyDate);
+        EventWizardService.newWizPartyPost(item)
+          .success(function(data){
+            localStorage.setItem('partyID', data.partyID);
+            // $cordovaToast.show('Party Created.'+' Finish the details here, or edit your party in Manage Parties', 'short', 'bottom')
+            $state.go('details');
+        });
       };
-      item.party.partyDate = JSON.stringify(item.party.partyDate);
-      item.party.partyDate = JSON.parse(item.party.partyDate);
-      console.log('party post', item);
-      EventWizardService.newWizPartyPost(item).success(function(data){
-        localStorage.setItem('partyID', data.partyID);
-        $state.go('details');
-      });
     };
     })
 
@@ -104,6 +112,8 @@
       EventWizardService.updateWizData(data)
         .success(function(updatedWizData){
           $state.go('stretchgoal');
+      }).error(function(data){
+        console.log('details error', data);
       });
     };
 
@@ -188,8 +198,12 @@
                 }
               };
             });
-              EventWizardService.updateWizData(data).then(function(data){
-                $state.go('home');
+              EventWizardService
+                .updateWizData(data).success(function(data){
+                   $state.go('home');
+              }).error(function(data){
+                console.log('erororororror', data);
+                $scope.go('home');
               });
             }
             else {
@@ -198,8 +212,6 @@
           });
         };
     })
-
-        
 
     .controller('FavorsController', function(
       $scope,
@@ -211,11 +223,13 @@
       var vm = this;
       ////GET FAVORS////
       var partyID = +localStorage.getItem('partyID');
+      console.log('party', partyID);
        EventWizardService
         .getFavors(partyID).then(function(data){
-           $scope.favors = data.data;
-           console.log($scope.favors);
-       });
+            console.log('return', data);
+            $scope.favors = data.data
+        });
+
 
       /////FAVORS PATCH/////
       vm.favorArray = [];
@@ -242,6 +256,8 @@
       $scope.addFavorToData = function(favorDoo){
         var partyID = +localStorage.getItem('partyID');
         var userID = +localStorage.getItem('userID');
+        console.log('partyid', partyID);
+        console.log('user', userID);
         var favorData = {
           favor: {
             favorName: favorDoo
@@ -256,12 +272,18 @@
             }).then(function(){
               console.log(newDataBlue.data.favorName);
               if(newDataBlue.data.favorName == null){
+                console.log('if');
+
                return;
             }
               else if(newDataBlue.data.favorName.length == 0 ){
+                console.log('else if');
+
                 return;
             }
               else {
+                console.log('else', newDataBlue.data);
+                console.log('this ishte array', $scope.favors);
               $scope.favors.unshift(newDataBlue.data);
             }
           });
