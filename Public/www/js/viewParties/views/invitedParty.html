@@ -1,12 +1,12 @@
-<ion-view class="invitedParty" ng-init="loadOneInvParty()">
-  <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
+<ion-view class="viewParties">
+  <ion-nav-bar>
   </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
-    <h1 class= "title">{{invPartyOne.partyName}}</h1>
+  <div class="bar bar-header">
+    <div class="viewPartiesHeader">
+      <h1 class= "title-text-wrap">{{invPartyOne.partyName}}</h1>
+    </div>
   </div>
-  <ion-content ng-init="loadOneFavor()">
+  <ion-content ng-init="loadOneInvParty();loadOneFavor()">
     <ion-list class="list card">
       <div class="row center">
         <div class="col">
@@ -18,11 +18,8 @@
       <div class="row center">
         <div class="col">
           <ion-item class="item-text-wrap">
-            <strong>Party Stretch Goal: </strong>
-            <br>
-            {{invPartyOne.stretchName}}
-            <br>
-            <progress></progress>
+            <h2>{{invPartyOne.stretchName}}</h2>
+            <progress max= "invPartyOne.stretchGoal"a value="1000"></progress>
           </ion-item>
         </div>
       </div>

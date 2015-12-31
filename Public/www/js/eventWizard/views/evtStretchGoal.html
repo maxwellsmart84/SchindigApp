@@ -3,31 +3,38 @@
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
   </ion-nav-bar>
-  <div class="wizardHeader bar bar-header bar-royal">
-    <h1 class= "title">STRETCHGOAL</h1>
+  <div class="bar bar-header">
+    <div class="wizardHeader">
+      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">STRETCH GOAL</span></h1>
+    </div>
   </div>
   <ion-padding>
     <ion-content>
-      <label class='item item-input item-floating-label'>
+      <label class= 'wizStretchExpl item-text-wrap'>
         <span>
-          <br>A STRETCHGOAL THAT TURNS THIS PARTY INTO THE PARTY!
-          <br> SET A DREAM-GOAL THAT WOULD PUSH THIS PARTY OVER THE EDGE,
-          <br>AND ASK YOUR FRIENDS TO CONTRIBUTE!
+          <br>A STRETCHGOAL TURNS THIS PARTY INTO ONE TO REMEMBER!
+          <br>
+          <br>SET A DREAM-GOAL THAT WILL PUSH THIS PARTY OVER THE EDGE!
+          <br>
+          <br>ASK YOUR FRIENDS TO CONTRIBUTE AND EVERYONE WILL SEE THE PROGRESS!
+          <br>
+          <br>
         </span>
+          "MY AWESOME GOAL"
+          <progress max="200" value="80"></progress>
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">WHAT WOULD MAKE THIS PARTY AWESOME?</span>
-        <input placeholder="Dream Fund ex. Ice Louge, Band.." ng-model= "stretchName" type="text">
+        <input placeholder="Ice Luge, Band, another keg..." ng-model= "stretchName" type="text">
       </label>
       <label class="item item-input item-floating-label">
-        <span class= "input-label">HOW MUCH IS THIS GOING TO COST?</span>
-        <input placeholder="How Much is This Going to Cost" ng-model="stretchGoal" type="number">
-        {{stretchGoal | currency}}
+        <span class= "input-label">COST?</span>
+        <input placeholder="How Much MONEY?" ng-model="stretchGoal" type="number">{{stretchGoal | currency}}
       </label>
       <button
         ng-click="stretchGoalData(stretchGoal, stretchName)"
-        class="button button-full button-positive">
-       Submit StretchGOOOOOAAAALLLL!!!
+        class="button button-full button-assertive">
+       Submit
       </button>
     </ion-content>
   </ion-padding>
