@@ -4,14 +4,15 @@
   .module('viewParties')
   .factory('ViewPartyService', function($http, $state){
     var vm = this;
-    var ip = 'http://10.0.10.72:8080';
+
+    var ip = 'http://localhost:8080';
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
     var getOneInvitedPartyURL = ip +'/party';
-    var rsvpURL = ip + '/party/rsvp'
+    var rsvpURL = ip + '/party/rsvp';
 
     var postRsvp = function(userRsvp){
-      return $http.post(rsvpURL, userRsvp)
+      return $http.post(rsvpURL, userRsvp);
     };
     var getHostedParties = function(userID){
       return $http.post(viewHostedPartiesURL, userID)
