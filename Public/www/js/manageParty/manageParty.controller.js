@@ -137,7 +137,6 @@
             console.log('data', data);
         });
       };
-
       vm.favorArray = [];
       $scope.favorCheck = false;
       $scope.pushToFavorArray = function(data){
@@ -154,7 +153,7 @@
           favorDump: vm.favorArray
         };
         EventWizardService.updatePartyFavorList(data).success(function(data){
-          $state.go('invites');
+          $state.go('manageFavor');
         });
       };
       $scope.addFavorToData = function(favorDoo){
@@ -175,18 +174,16 @@
               console.log(newDataBlue.data.favorName);
               if(newDataBlue.data.favorName == null){
                 console.log('if');
-
                return;
             }
               else if(newDataBlue.data.favorName.length == 0 ){
                 console.log('else if');
-
                 return;
             }
               else {
                 console.log('else', newDataBlue.data);
                 console.log('this ishte array', $scope.favors);
-              $scope.favors.unshift(newDataBlue.data);
+              $scope.browseFavors.unshift(newDataBlue.data);
             }
           });
         } else {
@@ -194,6 +191,5 @@
           return;
         }
       };
-
     });
 }());

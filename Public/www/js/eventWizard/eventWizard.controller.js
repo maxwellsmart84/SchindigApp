@@ -44,6 +44,7 @@
     $scope.newWizPartyPost = function(partyType, local, partyName, partyDate){
       var rawUserID = +localStorage.getItem('userID');
       if(local === undefined){
+        console.log('undefined party ');
         // $cordovaToast.show('All Fields Required', 'short', 'bottom')
       } else {
         console.log('this should be null',local);
@@ -111,6 +112,8 @@
       EventWizardService.updateWizData(data)
         .success(function(updatedWizData){
           $state.go('stretchgoal');
+      }).error(function(data){
+        console.log('details error', data);
       });
     };
 

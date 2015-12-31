@@ -49,7 +49,7 @@
 
       //DELETE TO TOP COMMENT
       $scope.createNewUserToast = function(){
-        $cordovaToast.show('               Please use accurate information,                                      as this will be a primary means of communcation.','long','bottom')
+        // $cordovaToast.show('               Please use accurate information,                                      as this will be a primary means of communcation.','long','bottom')
       };
       $scope.createNewUser = function(username, password, firstName, lastName, email, phone){
         var userData = {
