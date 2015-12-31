@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view ng-init="loadOneFavor()">
   <ion-nav-bar class="bar-stable">
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
@@ -10,39 +10,27 @@
           ng-click="data.showDelete = !data.showDelete"></button>
       </div>
    </div>
-   <ion-content ng-init="loadOneFavor()">
+   <ion-content >
      <div class="list" >
        <div class="item item-input-inset">
-         <label class="item-input-wrapper">
-           <input
-             ng-model="newFavor"
-             type="text"
-             placeholder="Add Your Own">
-         </label>
          <button
-           ng-click="addFavorToData(newFavor)"
-           class="button button-small">
-           Submit new Favor
+           ng-click="goToFavorBrowse();"
+           class="button button-full button-assertive">
+           Add More Favors
          </button>
        </div>
      </div>
-    <ion-list show-delete="data.showDelete">
-      <ion-checkbox
-        ng-repeat="item in onePartyFavor"
-        ng-click="favorHostCheck = !favorHostCheck">
-        <ion-item
-          ng-model="favorHostCheck"
-          id="{{item}}"
-          ng-class="favorHostCheck ? 'yes' : 'no'">
-          {{item.favor.favorName}}
-          <ion-item>
-            <ion-delete-button
-                class="ion-minus-circled"
-                ng-click="onItemDelete(item)">
-            </ion-delete-button>
-          </ion-item>
-        </ion-item>
-      </ion-checkbox>
+    <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
+      <ion-item>
+        {{item.favor.favorName}}
+        <ion-delete-button
+            class="ion-minus-circled"
+            ng-click="onItemDelete(item)">
+        </ion-delete-button>
+        <div ng-show='{{item.claimed}}' class="item">
+          Claimed by: {{item.user.username}}
+        </div>
+      </ion-item>
     </ion-list>
    </ion-content>
  </ion-view>

@@ -7,20 +7,23 @@
        <h1 class= "title">Let's Manage Parties</h1>
     </div>
    <ion-content ng-init="loadHostedParties()">
-     <div class="item item-divider">
-       <h1>Parties You Are Hosting</h1>
-     </div>
-     <ion-item
-       ui-sref="manageParty({partyID:party.partyID})"
-       ng-repeat="party in hostedParties"
-       class="card"
-       ng-model="party"
-       ng-click="viewOne(party)">
-      <div class="item item-text-wrap item-icon-right">
-        <h3>{{party.partyName}}</h3>
-        <p>{{party.partyDate | date: 'short'}}</p>
-        <i class="icon ion-chevron-right"></i>
-      </div>
-    </ion-item>
+     <ion-list
+          can-swipe="listCanSwipe">
+      <h3>Parties You Are Hosting</h3>
+      <ion-item
+        ng-repeat="party in hostedParties"
+        class="card"
+        ng-model="party"
+        ng-click="viewOne(party)">
+       <div ui-sref="manageParty({partyID:party.partyID})" class="item item-text-wrap item-icon-right">
+         <h3>{{party.partyName}}</h3>
+         <p>{{party.partyDate | date: 'short'}}</p>
+         <i class="icon ion-chevron-right"></i>
+       </div>
+       <ion-option-button ng-click="onPartyDelete(party)" class="button-assertive">
+         Delete
+       </ion-option-button>
+     </ion-item>
+   </ion-list>
    </ion-content>
  </ion-view>

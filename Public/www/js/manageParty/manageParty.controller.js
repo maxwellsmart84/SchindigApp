@@ -12,6 +12,7 @@
       EventWizardService
     ){
       var vm = this;
+      $scope.listCanSwipe = true;
       var rawUserID = +localStorage.getItem('userID')
       var userID = {
         userID: rawUserID
@@ -36,12 +37,6 @@
         ManagePartyService.deleteParty(partyDeleteData)
           .then(function(data){
             $scope.hostedParties = $scope.hostedParties;
-            console.log('data', data);
-            console.log('what is this', $scope.hostedParties);
-        }).then(function(data){
-          console.log('new page', $scope.hostedParties);
-          $state.go('manageLanding')
-
         });
       };
 
@@ -53,6 +48,7 @@
         ManagePartyService.deleteFavorFromParty(listDelete)
           .then(function(data){
             console.log('deleted',data);
+            $scope.loadOneFavorBrowse();
           })
         };
       $scope.data = {
@@ -62,6 +58,7 @@
       ////MANAGE/EDIT HOSTED PARTIES////
       $scope.viewOne = function(party){
         localStorage.setItem('OnePartyID', party.partyID);
+        localStorage.setItem('partyID', party.partyID);
       };
       $scope.loadOne = function(){
         var rawPartyID = +localStorage.getItem('OnePartyID');
@@ -80,7 +77,7 @@
       $scope.loadInvitedPeople = function(){
         var rawPartyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
-          console.log('controller invites', data.data);
+          console.log('load invited people', data.data);
           $scope.inviteList = data.data;
         });
       };
@@ -105,9 +102,12 @@
         $scope.local = locationValue;
         console.log('scoped location',$scope.local);
       };
+      $scope.getByob = function(doggy){
+        console.log('doggy value', doggy);
+      };
       $scope.editData = function(partyName, description, local, themeValue, doggy, parking, partyDate){
         var partyID = +localStorage.getItem('OnePartyID');
-        console.log('what is this', local);
+        console.log('what is this', doggy);
         var data = {
           party: {
             partyDate: partyDate,
@@ -120,13 +120,80 @@
             partyID: partyID
           }
         };
-        console.log(data.party.byob);
-        EventWizardService.updateWizData(data).success(function(updatedWizData){
-          console.log('new party', updatedWizData);
-          $scope.oneParty = updatedWizData;
-          // $state.go('home');
+        EventWizardService.updateWizData(data)
+          .success(function(updatedWizData){
+            console.log('new party', updatedWizData);
+            $scope.oneParty = updatedWizData;
+            // $state.go('home');
         });
       };
-
+      $scope.goToFavorBrowse = function(){
+        $state.go('manageFavorBrowse');
+      };
+      $scope.loadOneFavorBrowse = function(){
+        var partyID = +localStorage.getItem('OnePartyID');
+        ManagePartyService.oneFavorBrowse(partyID)
+          .success(function(data){
+            $scope.loadOneFavor();
+            $scope.browseFavors = data;
+            console.log('data', data);
+        });
+      };
+      vm.favorArray = [];
+      $scope.favorCheck = false;
+      $scope.pushToFavorArray = function(data){
+       var myElements = document.getElementsByClassName('yes');
+        _.each(myElements, function(el,idx,array){
+          var parsed = JSON.parse(el.id);
+          vm.favorArray.push(parsed);
+        });
+        var partyID = +localStorage.getItem('partyID');
+        var rawUserID = +localStorage.getItem('userID');
+        var data = {
+          userID: rawUserID,
+          partyID: partyID,
+          favorDump: vm.favorArray
+        };
+        EventWizardService.updatePartyFavorList(data)
+          .success(function(data){
+            vm.favorArray = [];
+            $scope.loadOneFavorBrowse();
+            $state.go('manageFavor');
+        });
+      };
+      $scope.addFavorToData = function(favorDoo){
+        var partyID = +localStorage.getItem('partyID');
+        var userID = +localStorage.getItem('userID');
+        var favorData = {
+          favor: {
+            favorName: favorDoo
+          },
+          partyID: partyID
+        };
+        if (favorData != null || favorData.favor.favorName != "") {
+            var newDataBlue;
+            EventWizardService.addFavorToData(favorData)
+              .then(function(data){
+                newDataBlue = data;
+            }).then(function(){
+              console.log(newDataBlue.data.favorName);
+              if(newDataBlue.data.favorName == null){
+                console.log('if');
+                return;
+            }
+              else if(newDataBlue.data.favorName.length == 0 ){
+                console.log('else if');
+                return;
+            }
+              else {
+                console.log('else', newDataBlue.data);
+                $scope.browseFavors.unshift(newDataBlue.data);
+            }
+          });
+        } else {
+          console.log('doodad');
+          return;
+        }
+      };
     });
 }());

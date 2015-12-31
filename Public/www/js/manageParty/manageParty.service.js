@@ -5,13 +5,20 @@
     .module('manageParty')
     .factory('ManagePartyService', function($http, $state){
       var vm = this;
-      var ip = 'http://localhost:8080';
+      var ip = 'http://10.0.10.72:8080';
       var viewHostedPartiesURL = ip + '/parties/host';
       var viewInvitedPartiesURL = ip +'/parties/user';
       var updatedHostedPartiesURL = ip + '/party/update';
       var deleteFavorUrl = ip + '/party/favor/delete';
       var deletePartyUrl = ip + '/party/delete';
+      var addFavorToDataUrl = ip + "/favor/save";
 
+      var addFavorToData = function(favorData) {
+        return $http.post(addFavorToDataUrl, favorData);
+      };
+      var oneFavorBrowse = function(partyID){
+        return $http.get(ip + '/party/' + partyID + '/filter')
+      };
       var deleteParty = function(data){
         return $http.post(deletePartyUrl, data);
       };
@@ -47,12 +54,6 @@
           console.log('favor data', data);
         });
       };
-      var getInvitedParties = function(userID){
-        return $http.get(viewInvitedPartiesURL, userID)
-          .success(function(data){
-            console.log('succes your', data);
-        });
-      };
       var updatedHostedParties = function (data){
         return $http.patch(updatedHostedPartiesURL, data)
           .success(function(data){
@@ -66,7 +67,9 @@
         getPartyFavor: getPartyFavor,
         getInvitedPeeps: getInvitedPeeps,
         deleteFavorFromParty: deleteFavorFromParty,
-        deleteParty: deleteParty
+        deleteParty: deleteParty,
+        oneFavorBrowse: oneFavorBrowse,
+        addFavorToData: addFavorToData
       };
 
     });

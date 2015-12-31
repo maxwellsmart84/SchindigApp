@@ -1,10 +1,9 @@
-<ion-view class="wizard">
+<ion-view class="wizard" >
    <ion-nav-bar class="bar-stable">
-     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-     </ion-nav-back-button>
+
    </ion-nav-bar>
    <div class= "bar bar-header">
-     <div class="wizardHeader ">
+     <div class="wizardHeader">
        <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">LET'S GET THIS PARTY STARTED</span></h1>
      </div>
     </div>
@@ -30,11 +29,13 @@
          <span class="item-text-wrap input-label">DATE | TIME:</span>
          <input class="wizardDateTime" placeholder= "Pick a Date and Time" ng-model="partyDate" type="datetime-local">
        </label>
-        <button
-        ng-click="newWizPartyPost(partyType, location, partyName, partyDate)"
-        class="bar bar-footer button button-full button-assertive">
-        Submit
-       </button>
+       <div class="buttonWrap">
+          <button
+          ng-click="newWizPartyPost(partyType, location, partyName, partyDate)"
+          class="bar bar-footer button button-full button-assertive">
+          Submit
+         </button>
+       </div>
   </ion-padding>
  </ion-content>
 </ion-view>

@@ -64,12 +64,10 @@ $base-color:                      #000 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 @import "navigation.scss";
 @import "eventWizard.scss";
 @import "viewInvites.scss";
 @import "manageParty.scss";
-
 // @include font-face("Showboat", font-files("fonts/Showboat.ttf");
