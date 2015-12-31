@@ -1,7 +1,13 @@
-<ion-view view-title="Parties">
+<ion-view class="viewParties">
+  <ion-nav-bar>
+  </ion-nav-bar>
+  <div class="bar bar-header">
+    <div class="viewPartiesHeader">
+      <h1 class= "title-text-wrap">{{invPartyOne.partyName}}</h1>
+    </div>
+  </div>
   <ion-content ng-init="loadOneInvParty();loadOneFavor()">
     <ion-list class="list card">
-
       <div class="row center">
         <div class="col">
           <ion-item class="item-text-wrap">
@@ -13,6 +19,7 @@
         <div class="col">
           <ion-item class="item-text-wrap">
             <h2>{{invPartyOne.stretchName}}</h2>
+            <progress max= "invPartyOne.stretchGoal"a value="1000"></progress>
           </ion-item>
         </div>
       </div>
@@ -24,9 +31,19 @@
           </ion-item>
         </div>
         <div class="col text-right">
-         <button class="button button-positive">
+         <button
+          ng-show="rsvpShowMainBool"
+          ng-click="rsvpShow()"
+          class="button button-positive">
            RSVP
          </button>
+         <div
+           ng-click="rsvpShowMain()"
+           ng-show="rsvpShowBool">
+           <button ng-click="rsvp('Yes')" class="button button-positive">Yes</button>
+           <button ng-click="rsvp('No')" class="button button-assertive">No</button>
+           <button ng-click="rsvp('Maybe')" class="button button-royal">Maybe</button>
+         </div>
         </div>
       </div>
       <div class="row center">
@@ -43,9 +60,9 @@
       </div>
       <div class="row center">
         <div class="col">
-          <ion-item model="themeRun" class="item-text-wrap">
-            <div ng-hide="themeRun" class="noTheme"><p>This <strong>{{invPartyOne.partyType}} Party</strong>  {{invPartyOne.theme}} </p></div>
-            <div ng-show="themeRun"><p>This <strong>{{invPartyOne.partyType}}</strong> party has a theme: <strong>{{invPartyOne.theme}}</strong></p></div>
+          <ion-item class="item-text-wrap">
+            <div ng-hide="invPartyOne.themeCheck" class="noTheme"><p>This <strong>{{invPartyOne.partyType}} Party</strong>  {{invPartyOne.theme}} </p></div>
+            <div ng-show="invPartyOne.themeCheck"><p>This <strong>{{invPartyOne.partyType}} Party</strong> party has a theme: <strong>{{invPartyOne.theme}}</strong></p></div>
           </ion-item>
         </div>
         <div class="col text-right">
@@ -55,13 +72,60 @@
         </div>
       </div>
     </ion-list>
-    <h3>Help out the party - pick a favor!</h3>
-    <ion-list ng-repeat="favor in onePartyFavor">
+    <div class="button-bar">
+      <button
+        class="button button-royal"
+        ng-click="showFavor()">
+        Favors
+      </button>
+      <button
+        ng-click="showInvite();loadInvitedPeople();"
+        class="button button-assertive">
+        Invites
+      </button>
+    </div>
+    <ion-list
+      ng-model="showFavorVar"
+      ng-show="showFavorVar"
+      class="list card">
+      <ion-item class="item">
+        <h2><strong>Help out the party - pick a favor!</strong></h2>
+      </ion-item>
       <ion-item
-        ng-model="favor"
-        ng-click="postOneFavorID(favor)">
-        <div class="favorUnclaimed" ng-show= "favor.claimed != true"><h3>{{favor.favor.favorName}}</h3></div>
-        <div class="favorClaimed" ng-show="favor.claimed == true"><h1>{{favor.favor.favorName}}</h1></div>
+        style="background-color:rgb(87, 218, 100)"
+        ng-repeat="favor in onePartyFavor"
+        ng-model="favor">
+        <div
+          style="background-color:rgb(218, 142, 87)"
+          ng-click="showFavorConfirm(favor)"
+          class="item favorUnclaimed"
+          ng-show= "favor.claimed != true">
+          <h3>{{favor.favor.favorName}}</h3>
+        </div>
+        <div
+          style="background-color:rgb(95, 154, 120)"
+          class="item favorClaimed"
+          ng-show="favor.claimed == true">
+          <h2><strong>{{favor.favor.favorName}}</strong> Claimed by: {{favor.user.username}}</h2>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list
+      ng-model="showInviteVar"
+      ng-show="showInviteVar"
+      class="list card">
+      <ion-item>
+        <h2><strong>Who's Coming To This Party</strong></h2>
+      </ion-item>
+      <ion-item
+        ng-repeat="invite in inviteList"
+        ng-model="invite">
+        <div
+          class="item"
+          ng-click="">
+          <h3>{{invite.user.username}}</h3>
+          <h2>{{invite.rsvpStatus}}</h2>
+        </div>
       </ion-item>
     </ion-list>
   </ion-content>
