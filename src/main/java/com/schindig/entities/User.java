@@ -1,5 +1,6 @@
 package com.schindig.entities;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.servlet.http.Cookie;
@@ -73,7 +74,7 @@ public class User {
         this.inviteCount = inviteCount;
         this.invitedCount = invitedCount;
     }
-    public User(String username, String password, String firstName, String lastName, String email, String phone) {
+    public User(String username, String password, String email, String phone, String firstName, String lastName) {
 
         this.username = username;
         this.password = password;
