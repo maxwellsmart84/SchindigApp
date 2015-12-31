@@ -5,7 +5,8 @@
     .module('manageParty')
     .factory('ManagePartyService', function($http, $state){
       var vm = this;
-      var ip = 'http://10.0.10.72:8080';
+
+      var ip = 'http://10.0.10.65:8080';
       var viewHostedPartiesURL = ip + '/parties/host';
       var viewInvitedPartiesURL = ip +'/parties/user';
       var updatedHostedPartiesURL = ip + '/party/update';
@@ -17,7 +18,7 @@
         return $http.post(addFavorToDataUrl, favorData);
       };
       var oneFavorBrowse = function(partyID){
-        return $http.get(ip + '/party/' + partyID + '/filter')
+        return $http.get(ip + '/party/' + partyID + '/filter');
       };
       var deleteParty = function(data){
         return $http.post(deletePartyUrl, data);
