@@ -9345,7 +9345,8 @@ img {
     background-color: rgba(0, 0, 0, 0.6); }
   .viewParties .item-text-wrap {
     background-color: rgba(0, 0, 0, 0.6);
-    border: solid rgba(247, 190, 243, 0.6) 5px; }
+    border: solid rgba(247, 190, 243, 0.6) 5px;
+    border-radius: 20px; }
     .viewParties .item-text-wrap .hostHeadCard {
       font-size: 1.8rem;
       color: white;
