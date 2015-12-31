@@ -499,6 +499,9 @@ public class MainController {
             if (parameters.party.stretchName != null) {
                 check.stretchName = parameters.party.stretchName;
             }
+            if (parameters.party.stretchStatus != null) {
+                check.stretchName += parameters.party.stretchStatus;
+            }
             if (parameters.party.theme != null) {
                 check.theme = parameters.party.theme;
             }
