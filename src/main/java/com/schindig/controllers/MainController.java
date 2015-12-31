@@ -152,6 +152,8 @@ public class MainController {
                         Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
                                 LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
                                 0, true, true, theme, "Valet");
+                        user.hostCount += 1;
+                        users.save(user);
                         parties.save(P);
                         for (int fa = 1; fa < 10; fa++) {
                             Favor f = favors.findOne(fa);
@@ -165,6 +167,10 @@ public class MainController {
                             ArrayList<Invite> inviteList = invites.findByParty(P);
                             if (inviteList.size() < 10) {
                                 Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "Maybe", invUser.firstName + invUser.lastName);
+                                invUser.invitedCount += 1;
+                                users.save(invUser);
+                                P.host.inviteCount += 1;
+                                users.save(P.host);
                                 invites.save(inv);
                                 u += 3;
                             }
@@ -404,7 +410,7 @@ public class MainController {
         Party party = parties.findOne(parameters.party.partyID);
         User user = users.findOne(parameters.user.userID);
         User host = party.host;
-        host.invitedCount += 1;
+        host.inviteCount += 1;
         Invite invite = new Invite(
                 user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name);
         users.save(host);
@@ -484,7 +490,8 @@ public class MainController {
                     Methods.newInvite(invite, invites, check);
 //                Methods.sendInvite(invite, check.host, check);
                     invite.sent = true;
-                    check.host.invitedCount += 1;
+                    check.host.inviteCount += 1;
+                    users.save(check.host);
                 }
             }
             if (parameters.party.wizPosition != null) {
