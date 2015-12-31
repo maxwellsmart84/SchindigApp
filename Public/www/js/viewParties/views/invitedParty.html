@@ -1,4 +1,11 @@
-<ion-view view-title="Parties">
+<ion-view class="viewParties">
+  <ion-nav-bar>
+  </ion-nav-bar>
+  <div class="bar bar-header">
+    <div class="viewPartiesHeader">
+      <h1 class= "title-text-wrap">{{invPartyOne.partyName}}</h1>
+    </div>
+  </div>
   <ion-content ng-init="loadOneInvParty();loadOneFavor()">
     <ion-list class="list card">
 
@@ -13,6 +20,7 @@
         <div class="col">
           <ion-item class="item-text-wrap">
             <h2>{{invPartyOne.stretchName}}</h2>
+            <progress max= "invPartyOne.stretchGoal"a value="1000"></progress>
           </ion-item>
         </div>
       </div>

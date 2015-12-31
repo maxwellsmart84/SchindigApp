@@ -7,13 +7,19 @@
 
 
 .viewParties {
-  font-family: "Monoton" serif;
-  background-image: url("../img/viewParties1.jpg");
+  font-family: "Righteous" serif;
+  background:
+  linear-gradient(
+     rgba(0, 0, 0, 0.1),
+     rgba(0, 0, 0, 0.2)
+   ),
+   url("../img/viewParties1.jpg");
+  // background-image: url("../img/viewParties1.jpg");
   background-size: 280%;
   background-position:center;
 
   .card {
-    background-color: rgba(#000000, 0.50);
+    background-color: rgba(#000000, 0.60);
     font-family: "Monoton";
     h2 {
       text-align: center;
@@ -25,7 +31,7 @@
       color:rgba(#ffffff, 0.9);
     }
     h3 {
-
+      text-align:center;
     }
   }
     ion-google-place {
@@ -44,23 +50,23 @@
   }
 //THIS IS FOR DROPDOWNS
   select {
-    font-family: "Monoton";
-      background-color: rgba(#000000, 0.70);
+    font-family: "Monton";
+      background-color: rgba(#000000, 0.60);
   }
 
 
   input {
-    background-color: rgba(#000000, 0.70);
-    font-family: "Monoton";
+    background-color: rgba(#000000, 0.60);
+    font-family: "Righteous";
 
     }
 
   .item-input {
-    font-family: "Monoton";
-    background-color: rgba(#000000, 0.70);
+    font-family: "Righteous";
+    background-color: rgba(#000000, 0.60);
       input {
-      font-family: "Monoton";
-      background-color: rgba(#000000, 0.70);
+      font-family: "Righteous";
+      background-color: rgba(#000000, 0.60);
     }
     .wizardDateTime {
       color: gray;
@@ -70,8 +76,8 @@
   .item-divider {
     padding:20px;
     text-align: center;
-    background-color: rgba(#000000, 0.70);
-    font-family: "Monoton";
+    background-color: rgba(#000000, 0.60);
+    font-family: "Righteous";
     h2 {
       font-size: 1.8rem;
       color: white;
@@ -82,11 +88,12 @@
     }
   }
   .item-content {
-    background-color: rgba(#000000, 0.70);
+    background-color: rgba(#000000, 0.60);
   }
 
   .item-text-wrap {
-    background-color: rgba(#000000, 0.70);
+    background-color: rgba(#000000, 0.60);
+    border: solid rgba(#f7bef3, 0.6) 5px;
 
     .hostHeadCard {
       font-size: 1.8rem;
@@ -98,23 +105,30 @@
       // 0 0 8px #5effd4;
       // 0 0 10px #5effd4;
       // 0 0 12px #ff5ea7;
+      letter-spacing: 1px;
     }
 
     h2 {
       font-family: "Monoton";
       color:#ff94d7;
       font-size: 1.2rem;
-      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+      text-shadow: 0 0 1px #ff94d7;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
+    ///DATE IN CARDS//
     h3 {
-      font-family: "Monoton";
-      color:#ff94d7;
+      font-family: "Righteous";
+      color:white;
       text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+      font-size: 1.3rem;
+      padding-top: 2vh;
+      font-weight: bold;
     }
   }
   .wizStretchExpl {
     text-align: center;
-    font-family: "Monoton";
+    font-family: "Righteous";
     font-size: .85rem;
     color:#ff94d7;
 
@@ -130,8 +144,9 @@
 }
 
 .viewPartiesHeader {
-  border:none;
-  background-color: rgba(#000000, 0.70);
+  border:solid rgba(#f7bef3, 0.6) 5px;
+  border-radius: 20px;
+  background-color: rgba(#000000, 0.60);
   display: flex;
   width:100%;
   h1 {

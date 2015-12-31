@@ -9293,12 +9293,12 @@ img {
   font-family: serif; }
 
 .viewParties {
-  font-family: "Monoton" serif;
-  background-image: url("../img/viewParties1.jpg");
+  font-family: "Righteous" serif;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url("../img/viewParties1.jpg");
   background-size: 280%;
   background-position: center; }
   .viewParties .card {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     font-family: "Monoton"; }
     .viewParties .card h2 {
       text-align: center; }
@@ -9307,6 +9307,8 @@ img {
       font-size: 1.2em;
       padding: 2px;
       color: rgba(255, 255, 255, 0.9); }
+    .viewParties .card h3 {
+      text-align: center; }
   .viewParties ion-google-place {
     background-color: white; }
   .viewParties .button {
@@ -9317,48 +9319,55 @@ img {
   .viewParties .button-small {
     font-size: 1.2rem; }
   .viewParties select {
-    font-family: "Monoton";
-    background-color: rgba(0, 0, 0, 0.7); }
+    font-family: "Monton";
+    background-color: rgba(0, 0, 0, 0.6); }
   .viewParties input {
-    background-color: rgba(0, 0, 0, 0.7);
-    font-family: "Monoton"; }
+    background-color: rgba(0, 0, 0, 0.6);
+    font-family: "Righteous"; }
   .viewParties .item-input {
-    font-family: "Monoton";
-    background-color: rgba(0, 0, 0, 0.7); }
+    font-family: "Righteous";
+    background-color: rgba(0, 0, 0, 0.6); }
     .viewParties .item-input input {
-      font-family: "Monoton";
-      background-color: rgba(0, 0, 0, 0.7); }
+      font-family: "Righteous";
+      background-color: rgba(0, 0, 0, 0.6); }
     .viewParties .item-input .wizardDateTime {
       color: gray; }
   .viewParties .item-divider {
     padding: 20px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    font-family: "Monoton"; }
+    background-color: rgba(0, 0, 0, 0.6);
+    font-family: "Righteous"; }
     .viewParties .item-divider h2 {
       font-size: 1.8rem;
       color: white;
       text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
   .viewParties .item-content {
-    background-color: rgba(0, 0, 0, 0.7); }
+    background-color: rgba(0, 0, 0, 0.6); }
   .viewParties .item-text-wrap {
-    background-color: rgba(0, 0, 0, 0.7); }
+    background-color: rgba(0, 0, 0, 0.6);
+    border: solid rgba(247, 190, 243, 0.6) 5px; }
     .viewParties .item-text-wrap .hostHeadCard {
       font-size: 1.8rem;
       color: white;
-      text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
+      text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4;
+      letter-spacing: 1px; }
     .viewParties .item-text-wrap h2 {
       font-family: "Monoton";
       color: #ff94d7;
       font-size: 1.2rem;
-      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7; }
+      text-shadow: 0 0 1px #ff94d7;
+      font-weight: bold;
+      letter-spacing: 1px; }
     .viewParties .item-text-wrap h3 {
-      font-family: "Monoton";
-      color: #ff94d7;
-      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7; }
+      font-family: "Righteous";
+      color: white;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+      font-size: 1.3rem;
+      padding-top: 2vh;
+      font-weight: bold; }
   .viewParties .wizStretchExpl {
     text-align: center;
-    font-family: "Monoton";
+    font-family: "Righteous";
     font-size: .85rem;
     color: #ff94d7; }
     .viewParties .wizStretchExpl span {
@@ -9368,8 +9377,9 @@ img {
       text-align: center; }
 
 .viewPartiesHeader {
-  border: none;
-  background-color: rgba(0, 0, 0, 0.7);
+  border: solid rgba(247, 190, 243, 0.6) 5px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   width: 100%; }
   .viewPartiesHeader h1 {
