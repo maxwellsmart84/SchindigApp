@@ -9289,6 +9289,9 @@ img {
 .bar {
   background-color: transparent; }
 
+#chipIn {
+  padding: 10px; }
+
 .viewPartiesDateTime {
   font-family: serif; }
 
@@ -9297,6 +9300,18 @@ img {
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url("../img/viewParties1.jpg");
   background-size: 280%;
   background-position: center; }
+  .viewParties progress {
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 30px;
+    width: 300px;
+    height: 20px; }
+  .viewParties progress::-webkit-progress-value {
+    background: blue; }
+  .viewParties progress[value] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #ffe05d; }
   .viewParties .card {
     background-color: rgba(0, 0, 0, 0.6);
     font-family: "Monoton"; }
@@ -9318,9 +9333,6 @@ img {
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
-    .viewParties .button :target {
-      color: white;
-      text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4, 0 0 8px #fff, 0 0 12px #5effd4; }
   .viewParties .button-small {
     font-size: 1.2rem; }
   .viewParties select {
@@ -9329,6 +9341,12 @@ img {
   .viewParties input {
     background-color: rgba(0, 0, 0, 0.6);
     font-family: "Righteous"; }
+  .viewParties .item {
+    background-color: rgba(0, 0, 0, 0.6);
+    font-family: "Righteous";
+    margin-right: 20px; }
+    .viewParties .item h2 {
+      font-color: white; }
   .viewParties .item-input {
     font-family: "Righteous";
     background-color: rgba(0, 0, 0, 0.6); }
@@ -9353,7 +9371,8 @@ img {
   .viewParties .item-text-wrap {
     background-color: rgba(0, 0, 0, 0.6);
     border: solid rgba(247, 190, 243, 0.6) 5px;
-    border-radius: 10px; }
+    border-radius: 10px;
+    text-align: center; }
     .viewParties .item-text-wrap .hostHeadCard {
       font-size: 1.8rem;
       color: white;

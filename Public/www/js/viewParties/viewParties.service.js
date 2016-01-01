@@ -10,6 +10,8 @@
     var viewInvitedPartiesURL = ip +'/parties/user';
     var getOneInvitedPartyURL = ip +'/party';
     var rsvpURL = ip + '/party/rsvp';
+    var updatePartyUrl = ip + '/party/update';
+
 
     var postRsvp = function(userRsvp){
       return $http.post(rsvpURL, userRsvp);
@@ -48,6 +50,11 @@
           .success(function(data){
             console.log(data);
         });
+
+      };
+
+      var patchStretchStatus = function(stretchValue){
+        return $http.patch(updatePartyUrl, stretchValue);
       };
 
     return {
@@ -57,7 +64,8 @@
       getOneParty: getOneParty,
       getPartyFavor : getPartyFavor,
       favorClaim: favorClaim,
-      postRsvp: postRsvp
+      postRsvp: postRsvp,
+      patchStretchStatus: patchStretchStatus
     };
   });
 

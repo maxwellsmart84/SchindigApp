@@ -50,19 +50,22 @@
           {
           text: 'Yes',
           onTap: function(){
-              return $scope.rsvp('Yes');
+              $scope.rsvp('Yes');
+              rsvpPopup.close();
           }
           },
           {
           text: 'No',
           onTap: function(){
-                return $scope.rsvp('No');
+                $scope.rsvp('No');
+                rsvpPopup.close();
             }
           },
           {
           text: 'Maybe',
           onTap: function(){
-                return $scope.rsvp('Maybe');
+                $scope.rsvp('Maybe');
+                rsvpPopup.close();
             }
           },
         ]
@@ -123,10 +126,10 @@
           console.log('invite data',data.data);
           if(data.data.byob === true){
             console.log('true');
-            data.data.byob = "BYOB";
+            data.data.byob = "Yes";
           } else {
             console.log('false');
-            data.data.byob = "Booze Included";
+            data.data.byob = "No";
           }
           if(data.data.themeCheck === true){
             console.log('theme true');
@@ -203,5 +206,33 @@
           }
           });
         };
+
+
+        ///PATCH TO STRETCH STATUS//
+      $scope.pledgeStretch = function(stretchValue){
+        $scope.invPartyOne.stretchStatus += stretchValue;
+        var stretchStatusValue = $scope.invPartyOne.stretchStatus;
+        var partyID = +localStorage.getItem('oneInvPartyID');
+        var patchData = {
+          party: {
+            partyID: partyID,
+            stretchStatus: stretchStatusValue
+          }
+        };
+        ViewPartyService.patchStretchStatus(patchData)
+          .success(function(data){
+            console.log('success stretch', data);
+            $scope.chipIn = true;
+            $scope.stretchInput = false;
+            $scope.loadOneInvParty();
+        });
+      };
+      $scope.chipIn = true;
+      $scope.stretchInput = false;
+      $scope.showStretchInput = function(){
+        $scope.stretchInput = true;
+        $scope.chipIn = false;
+      };
+
     });
 }());
