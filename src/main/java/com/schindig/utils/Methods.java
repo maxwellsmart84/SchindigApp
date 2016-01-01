@@ -63,7 +63,7 @@ public class Methods extends MainController {
         Invite invite = new Invite();
         invite.party = p;
         invite.email = i.email;
-        invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
+        invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+1", "");
         invite.name = i.name;
         inv.save(invite);
     }
