@@ -46,6 +46,7 @@ public class User {
     public Integer hostCount = 0;
     public Integer inviteCount = 0;
     public Integer invitedCount = 0;
+    private Double contributions = 0.0;
 
     private String venmoCode;
     private String venmoAccessToken;
@@ -57,29 +58,7 @@ public class User {
         this.username = username;
         this.userID = userID;
     }
-    public User(Integer userID, String username, String firstName, String lastName, String email, String phone) {
-
-        this.userID = userID;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-    }
-    public User(Integer userID, String username, String firstName, String lastName, String email, String phone, Integer partyCount, Integer hostCount, Integer inviteCount, Integer invitedCount) {
-
-        this.userID = userID;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.partyCount = partyCount;
-        this.hostCount = hostCount;
-        this.inviteCount = inviteCount;
-        this.invitedCount = invitedCount;
-    }
-    public User(String username, String password, String email, String phone, String firstName, String lastName) {
+    public User(String username, String password, String firstName, String lastName, String email, String phone) {
 
         this.username = username;
         this.password = password;
@@ -207,5 +186,13 @@ public class User {
     public void setVenmoID(String venmoID) {
 
         this.venmoID = venmoID;
+    }
+    public Double getContributions() {
+
+        return contributions;
+    }
+    public void setContributions(Double contributions) {
+
+        this.contributions = contributions;
     }
 }
