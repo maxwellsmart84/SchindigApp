@@ -258,7 +258,6 @@
                 favor.claimed = false;
                 favor.user = null;
                 $scope.loadOneFavor();
-                $scope.itemFlip();
                 // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }

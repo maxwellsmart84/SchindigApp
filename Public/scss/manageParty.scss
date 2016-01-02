@@ -1,53 +1,77 @@
+
+$Brown: #594544;
+$Gold: #FFB312;
+$Pink: #FF66A6;
+$Green: #C1C71F;
+$Blue: #00B3A0;
+$Yellow: #FAF700;
+$Orange: #F63B09;
+$Red: #F60024;
+$PinkFire: #F7007B;
+$White: #e0e0e0;
+$Cream: #dddcbe;
+
+
+
 .manageParty {
-  .bar {
-    height: 50px;
-    .title {
-      font-size: 40px;
-      font-family: 'Acme', sans-serif;
-      margin: 0;
-    }
-  }
   display: flex;
-  background:
-  linear-gradient(
-     rgba(0, 0, 0, 0.1),
-     rgba(0, 0, 0, 0.2)
-   ),
-   url("../img/manageParty1.jpg");
+  background-color: $Cream;
   background-size: 100%;
   background-position: top;
+  font-style: "Righteous";
+
   .managePartyHeader {
     display: flex;
+    width:100%;
     text-align: center;
-    justify-content: center;
-    margin: 0 auto;
+    background-color: $Brown;
     h1 {
-      color: #FBDE03;
+      margin: 0;
+      text-align: center;
+      border:none;
+      align-self: center;
+      justify-content: center;
+      font-size: 2.75rem;
+      color: $Yellow;
+      font-weight: bold;
       margin-bottom: 20px;
+      margin-left: 8%;
+      text-shadow:   -7px 5px 1px $Gold,
+                     -14px 10px 1px $Orange,
+                     -21px 15px 1px $Red,
+                     -28px 20px 1px $PinkFire,
+      }
     }
-  }
+
   .managePartyContent{
-    margin-top: 90px;
     border-top: thin solid gray;
     input{
-      height: 50px;
+      font-size: 1.2rem;
+      height: 10vh;
       width: 100%;
+      background-color: $Cream;
+      border-radius: 10px;
     }
     .item{
-      background-color: #5E412F;
-      border-radius: 15px;
+      background-color: $Orange;
+      border-radius: 10px;
+      font-style: "Righteous";
+
     }
     .manageItem{
-      background-color: #FCEBB6;
+      background-color: $Brown;
       border-radius: 10px;
-      padding: 10px;
+      padding:20px;
       padding-right: 35px;
+      color: $Cream;
+      font-size: 1.2rem;
+      justify-content: center;
     }
     .button-icon{
-      bottom: 20px;
+      padding-bottom: 12%;
     }
     .manageButton{
-      border-radius: 20px;
+      border-radius: 10px;
       background-color: #78C0A8;
       color: #FCEBB6;
     }
@@ -70,23 +94,27 @@
   .card {
     border-radius: 10px;
     .item {
-      background-color: #E7450D;
+      background-color: $Orange;
       border-radius: 15px;
     }
     .item-content{
-      background-color: #FBDE03;
+      background-color: $Gold;
       padding-right: 20px;
     }
     h3 {
-      background-color: #FBDE03;
+      background-color: $Green;
       text-align: center;
       border-radius: 20px;
+      font-size: 1.3rem;
+      padding:5px;
+      color:black;
     }
     p {
       font-family: "Righteous";
-      font-size: 1.2em;
+      font-size: 1.3em;
+      font-weight: bold;
       padding:2px;
-      color:rgba(#ffffff, 0.9);
+      color:$Cream;
     }
   }
 }
