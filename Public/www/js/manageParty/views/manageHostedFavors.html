@@ -1,15 +1,12 @@
-<ion-view ng-init="loadOneFavor()" class="manageParty">
-  <div class="bar managePartyHeader item item-icon-right">
-    <button class="button button-positive">
-      <i class="icon ion-ios-telephone"></i>
-    </button>
-      <h1 class= "title">Let's Manage Favors</h1>
+<ion-view class="manageParty" ng-init="loadOneFavor()">
+  <div class="bar managePartyHeader">
+    <h1>Let's Manage Favors</h1>
    </div>
-   <ion-content class="managePartyContent">
+   <ion-content class="managePartyContent" >
      <div class="list" >
        <div class="item item-input-inset">
          <button
-           ng-click="goToFavorBrowse();"
+           ng-click="goToFavorBrowse();loadOneFavorBrowse();"
            class="button button-full button-assertive">
            Add More Favors
          </button>

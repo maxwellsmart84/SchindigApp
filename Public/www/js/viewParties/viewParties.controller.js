@@ -23,8 +23,10 @@
       $scope.pledgeStretch = function(stretchValue){
         var userID = +localStorage.getItem('userID');
         ViewPartyService.userGet(userID).then(function(data){
-          if(data.venmoID != null){
-            console.log('datadatadtadtast', data);
+          if(data.data.venmoID != null){
+            console.log('DONDE ESTA LA DATA', data.data.venmoID);
+          } else {
+            return
           }
         });
         $scope.invPartyOne.stretchStatus += stretchValue;

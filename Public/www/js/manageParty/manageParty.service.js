@@ -54,9 +54,7 @@
       };
       var getPartyFavor = function(partyID){
         partyID = partyID;
-        return $http.get(ip + '/party/'+ partyID +'/favors').success(function(data){
-          console.log('favor data', data);
-        });
+        return $http.get(ip + '/party/'+ partyID +'/favors')
       };
       var updatedHostedParties = function (data){
         return $http.patch(updatedHostedPartiesURL, data)
