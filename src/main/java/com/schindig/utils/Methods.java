@@ -205,8 +205,8 @@ public class Methods extends MainController {
 
     public static void getVenmo(String code, User user, UserRepo repo) throws IOException {
 
-        String url= Venmo.getVenmoTokenURL();
-        URL object=new URL(url);
+        String url = Venmo.getVenmoTokenURL();
+        URL object = new URL(url);
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         con.setDoOutput(true);
         con.setDoInput(true);
@@ -214,7 +214,7 @@ public class Methods extends MainController {
         con.setRequestProperty("Accept", "application/json; charset=UTF-8");
         con.setRequestMethod("POST");
 
-        JSONObject json   = new JSONObject();
+        JSONObject json = new JSONObject();
 
         json.put("client_id",Venmo.getVenmoID());
         json.put("client_secret", Venmo.getVenmoKey());
@@ -225,23 +225,25 @@ public class Methods extends MainController {
         os.close();
         os.flush();
         String split = null;
-        StringBuilder sb = new StringBuilder();
         int HttpResult = con.getResponseCode();
-        if(HttpResult == HttpURLConnection.HTTP_OK){
+
+        if ( HttpResult == HttpURLConnection.HTTP_OK ) {
+
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
             String line = null;
+
             while ((line = br.readLine()) != null) {
                 split = line;
             }
 
             br.close();
 
-            System.out.println(""+sb.toString());
+        } else {
 
-        }else{
             System.out.println(con.getResponseMessage());
+
         }
-        HashMap<String, String> map = new HashMap<>();
+
         JSONObject obj = new JSONObject(split);
         JSONObject userObj = obj.getJSONObject("user");
         String id = userObj.get("id").toString().trim();
@@ -251,6 +253,65 @@ public class Methods extends MainController {
         user.setVenmoAccessToken(access);
         user.setVenmmoRefreshToken(refresh);
         repo.save(user);
+    }
+
+    public static String sendPayment(User guest, Party party, UserRepo repo, Double amount) throws IOException {
+        String url = Venmo.getVenmoSandbox();
+        URL object = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) object.openConnection();
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json; charset=UTF-8");
+        con.setRequestMethod("POST");
+
+        JSONObject json = new JSONObject();
+        amount = .10;
+        String message = String.format("Schindig Party Payment of %s made to %s's %s.", String.valueOf(amount), party.host.getFirstName(), party.getPartyName());
+
+        json.put("access_token", guest.getVenmoAccessToken());
+        if (party.host.getVenmoID()!=null) {
+            json.put("user", party.host.getVenmoID());
+        } else if (party.host.getEmail()!=null) {
+            json.put("email", party.host.getEmail());
+        } else {
+            json.put("phone", party.host.getPhone());
+        }
+        json.put("note", message);
+        json.put("amount", amount);
+
+
+        OutputStream os = con.getOutputStream();
+        os.write(json.toString().getBytes("UTF-8"));
+        os.close();
+        os.flush();
+        String split = null;
+        int HttpResult = con.getResponseCode();
+
+        if ( HttpResult == HttpURLConnection.HTTP_OK ) {
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
+            String line = null;
+
+            while ((line = br.readLine()) != null) {
+                split = line;
+            }
+
+            br.close();
+
+        } else {
+
+            System.out.println(con.getResponseMessage());
+
+        }
+        if (split==null) {
+            return "400";
+        } else {
+            guest.setContributions(guest.getContributions()+amount);
+            repo.save(guest);
+            return "200";
+        }
+
     }
 
 }

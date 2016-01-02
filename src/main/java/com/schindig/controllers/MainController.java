@@ -117,8 +117,11 @@ public class MainController {
         ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
         if (userBuild.size() < 10) {
 
-            User admin = new User("admin", "pass", "schindig.app@gmail.com", "1234567890", "The", "Admin");
+            User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
+            User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
+            venmoTest.setVenmoID("145434160922624933");
             users.save(admin);
+            users.save(venmoTest);
 
             String fileContent = Methods.readFile("users.csv");
 
@@ -151,7 +154,7 @@ public class MainController {
                     if (parties.count() < 10) {
                         Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
                                 LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-                                0, true, true, theme, "Valet");
+                                0.0, true, true, theme, "Valet");
                         user.hostCount += 1;
                         users.save(user);
                         parties.save(P);
@@ -514,7 +517,7 @@ public class MainController {
             }
             if (parameters.party.stretchStatus != null) {
                 if ((check.stretchStatus += parameters.party.stretchStatus) > check.stretchGoal) {
-                    Integer diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
+                    double diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
                     check.stretchStatus += (parameters.party.stretchStatus - diff);
                     response.sendError(200, check.stretchName + "'s goal has been fulfilled!");
                 } else {
@@ -734,17 +737,35 @@ public class MainController {
         return new ArrayList<>();
     }
 
-    @RequestMapping(path = "/venmo/{id}", method = RequestMethod.GET)
-    public void goVenmo(HttpServletResponse response, @PathVariable("id") Integer id) throws IOException {
-        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+id));
+    @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
+    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, @PathVariable("partyID") Integer partyID) throws IOException {
+        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+":"+userID));
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public void saveVenmo(String code, Integer state, HttpServletResponse response) throws IOException {
+    public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
         HashMap<String, String> map = new HashMap<>();
-        User user = users.findOne(state);
+        String[] relocate = state.split(":");
+        User user = users.findOne(Integer.valueOf(relocate[1]));
         user.setVenmoCode(code);
         Methods.getVenmo(code, user, users);
+        response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
+    }
+
+    @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
+    public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
+        Party party = parties.findOne(p.partyID);
+        User guest = users.findOne(p.userID);
+        Double amount = p.amount;
+        if (guest.getVenmoID()==null) {
+            response.sendError(400, "No Venmo account found.");
+        }
+        if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
+            party.stretchStatus += amount;
+            response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
+        } else {
+            response.sendError(400, "There was an error processing your payment.");
+        }
     }
 }
 
