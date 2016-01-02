@@ -117,8 +117,11 @@ public class MainController {
         ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
         if (userBuild.size() < 10) {
 
-            User admin = new User("admin", "pass", "schindig.app@gmail.com", "1234567890", "The", "Admin");
+            User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
+            User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
+            venmoTest.setVenmoID("145434160922624933");
             users.save(admin);
+            users.save(venmoTest);
 
             String fileContent = Methods.readFile("users.csv");
 
