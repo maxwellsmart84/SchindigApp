@@ -13,10 +13,48 @@
       $ionicPopup,
       $cordovaToast,
       ManagePartyService
-
     ){
 
       var vm = this;
+
+
+
+      ///PATCH TO STRETCH STATUS//
+      $scope.pledgeStretch = function(stretchValue){
+        var userID = +localStorage.getItem('userID');
+        ViewPartyService.userGet(userID).then(function(data){
+          if(data.data.venmoID != null){
+            console.log('DONDE ESTA LA DATA', data.data.venmoID);
+          } else {
+            return
+          }
+        });
+        $scope.invPartyOne.stretchStatus += stretchValue;
+        var stretchStatusValue = $scope.invPartyOne.stretchStatus;
+        var partyID = +localStorage.getItem('oneInvPartyID');
+        var patchData = {
+          party: {
+            partyID: partyID,
+            stretchStatus: stretchStatusValue
+          }
+        };
+        ViewPartyService.patchStretchStatus(patchData)
+          .success(function(data){
+            console.log('success stretch', data);
+            $scope.chipIn = true;
+            $scope.stretchInput = false;
+            $scope.loadOneInvParty();
+        });
+      };
+
+      $scope.chipIn = true;
+      $scope.stretchInput = false;
+      $scope.showStretchInput = function(){
+        $scope.stretchInput = true;
+        $scope.chipIn = false;
+      };
+
+
       $scope.showInviteVar = false;
       $scope.showFavorVar = true;
       $scope.showInvite = function(){
@@ -90,10 +128,12 @@
       ViewPartyService.postRsvp(userRsvp)
         .success(function(data){
           ManagePartyService.getInvitedPeeps(partyID).then(function(data){
-            console.log('load invited people', data.data);
+            console.log('load invited people', data);
             $scope.inviteList = data.data;
           });
           console.log('success', data);
+          // $cordovaToast.show(data.message, 'short', 'bottom')
+
         });
       };
         $scope.loadRSVPStatus = function(){
@@ -120,42 +160,45 @@
 
 
     //INVITED PARTIES GET
-    ViewPartyService.getInvitedParties(userID)
-      .success(function(invData){
-        console.log('parties success', invData);
-        $scope.invitedParties = invData;
-      })
-      .error(function(data){
-        console.log('error', data);
-      });
+    ///////////TURN INTO FUNCTION INIT/////
+    $scope.getAllInvitedParties = function(){
+      ViewPartyService.getInvitedParties(userID)
+        .success(function(invData){
+          console.log('parties success', invData);
+          $scope.invitedParties = invData;
+        })
+        .error(function(data){
+          console.log('error', data);
+        });
+    };
 
       $scope.getOneInvParty = function (party){
         localStorage.setItem('oneInvPartyID', party.partyID);
       };
 
       $scope.loadOneInvParty = function(){
-          var partyIdItem = +localStorage.getItem('oneInvPartyID');
-          var userID = +localStorage.getItem('userID');
-          ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
-            console.log('invite data',data.data);
-            if(data.data.byob === true){
-              console.log('true');
-              data.data.byob = "Yes";
-            } else {
-              console.log('false');
-              data.data.byob = "No";
-            }
-            if(data.data.themeCheck === true){
-              console.log('theme true');
-              data.data.theme = data.data.theme;
-            } else {
-              console.log('theme false');
-              data.data.theme = 'does not have a theme';
-            }
-            console.log('byob statsu', data.data.byob);
-            $scope.invPartyOne = data.data;
-          });
-        };
+        var partyIdItem = +localStorage.getItem('oneInvPartyID');
+        var userID = +localStorage.getItem('userID');
+        ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
+          console.log('invite data',data.data);
+          if(data.data.byob === true){
+            console.log('true');
+            data.data.byob = "BYOB";
+          } else {
+            console.log('false');
+            data.data.byob = "Booze Included";
+          }
+          if(data.data.themeCheck === true){
+            console.log('theme true');
+            data.data.theme = data.data.theme;
+          } else {
+            console.log('theme false');
+            data.data.theme = 'does not have a theme';
+          }
+          console.log('byob statsu', data.data.byob);
+          $scope.invPartyOne = data.data;
+        });
+      };
       $scope.loadInvitedPeople = function(){
         var rawPartyID = +localStorage.getItem('oneInvPartyID');
         var userID = +localStorage.getItem('userID');
@@ -166,25 +209,26 @@
       };
 
       //HOSTED PARTIES GET
-      ViewPartyService.getHostedParties(userID)
-        .success(function(hostData){
-          $scope.hostedParties = hostData;
-          console.log(hostData);
-        })
-        .error(function(data){
-          console.log('error', rawUserID);
-        });
+      $scope.getAllHostedParties = function(){
+        ViewPartyService.getHostedParties(userID)
+          .success(function(hostData){
+            $scope.hostedParties = hostData;
+            console.log('host success',hostData);
+          })
+          .error(function(data){
+            console.log('error', rawUserID);
+          });
+      };
       $scope.getOneHostParty = function (party) {
         localStorage.setItem('oneHostPartyID', party.partyID);
       };
       $scope.loadOneHostParty = function(){
         var partyIdItem = +localStorage.getItem('oneHostPartyID');
-        ViewPartyService.getOneParty(partyIdItem).then(function(data){
+        ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
           console.log('hostpartyData', data.data);
           $scope.hostPartyOne = data.data;
         });
       };
-
 
         //FAVOR CLAIMING//
       $scope.loadOneFavor = function(){
@@ -194,7 +238,32 @@
             $scope.onePartyFavor = data.data;
         });
       };
-
+      $scope.showFavorUnclaim = function(favor){
+        var favorClaimPopup = $ionicPopup.confirm ({
+          title: 'Unclaim Party Favor?',
+          template: 'Are you REALLY NOT going to bring this?'
+        });
+        favorClaimPopup.then(function(res){
+          console.log('que?',res);
+          if(res){
+            var data = {
+              userID: rawUserID,
+              listID: favor.listID
+            };
+            console.log('postFavor', data);
+            ViewPartyService.favorClaim(data)
+              .then(function(data){
+                favor.claimed = false;
+                favor.user = null;
+                $scope.loadOneFavor();
+                // $cordovaToast.show(data.data.message, 'short', 'bottom')
+            });
+          }
+          else {
+            return
+            }
+          });
+      };
       $scope.showFavorConfirm = function(favor){
         var favorClaimPopup = $ionicPopup.confirm ({
           title: 'Claim Party Favor?',
@@ -204,9 +273,6 @@
           console.log('que?',res);
           if(res){
             var data = {
-              favor: {
-              favorID: favor.favor.favorID
-              },
               userID: rawUserID,
               listID: favor.listID
             };
@@ -215,6 +281,8 @@
               .then(function(data){
                 favor.claimed = true;
                 favor.user = data.data.user;
+                $scope.loadOneFavor();
+                // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }
           else {

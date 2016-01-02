@@ -14,6 +14,7 @@
       var deletePartyUrl = ip + '/party/delete';
       var addFavorToDataUrl = ip + "/favor/save";
 
+
       var addFavorToData = function(favorData) {
         return $http.post(addFavorToDataUrl, favorData);
       };
@@ -42,18 +43,18 @@
             console.log('succes view', data);
         });
       };
-      var getOneHostedParty = function(partyID){
+      var getOneHostedParty = function(partyID, userID){
         console.log(partyID);
+        console.log('getting one party');
         partyID = partyID;
-        return $http.get(ip+'/party/'+partyID).success(function(data){
+        userID = userID;
+        return $http.get(ip+'/party/'+partyID+'/'+userID).success(function(data){
           console.log('one party', data);
         });
       };
       var getPartyFavor = function(partyID){
         partyID = partyID;
-        return $http.get(ip + '/party/'+ partyID +'/favors').success(function(data){
-          console.log('favor data', data);
-        });
+        return $http.get(ip + '/party/'+ partyID +'/favors')
       };
       var updatedHostedParties = function (data){
         return $http.patch(updatedHostedPartiesURL, data)

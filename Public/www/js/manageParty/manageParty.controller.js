@@ -61,17 +61,21 @@
         localStorage.setItem('partyID', party.partyID);
       };
       $scope.loadOne = function(){
+        console.log('does this fire?');
         var rawPartyID = +localStorage.getItem('OnePartyID');
-        ManagePartyService.getOneHostedParty(rawPartyID).then(function(data){
-          console.log('data?', data);
-          $scope.oneParty = data.data;
+        var userID = +localStorage.getItem('userID')
+        ManagePartyService.getOneHostedParty(rawPartyID, userID)
+          .then(function(data){
+            console.log('data?', data);
+            $scope.oneParty = data.data;
         });
       };
       $scope.loadOneFavor = function(){
         var rawPartyID = +localStorage.getItem('OnePartyID');
-        ManagePartyService.getPartyFavor(rawPartyID).then(function(data){
-          console.log('load favors',data);
-          $scope.onePartyFavor = data.data;
+        ManagePartyService.getPartyFavor(rawPartyID)
+          .then(function(data){
+            console.log('load favors',data);
+            $scope.onePartyFavor = data.data;
         });
       };
       $scope.loadInvitedPeople = function(){
@@ -90,7 +94,6 @@
       $scope.getNameValue = function(value){
         console.log('changed value',value);
         $scope.partyName = value;
-        console.log('scoped value',$scope.partyName);
       };
       $scope.getDescriptionValue = function(descriptionValue){
         console.log('changed descriptionValue',descriptionValue);
@@ -155,12 +158,17 @@
           favorDump: vm.favorArray
         };
         EventWizardService.updatePartyFavorList(data)
-          .success(function(data){
+          .then(function(data){
+            console.log('what kind of data', data);
             vm.favorArray = [];
-            $scope.loadOneFavorBrowse();
-            $state.go('manageFavor');
-        });
+            // $scope.loadOneFavorBrowse();
+          });
       };
+      $scope.goBackToManage = function(){
+        $scope.loadOneFavor();
+        $state.go('manageFavor');
+      };
+
       $scope.addFavorToData = function(favorDoo){
         var partyID = +localStorage.getItem('partyID');
         var userID = +localStorage.getItem('userID');

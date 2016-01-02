@@ -9095,7 +9095,7 @@ a.button {
   font-weight: normal;
   font-style: normal; }
 
-img {
+.splashHome img {
   width: 70vw;
   height: 15vh;
   position: relative;
@@ -9205,11 +9205,45 @@ img {
   color: #c1f6f3;
   text-shadow: 0px 0px 10px #c1f6f3; }
 
+.login {
+  display: flex;
+  justify-content: center;
+  background-color: blue; }
+  .login .scroll {
+    margin-top: 90px;
+    width: 80%; }
+  .login img {
+    border-radius: 20px;
+    width: 50px;
+    margin: 0 auto; }
+  .login h1 {
+    text-align: center; }
+  .login .logo {
+    background-color: #54e4e6;
+    border-radius: 90px; }
+  .login .loginStuff {
+    background-color: #54e4e6;
+    border-radius: 20px; }
+
+.createUser {
+  background-color: blue; }
+  .createUser h1 {
+    color: white; }
+  .createUser .topCreateBar {
+    text-align: center;
+    background-image: url("../img/miamiSkyline.jpg");
+    padding: 10px;
+    color: white; }
+
 .bar {
   background-color: transparent; }
 
 .wizardDateTime {
   font-family: serif; }
+
+.schinDigHome {
+  position: fixed;
+  margin-left: 220px; }
 
 .wizard {
   font-family: "Showboat" serif;
@@ -9443,3 +9477,71 @@ img {
     font-size: 2rem;
     color: #fffc00;
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
+
+.manageParty {
+  display: flex;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url("../img/manageParty1.jpg");
+  background-size: 100%;
+  background-position: top; }
+  .manageParty .bar {
+    height: 50px; }
+    .manageParty .bar .title {
+      font-size: 40px;
+      font-family: 'Acme', sans-serif;
+      margin: 0; }
+  .manageParty .managePartyHeader {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto; }
+    .manageParty .managePartyHeader h1 {
+      color: #FBDE03;
+      margin-bottom: 20px; }
+  .manageParty .managePartyContent {
+    margin-top: 90px;
+    border-top: thin solid gray; }
+    .manageParty .managePartyContent input {
+      height: 50px;
+      width: 100%; }
+    .manageParty .managePartyContent .item {
+      background-color: #5E412F;
+      border-radius: 15px; }
+    .manageParty .managePartyContent .manageItem {
+      background-color: #FCEBB6;
+      border-radius: 10px;
+      padding: 10px;
+      padding-right: 35px; }
+    .manageParty .managePartyContent .button-icon {
+      bottom: 20px; }
+    .manageParty .managePartyContent .manageButton {
+      border-radius: 20px;
+      background-color: #78C0A8;
+      color: #FCEBB6; }
+    .manageParty .managePartyContent .inviteButton {
+      border-radius: 20px;
+      background-color: #FCEBB6;
+      color: #78C0A8; }
+  .manageParty ion-item {
+    margin: 0; }
+  .manageParty h1 {
+    display: flex;
+    flex-wrap: nowrap; }
+  .manageParty ion-item {
+    margin-top: 15px; }
+  .manageParty .card {
+    border-radius: 10px; }
+    .manageParty .card .item {
+      background-color: #E7450D;
+      border-radius: 15px; }
+    .manageParty .card .item-content {
+      background-color: #FBDE03;
+      padding-right: 20px; }
+    .manageParty .card h3 {
+      background-color: #FBDE03;
+      text-align: center;
+      border-radius: 20px; }
+    .manageParty .card p {
+      font-family: "Righteous";
+      font-size: 1.2em;
+      padding: 2px;
+      color: rgba(255, 255, 255, 0.9); }

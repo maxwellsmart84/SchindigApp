@@ -484,7 +484,7 @@ public class MainController {
 
     @RequestMapping(path = "/party/update", method = RequestMethod.PATCH)
     public Party updateParty(@RequestBody Parameters parameters, HttpServletResponse response) throws MessagingException, IOException {
-
+      //josh is a doofus//
         Party check = parties.findOne(parameters.party.partyID);
         if (parameters != null) {
 

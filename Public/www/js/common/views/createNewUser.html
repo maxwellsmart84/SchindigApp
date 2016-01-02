@@ -1,12 +1,10 @@
 <ion-view ng-init="createNewUserToast();">
-  <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
-  </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
-      <h1 class= "title">Let's Get This Account Started</h1>
-   </div>
-  <ion-content>
+
+  <ion-content class="createUser">
+    <div class="topCreateBar">
+        <h1 class= "title">Let's Get This Account Started</h1>
+        <p>Please Use Accurate Information</p>
+     </div>
     <ion-list class="list">
       <form name="userForm" novalidate>
         <label class="item item-input item-floating-label" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">

@@ -1,8 +1,6 @@
 <ion-view ng-init="loadOneFavorBrowse()">
     <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button class="button-clear">
-        <i class="ion-arrow-left-c"></i>
-      </ion-nav-back-button>
+
     </ion-nav-bar>
     <div class=" wizardHeader bar bar-header bar-royal">
         <h1 class= "title">CHECK/UNCHECK YOUR FAVORS</h1>
@@ -28,7 +26,7 @@
           </div>
         </div>
         <button
-          ng-click="pushToFavorArray();loadOneFavorBrowse();"
+          ng-click="pushToFavorArray();loadOneFavorBrowse();goBackToManage();"
           class="button button-full button-positive">
           SUBMIT YOUR NEW FAVORS
         </button>

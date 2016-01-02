@@ -5,14 +5,22 @@
   .factory('ViewPartyService', function($http, $state){
     var vm = this;
 
-    var ip = 'http://localhost:8080';
+    var ip = 'http://10.0.10.29:8080';
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
-    var getOneInvitedPartyURL = ip +'/party';
     var rsvpURL = ip + '/party/rsvp';
     var updatePartyUrl = ip + '/party/update';
 
 
+    var userGet = function(userID){
+      return $http.get(ip + '/user/' + userID)
+    };
+    var venmoGet = function(partyID, userID){
+      return $http.get(ip+partyID+userID);
+    };
+    var patchStretchStatus = function(stretchValue){
+      return $http.patch(updatePartyUrl, stretchValue)
+    };
     var postRsvp = function(userRsvp){
       return $http.post(rsvpURL, userRsvp);
     };
@@ -50,7 +58,7 @@
         favorData = favorData;
         return $http.post(ip + '/party/claim', favorData)
           .success(function(data){
-            console.log(data);
+            console.log(data.message);
         });
 
       };
@@ -58,6 +66,10 @@
       var patchStretchStatus = function(stretchValue){
         return $http.patch(updatePartyUrl, stretchValue);
       };
+      // var favorUnclaim = function(favorData){
+      //   favorData = favorData;
+      //   return $http.post(ip + '/party/claim', favorData)
+      // }
 
     return {
       getHostedParties: getHostedParties,
@@ -67,6 +79,8 @@
       getPartyFavor : getPartyFavor,
       favorClaim: favorClaim,
       postRsvp: postRsvp,
+      venmoGet: venmoGet,
+      userGet: userGet,
       patchStretchStatus: patchStretchStatus
     };
   });

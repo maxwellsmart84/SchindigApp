@@ -8,7 +8,6 @@
       <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyDate | date: 'short'}}</span></h1>
     </div>
   </div>
-
   <ion-content ng-init="loadOneInvParty();loadOneFavor();loadRSVPStatus()">
   <br>
   <div class="item-text-wrap">
@@ -74,7 +73,6 @@
     <ion-list
       ng-model="showFavorVar"
       ng-show="showFavorVar">
-
       <ion-item class="item">
         <h2><strong>Help out the party - pick a favor!</strong></h2>
       </ion-item>

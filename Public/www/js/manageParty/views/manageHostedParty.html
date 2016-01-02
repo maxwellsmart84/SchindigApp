@@ -1,24 +1,21 @@
-<ion-view title="">
-  <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
-  </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
-      <h1 class= "title">Let's Manage Parties</h1>
-   </div>
-  <ion-content ng-init="loadOne()">
+<ion-view class="manageParty">
+  <div class="bar managePartyHeader">
+    <h1>Let's Manage Parties</h1>
+  </div>
+  <ion-content class="managePartyContent" ng-init="loadOne()">
     <ion-list>
       <ion-item>
-        <div ng-show="!edit" class="item-icon-right">
-            <strong>Party Name: <br></strong>{{oneParty.partyName}}
+        <div ng-show="!edit" class="item-icon-right manageItem">
+            {{oneParty.partyName}}
             <button
               ng-hide="edit"
               ng-click="edit = true"
               class="button-icon icon ion-ios-compose-outline">
             </button>
         </div>
-        <div ng-show="edit" class="item-icon-right">
+        <div ng-show="edit" class="item-icon-right manageItem">
           <input
+          class="inputField"
             type="text"
             ng-model="partyName"
             ng-change='getNameValue(partyName)'
@@ -30,7 +27,7 @@
         </div>
       </ion-item>
       <ion-item>
-        <div ng-show="!edit" class="item-icon-right item-text-wrap">
+        <div ng-show="!edit" class="item-icon-right manageItem item-text-wrap">
             <strong>Description: <br></strong>{{oneParty.description}}
             <button
               ng-hide="edit"
@@ -38,7 +35,7 @@
               class="button-icon icon ion-ios-compose-outline">
             </button>
         </div>
-        <div ng-show="edit" class="item-icon-right">
+        <div ng-show="edit" class="item-icon-right manageItem">
           <input
             type="text"
             ng-model="description"
@@ -51,7 +48,7 @@
         </div>
       </ion-item>
       <ion-item>
-        <div ng-show="!edit" class="item-icon-right">
+        <div ng-show="!edit" class="item-icon-right manageItem">
             <strong>Where The Party At? <br></strong>{{oneParty.local}}
             <button
               ng-hide="edit"
@@ -59,7 +56,7 @@
               class="button-icon icon ion-ios-compose-outline">
             </button>
         </div>
-        <div ng-show="edit" class="item-icon-right">
+        <div ng-show="edit" class="item-icon-right manageItem">
           <ion-google-place placeholder= "Enter an Address, Apt#, and ZIP" ng-model="local"></ion-google-place>
             <button
               ng-click="edit = false; editData(partyName, description, local.formatted_address, themeVal, doggy, parking, partyDate);"
@@ -68,7 +65,7 @@
         </div>
       </ion-item>
       <ion-item>
-        <div ng-show="!edit" class="item-icon-right">
+        <div ng-show="!edit" class="item-icon-right manageItem">
             <strong>When The Party At? <br></strong>{{oneParty.partyDate | date: 'short'}}
             <button
               ng-hide="edit"
@@ -76,7 +73,7 @@
               class="button-icon icon ion-ios-compose-outline">
             </button>
         </div>
-        <div ng-show="edit" class="item-icon-right">
+        <div ng-show="edit" class="item-icon-right manageItem">
           <input placeholder= "Pick a Date and Time" ng-model="partyDate" type="datetime-local">
             <button
               ng-click="edit = false; editData(partyName, description, local, themeVal, doggy, parking, partyDate);"
@@ -85,7 +82,7 @@
         </div>
       </ion-item>
       <ion-item>
-        <div ng-show="!edit" class="item-icon-right">
+        <div ng-show="!edit" class="item-icon-right manageItem">
           <strong>Parking: <br></strong>{{oneParty.parking}}
           <button
             ng-hide="edit"
@@ -93,7 +90,7 @@
             class="button-icon icon ion-ios-compose-outline">
           </button>
         </div>
-        <div ng-show="edit" class="item-icon-right">
+        <div ng-show="edit" class="item-icon-right manageItem">
           <strong>Parking: <br></strong>
           <select ng-model="parking" ng-change='getParking(parking)'>
             <option value="Valet">Valet</option>
@@ -106,7 +103,7 @@
           </button>
         </div>
       </ion-item>
-      <ion-toggle
+      <!-- <ion-toggle
         ng-click="themeCheck = !themeCheck"
         ng-checked="oneParty.themeCheck"
         toggle-class="toggle-calm">
@@ -133,18 +130,17 @@
             BYOB
           </strong>
         </div>
-      </ion-toggle>
+      </ion-toggle> -->
       <button
         ng-click="goToManageFavor()"
-        class="button button-full button-assertive">
+        class="button button-full manageButton button-assertive">
         Manage Favors
       </button>
       <button
         ng-click="goToManageInvites()"
-        class="button button-full button-royal">
+        class="button inviteButton button-full button-royal">
         Manage Invites
       </button>
-
     </ion-list>
   </ion-content>
 </ion-view>

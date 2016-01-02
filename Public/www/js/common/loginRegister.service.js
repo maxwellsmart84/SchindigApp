@@ -5,10 +5,7 @@
 
     .module('schindig')
     .factory('LoginRegisterService', function($http, $state, $q, $cordovaDevice, $cordovaToast){
-
-
       var ip = 'http://localhost:8080';
-
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
 

@@ -16,7 +16,7 @@
     </button>
     <ul class="list">
       <ion-checkbox
-        ng-repeat="item in contactName"
+        ng-repeat="item in contactName | orderBy: 'name.formatted'"
         ng-click="isChecked = !isChecked">
         <ion-item
           ng-model="isChecked"
@@ -25,8 +25,6 @@
           {{item.name.formatted}}
         </ion-item>
       </ion-checkbox>
-
     </ul>
-
   </ion-content>
 </ion-view>
