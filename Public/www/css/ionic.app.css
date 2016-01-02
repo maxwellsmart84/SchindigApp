@@ -9483,12 +9483,60 @@ a.button {
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url("../img/manageParty1.jpg");
   background-size: 100%;
   background-position: top; }
+  .manageParty .manageHostedInvites ion-list .item {
+    text-align: center;
+    background-color: red; }
+  .manageParty .manageHostedInvites ion-list ion-item h3 {
+    color: black; }
+  .manageParty .manageHostedInvites ion-list .invitesSub {
+    background-color: orange; }
+    .manageParty .manageHostedInvites ion-list .invitesSub h3 {
+      color: blue;
+      text-align: center; }
+  .manageParty .manageBrowseFavor .topListButtonAndLabel {
+    display: flex; }
+    .manageParty .manageBrowseFavor .topListButtonAndLabel .addFavorToDataButton {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      border-radius: 10px;
+      margin-top: 5px; }
+    .manageParty .manageBrowseFavor .topListButtonAndLabel input {
+      text-align: center; }
+  .manageParty .manageBrowseFavor .submitFavorsButton {
+    display: flex;
+    margin-bottom: 10px; }
+    .manageParty .manageBrowseFavor .submitFavorsButton button {
+      margin: 0 auto;
+      width: 90%;
+      border-radius: 10px; }
+  .manageParty .manageBrowseFavor .favorsList {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; }
+    .manageParty .manageBrowseFavor .favorsList .favorItem {
+      margin: 0 auto;
+      margin-bottom: 10px;
+      background-color: blue;
+      justify-content: center;
+      align-items: center; }
+      .manageParty .manageBrowseFavor .favorsList .favorItem .item-content {
+        margin: 0;
+        text-align: center; }
+        .manageParty .manageBrowseFavor .favorsList .favorItem .item-content ion-item {
+          background-color: red;
+          text-align: center;
+          margin: 0; }
   .manageParty .bar {
     height: 50px; }
     .manageParty .bar .title {
       font-size: 40px;
       font-family: 'Acme', sans-serif;
       margin: 0; }
+  .manageParty .addFavorButton {
+    position: relative;
+    z-index: 100; }
   .manageParty .managePartyHeader {
     display: flex;
     text-align: center;

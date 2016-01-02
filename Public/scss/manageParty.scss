@@ -1,4 +1,85 @@
 .manageParty {
+
+
+  ///////////MANAGE INVITES///////
+  .manageHostedInvites{
+    ion-list{
+      .item{
+        text-align: center;
+        background-color: red;
+      }
+      ion-item{
+        h3{
+          color: black;
+        }
+      }
+      .invitesSub{
+        h3{
+          color: blue;
+          text-align: center;
+        }
+        background-color: orange;
+      }
+    }
+  }
+
+
+
+
+
+
+  ///MANAGE BROWSE PARTIES////
+  .manageBrowseFavor{
+    .topListButtonAndLabel{
+      display: flex;
+      .addFavorToDataButton{
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+        margin-top: 5px;
+      }
+      input{
+        text-align: center;
+      }
+    }
+    .submitFavorsButton{
+      display: flex;
+      button{
+        margin: 0 auto;
+        width: 90%;
+        border-radius: 10px;
+      }
+      margin-bottom: 10px;
+    }
+    .favorsList{
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      .favorItem{
+        margin: 0 auto;
+        margin-bottom: 10px;
+        background-color: blue;
+        justify-content: center;
+        align-items: center;
+
+        .item-content{
+          margin: 0;
+          text-align: center;
+          ion-item{
+            background-color: red;
+            text-align: center;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+
+  //////////
+
   .bar {
     height: 50px;
     .title {
@@ -6,6 +87,10 @@
       font-family: 'Acme', sans-serif;
       margin: 0;
     }
+  }
+  .addFavorButton{
+    position: relative;
+    z-index: 100;
   }
   display: flex;
   background:

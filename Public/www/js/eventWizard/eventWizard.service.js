@@ -5,14 +5,23 @@
     .module('eventWizard')
     .factory('EventWizardService', function($http, $state){
 
-      var ip = 'http://localhost:8080';
+      var ip = 'http://10.0.10.72:8080';
       var wizCreateUrl = ip + "/party/create";
       var wizUpdateUrl = ip + "/party/update";
       var favorUpdateUrl = ip + "/party/favor";
       var addFavorToDataUrl = ip + "/favor/save";
       var getWizardUrl = ip + "/wizard";
       var invitePostUrl = ip + "/party/update";
+      var postContacts = ip + '/user/contacts';
 
+      var getContacts = function(userID, partyID){
+        var userID = userID;
+        var partyID = partyID;
+        return $http.get(ip + '/' + partyID + '/' + userID + '/contacts');
+      };
+      var postContactsRoute = function(contactsData){
+        return $http.post(postContacts, contactsData)
+      };
       var getWizard = function() {
         return $http.get(getWizardUrl);
       };
@@ -51,13 +60,9 @@
         updateFavorData: updateFavorData,
         addFavorToData: addFavorToData,
         postInviteData: postInviteData,
-        updatePartyFavorList: updatePartyFavorList
+        updatePartyFavorList: updatePartyFavorList,
+        postContactsRoute: postContactsRoute,
+        getContacts: getContacts
       };
-
     });
-
-
-
-
-
 }());
