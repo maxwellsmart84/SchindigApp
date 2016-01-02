@@ -753,10 +753,15 @@ public class MainController {
     public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         Party party = parties.findOne(p.partyID);
         User guest = users.findOne(p.userID);
-        User host = party.host;
         Integer amount = p.amount;
         if (guest.getVenmoID()==null) {
             response.sendError(400, "No Venmo account found.");
+        }
+        if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
+            party.stretchStatus += amount;
+            response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
+        } else {
+            response.sendError(400, "There was an error processing your payment.");
         }
     }
 }
