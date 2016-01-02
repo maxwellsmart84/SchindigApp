@@ -47,6 +47,11 @@ public class User {
     public Integer inviteCount = 0;
     public Integer invitedCount = 0;
 
+    private String venmoCode;
+    private String venmoAccessToken;
+    private String venmmoRefreshToken;
+    private String venmoID;
+
     public User(){}
     public User(Integer userID, String username) {
         this.username = username;
@@ -170,5 +175,37 @@ public class User {
     public void setInvitedCount(Integer invitedCount) {
 
         this.invitedCount = invitedCount;
+    }
+    public String getVenmoCode() {
+
+        return venmoCode;
+    }
+    public void setVenmoCode(String venmoCode) {
+
+        this.venmoCode = venmoCode;
+    }
+    public String getVenmoAccessToken() {
+
+        return venmoAccessToken;
+    }
+    public void setVenmoAccessToken(String venmoAccessToken) {
+
+        this.venmoAccessToken = venmoAccessToken;
+    }
+    public String getVenmmoRefreshToken() {
+
+        return venmmoRefreshToken;
+    }
+    public void setVenmmoRefreshToken(String venmmoRefreshToken) {
+
+        this.venmmoRefreshToken = venmmoRefreshToken;
+    }
+    public String getVenmoID() {
+
+        return venmoID;
+    }
+    public void setVenmoID(String venmoID) {
+
+        this.venmoID = venmoID;
     }
 }

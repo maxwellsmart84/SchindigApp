@@ -1,4 +1,7 @@
 package com.schindig.utils;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
@@ -6,44 +9,41 @@ import com.schindig.services.AuthRepo;
 import com.schindig.services.InviteRepo;
 import com.schindig.services.PartyRepo;
 import com.schindig.services.UserRepo;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.security.crypto.keygen.KeyGenerators;
-import org.springframework.web.util.CookieGenerator;
-
 import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.*;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.stream.Collectors;
+import java.util.*;
+
 
 /**
  * Created by Agronis on 12/9/15.
  */
 public class Methods extends MainController {
-
-
 
     public static String readFile(String fileName) {
         File f = new File(fileName);
@@ -192,7 +192,7 @@ public class Methods extends MainController {
         return true;
     }
 
-    public static boolean isValidEmailAddress(String email) {
+    public static Boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
             InternetAddress emailAddr = new InternetAddress(email);
@@ -201,6 +201,56 @@ public class Methods extends MainController {
             result = false;
         }
         return result;
+    }
+
+    public static void getVenmo(String code, User user, UserRepo repo) throws IOException {
+
+        String url= Venmo.getVenmoTokenURL();
+        URL object=new URL(url);
+        HttpURLConnection con = (HttpURLConnection) object.openConnection();
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json; charset=UTF-8");
+        con.setRequestMethod("POST");
+
+        JSONObject json   = new JSONObject();
+
+        json.put("client_id",Venmo.getVenmoID());
+        json.put("client_secret", Venmo.getVenmoKey());
+        json.put("code", code);
+
+        OutputStream os = con.getOutputStream();
+        os.write(json.toString().getBytes("UTF-8"));
+        os.close();
+        os.flush();
+        String split = null;
+        StringBuilder sb = new StringBuilder();
+        int HttpResult = con.getResponseCode();
+        if(HttpResult == HttpURLConnection.HTTP_OK){
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                split = line;
+            }
+
+            br.close();
+
+            System.out.println(""+sb.toString());
+
+        }else{
+            System.out.println(con.getResponseMessage());
+        }
+        HashMap<String, String> map = new HashMap<>();
+        JSONObject obj = new JSONObject(split);
+        JSONObject userObj = obj.getJSONObject("user");
+        String id = userObj.get("id").toString().trim();
+        String access = obj.get("access_token").toString().trim();
+        String refresh = obj.get("refresh_token").toString().trim();
+        user.setVenmoID(id);
+        user.setVenmoAccessToken(access);
+        user.setVenmmoRefreshToken(refresh);
+        repo.save(user);
     }
 
 }
