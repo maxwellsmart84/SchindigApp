@@ -7,6 +7,7 @@
       $http,
       $scope,
       $state,
+      $timeout,
       $stateParams,
       ManagePartyService,
       EventWizardService
@@ -130,7 +131,27 @@
             // $state.go('home');
         });
       };
+      $scope.showInviteVar = false;
+      $scope.showGuestListVar = true;
+      $scope.showInvite = function(){
+        $scope.showInviteVar = true;
+        $scope.showGuestListVar = false;
+        console.log('invite var', $scope.showInviteVar);
+        
+      };
+      $scope.showGuestList = function(){
+        $scope.showInviteVar = false;
+        $scope.showGuestListVar = true;
+        console.log('invite var', $scope.showInviteVar);
+
+      };
+
+
+
+
+
       $scope.goToFavorBrowse = function(){
+        $timeout($scope.loadOneFavorBrowse(), 3000)
         $state.go('manageFavorBrowse');
       };
       $scope.loadOneFavorBrowse = function(){
@@ -165,7 +186,7 @@
           });
       };
       $scope.goBackToManage = function(){
-        $scope.loadOneFavor();
+        $timeout($scope.loadOneFavor(), 3000)
         $state.go('manageFavor');
       };
 

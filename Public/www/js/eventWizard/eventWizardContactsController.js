@@ -39,7 +39,7 @@
         vm.contactDataArray=[];
         $scope.showConfirm = function() {
           if(vm.contactArray === []){
-            $state.go('home');
+            $state.go('manageParty');
             return
           } else{
             var confirmPopup = $ionicPopup.confirm({
@@ -66,7 +66,7 @@
               });
                 EventWizardService
                   .updateWizData(data).then(function(data){
-                     $state.go('home');
+                     $state.go('manageParty');
                 });
               }
               else {

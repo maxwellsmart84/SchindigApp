@@ -1,30 +1,61 @@
-<ion-view title="Manage Your Invites">
-  <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
-  </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
-      <h1 class= "title">Let's Manage Invites</h1>
+<ion-view class="manageParty">
+  <div class="bar managePartyHeader">
+      <h1>Let's Manage Invites</h1>
    </div>
-   <ion-content ng-init="loadInvitedPeople()">
-    <ion-list>
-      <ion-item>
+   <ion-content class="managePartyContent manageHostedInvites" ng-init="loadInvitedPeople()">
+     <button
+       class="button button-small button-energized"
+       ng-click="showGuestList()">
+       Guest List
+     </button>
+     <button
+       ng-click="showInvite()"
+       class="button button-small button-energized">
+       Invite More
+     </button>
+    <ion-list
+      ng-show="showGuestListVar">
+      <ion-item class="invitesSub">
         <div class="row center">
-          <div class="col">Username:</div>
-          <div class="col">RSVP Status:</div>
-
+          <div class="col"><h3>Username:</h3></div>
+          <div class="col"><h3>RSVP Status:</h3></div>
         </div>
       </ion-item>
       <ion-item ng-repeat="invite in inviteList">
         <div class="row center">
           <div class="col">
-            {{invite.user.username}}
+            <h3>{{invite.name}}</h3>
           </div>
           <div class="col">
-            {{invite.rsvpStatus}}
+            <h3>{{invite.rsvpStatus}}</h3>
           </div>
         </div>
       </ion-item>
+    </ion-list>
+    <ion-list
+      ng-show="showInviteVar">
+      <!-- <h1>dog</h1> -->
+      <div ng-controller="ContactsController">
+        <div ng-init="getContactList()">
+          <button
+            ng-click="pushToContactArray();showConfirm()"
+            class="button button-full button-positive">
+            SEND INVITES
+          </button>
+          <ul class="list">
+            <ion-checkbox
+              ng-repeat="item in contactName | orderBy: 'name.formatted'"
+              ng-click="isChecked = !isChecked">
+              <ion-item
+                ng-model="isChecked"
+                id="{{item}}"
+                ng-class="isChecked ? 'true' : 'false'">
+                {{item.name.formatted}}
+              </ion-item>
+            </ion-checkbox>
+          </ul>
+        </div>
+      </div>
     </ion-list>
    </ion-content>
  </ion-view>

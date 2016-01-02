@@ -53,11 +53,5 @@
         postInviteData: postInviteData,
         updatePartyFavorList: updatePartyFavorList
       };
-
     });
-
-
-
-
-
 }());
