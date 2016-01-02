@@ -84,8 +84,8 @@
         userID: userID,
         invites: {
           rsvpStatus: rsvpStatus
-        }
-      };
+          }
+        };
       console.log('userrsvp', userRsvp);
       ViewPartyService.postRsvp(userRsvp)
         .success(function(data){
@@ -95,14 +95,8 @@
           });
           console.log('success', data);
         });
-
+      };
         $scope.loadRSVPStatus = function(){
-          // if ($scope.rsvpShowBool === true){
-          //   return $scope.rsvpShowMainBool === false;
-          // }
-          // if ($scope.rsvpShowMainBool === false){
-          //   return $scope.rsvpShowBool === true;
-          // }
           var rawPartyID = +localStorage.getItem('oneInvPartyID');
           var userID = +localStorage.getItem('userID');
           ViewPartyService.getOneParty(rawPartyID, userID).then(function(data){
@@ -116,7 +110,6 @@
             }
           });
         };
-    };
 
 
     //PARKING TOAST//

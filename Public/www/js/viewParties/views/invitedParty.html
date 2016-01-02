@@ -35,8 +35,7 @@
     <ion-padding></ion-padding>
     <h2>Are you going to this party?</h2>
     <h2><button
-      ng-model="rsvpShowMainBool"
-      ng-click="rsvpShow(); loadRSVPStatus()"
+      ng-click="loadRSVPStatus(); rsvpShow()"
       class="button button-energized">{{rsvpShowData}}</button></h2>
   </div>
   <ion-padding></ion-padding>
@@ -52,33 +51,17 @@
         </div> -->
     <ion-item class="card">
       <div class= "invitePartyCard item item-text-wrap item">
-        <p ng-show="invPartyOne.themeCheck">This <strong>{{invPartyOne.partyType}}</strong>
-
-        <h2 ng-hide="invPartyOne.themeCheck" class="noTheme"><strong>{{invPartyOne.partyType}} Party</h2>
         <h2>{{invPartyOne.local}}</h2>
         <h3>BYOB: {{invPartyOne.byob}}</h3>
         <h3>Parking: {{invPartyOne.parking}}</h3>
         <h3>{{invPartyOne.partyDate | date: 'short'}}</h3>
         <p>{{invPartyOne.description}}</p>
-        <p ng-show="invPartyOne.themeCheck">This <strong>{{invPartyOne.partyType}}</strong>
       </div>
   </ion-item>
-      <!-- <div
-        ng-click="rsvpShowMain()"
-        ng-show="rsvpShowBool">
-        <button ng-click="rsvp('Yes')" class="button button-small button-energized">Yes</button>
-        <button ng-click="rsvp('No')" class="button button-assertive">No</button>
-        <button ng-click="rsvp('Maybe')" class="button button-royal">Maybe</button>
-      </div> -->
-
-      <!-- <div class="item-text-wrap">
-          <div ng-hide="invPartyOne.themeCheck" class="noTheme"><p>This <strong>{{invPartyOne.partyType}} Party</strong>  {{invPartyOne.theme}} </p></div>
-          <div ng-show="invPartyOne.themeCheck"><p>This <strong>{{invPartyOne.partyType}} Party</strong> party has a theme: <strong>{{invPartyOne.theme}}</strong></p></div>
-      </div> -->
     </ion-list>
     <div class="button-bar">
       <button
-        class="button button-energized"
+        class="button button-small button-energized"
         ng-click="showFavor()">
         Favors
       </button>
