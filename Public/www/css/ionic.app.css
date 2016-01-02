@@ -9313,8 +9313,12 @@ img {
     appearance: none;
     background-color: #ffe05d; }
   .viewParties .card {
-    background-color: rgba(0, 0, 0, 0.6);
-    font-family: "Monoton"; }
+    font-family: "Monoton";
+    padding-top: 15px;
+    margin: 0; }
+    .viewParties .card .list-inset {
+      margin: 0;
+      padding: 0; }
     .viewParties .card h2 {
       text-align: center; }
     .viewParties .card p {
@@ -9366,8 +9370,7 @@ img {
       text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
   .viewParties .item-content {
     background-color: rgba(0, 0, 0, 0.6);
-    padding-right: 16px;
-    margin-right: 20px; }
+    padding-right: 12px; }
   .viewParties .item-text-wrap {
     background-color: rgba(0, 0, 0, 0.6);
     border: solid rgba(247, 190, 243, 0.6) 5px;

@@ -41,8 +41,8 @@
     //THIS IS DEFINITELY NOT USED, MAX..
 
     ///RSVP///
-    $scope.rsvpShowMainBool = true;
-    $scope.rsvpShowBool = false;
+
+
     $scope.rsvpShow = function(){
       var rsvpPopup = $ionicPopup.show ({
         title: 'Are You Going?',
@@ -51,6 +51,7 @@
           text: 'Yes',
           onTap: function(){
               $scope.rsvp('Yes');
+              $scope.loadRSVPStatus();
               rsvpPopup.close();
           }
           },
@@ -58,6 +59,7 @@
           text: 'No',
           onTap: function(){
                 $scope.rsvp('No');
+                $scope.loadRSVPStatus();
                 rsvpPopup.close();
             }
           },
@@ -65,18 +67,15 @@
           text: 'Maybe',
           onTap: function(){
                 $scope.rsvp('Maybe');
+                $scope.loadRSVPStatus();
                 rsvpPopup.close();
             }
           },
         ]
       });
-      // $scope.rsvpShowBool = true;
-      // $scope.rsvpShowMainBool = false;
     };
 
     $scope.rsvp = function(rsvpStatus){
-      $scope.rsvpShowMainBool = true;
-      $scope.rsvpShowBool = false;
       console.log('what rsvp', rsvpStatus);
       var partyID = +localStorage.getItem('oneInvPartyID');
       var userID = +localStorage.getItem('userID');
@@ -96,6 +95,27 @@
           });
           console.log('success', data);
         });
+
+        $scope.loadRSVPStatus = function(){
+          // if ($scope.rsvpShowBool === true){
+          //   return $scope.rsvpShowMainBool === false;
+          // }
+          // if ($scope.rsvpShowMainBool === false){
+          //   return $scope.rsvpShowBool === true;
+          // }
+          var rawPartyID = +localStorage.getItem('oneInvPartyID');
+          var userID = +localStorage.getItem('userID');
+          ViewPartyService.getOneParty(rawPartyID, userID).then(function(data){
+            $scope.rsvpShowData = data.data.rsvpStatus;
+            console.log("scopeRSVP", $scope.rsvpShowData);
+            if ($scope.rsvpShowData === null || undefined) {
+              $scope.rsvpShowData = "RSVP";
+            }
+            else {
+              $scope.rsvpShowData = data.data.rsvpStatus;
+            }
+          });
+        };
     };
 
 
@@ -121,34 +141,37 @@
       };
 
       $scope.loadOneInvParty = function(){
-        var partyIdItem = +localStorage.getItem('oneInvPartyID');
-        ViewPartyService.getOneParty(partyIdItem).then(function(data){
-          console.log('invite data',data.data);
-          if(data.data.byob === true){
-            console.log('true');
-            data.data.byob = "Yes";
-          } else {
-            console.log('false');
-            data.data.byob = "No";
-          }
-          if(data.data.themeCheck === true){
-            console.log('theme true');
-            data.data.theme = data.data.theme;
-          } else {
-            console.log('theme false');
-            data.data.theme = 'does not have a theme';
-          }
-          console.log('byob statsu', data.data.byob);
-          $scope.invPartyOne = data.data;
-        });
-      };
+          var partyIdItem = +localStorage.getItem('oneInvPartyID');
+          var userID = +localStorage.getItem('userID');
+          ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
+            console.log('invite data',data.data);
+            if(data.data.byob === true){
+              console.log('true');
+              data.data.byob = "Yes";
+            } else {
+              console.log('false');
+              data.data.byob = "No";
+            }
+            if(data.data.themeCheck === true){
+              console.log('theme true');
+              data.data.theme = data.data.theme;
+            } else {
+              console.log('theme false');
+              data.data.theme = 'does not have a theme';
+            }
+            console.log('byob statsu', data.data.byob);
+            $scope.invPartyOne = data.data;
+          });
+        };
       $scope.loadInvitedPeople = function(){
         var rawPartyID = +localStorage.getItem('oneInvPartyID');
+        var userID = +localStorage.getItem('userID');
         ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
           console.log('load invited people', data.data);
           $scope.inviteList = data.data;
         });
       };
+
       //HOSTED PARTIES GET
       ViewPartyService.getHostedParties(userID)
         .success(function(hostData){

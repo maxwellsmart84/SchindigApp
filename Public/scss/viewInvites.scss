@@ -39,8 +39,14 @@
   }
 
   .card {
-    background-color: rgba(#000000, 0.60);
     font-family: "Monoton";
+    padding-top: 15px;
+    margin:0;
+
+    .list-inset {
+      margin:0;
+      padding:0;
+    }
 
     h2 {
       text-align: center;
@@ -124,8 +130,7 @@
   }
   .item-content {
     background-color: rgba(#000000, 0.60);
-    padding-right: 16px;
-    margin-right: 20px;
+    padding-right: 12px;
 
    }
 
