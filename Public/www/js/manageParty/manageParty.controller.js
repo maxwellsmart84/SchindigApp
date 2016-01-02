@@ -69,6 +69,8 @@
           .then(function(data){
             console.log('data?', data);
             $scope.oneParty = data.data;
+            $scope.showInviteVar = false;
+            
         });
       };
       $scope.loadOneFavor = function(){
@@ -133,11 +135,13 @@
       };
       $scope.showInviteVar = false;
       $scope.showGuestListVar = true;
+      $scope.isChecked = false;
+
       $scope.showInvite = function(){
         $scope.showInviteVar = true;
         $scope.showGuestListVar = false;
+        console.log('what is this checked', $scope.isChecked);
         console.log('invite var', $scope.showInviteVar);
-        
       };
       $scope.showGuestList = function(){
         $scope.showInviteVar = false;

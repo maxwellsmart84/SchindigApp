@@ -3,16 +3,18 @@
       <h1>Let's Manage Invites</h1>
    </div>
    <ion-content class="managePartyContent manageHostedInvites" ng-init="loadInvitedPeople()">
-     <button
-       class="button button-small button-energized"
-       ng-click="showGuestList()">
-       Guest List
-     </button>
-     <button
-       ng-click="showInvite()"
-       class="button button-small button-energized">
-       Invite More
-     </button>
+     <div class="button-bar">
+       <button
+         class="button button-small button-energized"
+         ng-click="showGuestList();loadInvitedPeople();">
+         Guest List
+       </button>
+       <button
+         ng-click="showInvite()"
+         class="button button-small button-energized">
+         Invite More
+       </button>
+     </div>
     <ion-list
       ng-show="showGuestListVar">
       <ion-item class="invitesSub">
@@ -34,7 +36,6 @@
     </ion-list>
     <ion-list
       ng-show="showInviteVar">
-      <!-- <h1>dog</h1> -->
       <div ng-controller="ContactsController">
         <div ng-init="getContactList()">
           <button
@@ -44,13 +45,13 @@
           </button>
           <ul class="list">
             <ion-checkbox
-              ng-repeat="item in contactName | orderBy: 'name.formatted'"
+              ng-repeat="item in contactName | orderBy: 'name'"
               ng-click="isChecked = !isChecked">
               <ion-item
                 ng-model="isChecked"
                 id="{{item}}"
                 ng-class="isChecked ? 'true' : 'false'">
-                {{item.name.formatted}}
+                {{item.name}}
               </ion-item>
             </ion-checkbox>
           </ul>
