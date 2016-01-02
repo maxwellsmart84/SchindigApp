@@ -10,6 +10,7 @@
       $stateParams,
       ViewPartyService,
       ionicMaterialMotion,
+      ionicMaterialInk,
       $ionicPopup,
       $cordovaToast,
       ManagePartyService
@@ -183,10 +184,10 @@
           console.log('invite data',data.data);
           if(data.data.byob === true){
             console.log('true');
-            data.data.byob = "BYOB";
+            data.data.byob = "Yes";
           } else {
             console.log('false');
-            data.data.byob = "Booze Included";
+            data.data.byob = "No";
           }
           if(data.data.themeCheck === true){
             console.log('theme true');
@@ -231,6 +232,7 @@
       };
 
         //FAVOR CLAIMING//
+
       $scope.loadOneFavor = function(){
           var rawPartyID = +localStorage.getItem('oneInvPartyID');
           ViewPartyService.getPartyFavor(rawPartyID).then(function(data){
@@ -256,11 +258,12 @@
                 favor.claimed = false;
                 favor.user = null;
                 $scope.loadOneFavor();
+                $scope.itemFlip();
                 // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }
           else {
-            return
+            return;
             }
           });
       };
@@ -270,13 +273,11 @@
           template: 'Are you REALLY going to bring this?'
         });
         favorClaimPopup.then(function(res){
-          console.log('que?',res);
           if(res){
             var data = {
               userID: rawUserID,
               listID: favor.listID
             };
-            console.log('postFavor', data);
             ViewPartyService.favorClaim(data)
               .then(function(data){
                 favor.claimed = true;

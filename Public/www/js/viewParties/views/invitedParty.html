@@ -18,7 +18,7 @@
        class="button"
        ng-show="chipIn"
        ng-click="showStretchInput()">
-       Chip In!
+       Chip In !
      </button>
      <input type="number" placeholder="You Feelin' Generous?" ng-model="stretchValue" ng-show="stretchInput">
      <button
@@ -26,10 +26,9 @@
        class="button button-energized"
        ng-show="stretchInput"
        ng-click="pledgeStretch(stretchValue)">
-       Chip In!
+       Chip In !
      </button>
   </div>
-  <br>
   <div class="item-text-wrap">
     <ion-padding></ion-padding>
     <h2>Are you going to this party?</h2>
@@ -56,8 +55,10 @@
         <h3>{{invPartyOne.partyDate | date: 'short'}}</h3>
         <p>{{invPartyOne.description}}</p>
       </div>
-  </ion-item>
+      <ion-padding></ion-padding>
+    </ion-item>
     </ion-list>
+    <ion-padding></ion-padding>
     <div class="button-bar">
       <button
         class="button button-small button-energized"
@@ -73,8 +74,8 @@
     <ion-list
       ng-model="showFavorVar"
       ng-show="showFavorVar">
-      <ion-item class="item">
-        <h2><strong>Help out the party - pick a favor!</strong></h2>
+      <ion-item class="item item-text-wrap">
+        <h4>Help out the party pick a favor!</h4>
       </ion-item>
       <ion-item
         ng-repeat="favor in onePartyFavor"
@@ -86,28 +87,28 @@
           <h3>{{favor.favor.favorName}}</h3>
         </div>
         <div
-          class="item favorClaimed"
+          class="item-text-wrap favorClaimed"
           ng-show="favor.claimed == true"
           ng-click="showFavorUnclaim(favor)">
-          <h2><strong>{{favor.favor.favorName}}</strong> Claimed by: {{favor.user.username}}</h2>
+          <h3>{{favor.user.username}} ({{favor.user.firstName}}) Is Bringing:</h3>
+          <h3>{{favor.favor.favorName}}</h3>
         </div>
       </ion-item>
     </ion-list>
     <ion-list
       ng-model="showInviteVar"
-      ng-show="showInviteVar"
-      class="list card">
-      <ion-item>
-        <h2><strong>Who's Coming To This Party</strong></h2>
+      ng-show="showInviteVar">
+      <ion-item class= "item item-text-wrap">
+        <h4>Who's Coming To This Party</h4>
       </ion-item>
       <ion-item
         ng-repeat="invite in inviteList"
         ng-model="invite">
         <div
-          class="item"
+          class=" invitedPeeps item"
           ng-click="">
-          <h3>{{invite.user.username}}</h3>
-          <h2>{{invite.rsvpStatus}}</h2>
+          <h3>{{invite.user.firstName}} {{invite.user.lastName}}</h3>
+          <h4>{{invite.rsvpStatus}}</h4>
         </div>
       </ion-item>
     </ion-list>
