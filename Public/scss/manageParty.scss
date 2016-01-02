@@ -10,8 +10,7 @@ $Red: #F60024;
 $PinkFire: #F7007B;
 $White: #e0e0e0;
 $Cream: #dddcbe;
-
-
+$LightOrange: #DD7A14;
 
 .manageParty {
   display: flex;
@@ -20,6 +19,11 @@ $Cream: #dddcbe;
   background-position: top;
   font-style: "Righteous";
 
+  .list {
+    .item {
+      border: 5px, solid, white;
+    }
+  }
   .managePartyHeader {
     display: flex;
     width:100%;
@@ -47,15 +51,17 @@ $Cream: #dddcbe;
     border-top: thin solid gray;
     input{
       font-size: 1.2rem;
-      height: 10vh;
+      padding:8px;
+      height: 6vh;
       width: 100%;
       background-color: $Cream;
       border-radius: 10px;
     }
     .item{
-      background-color: $Orange;
+      background-color: $LightOrange;
       border-radius: 10px;
       font-style: "Righteous";
+
 
     }
     .manageItem{
@@ -66,7 +72,7 @@ $Cream: #dddcbe;
       color: $Cream;
       font-size: 1.2rem;
       justify-content: center;
-    }
+        }
     .button-icon{
       padding-bottom: 12%;
     }
@@ -74,11 +80,14 @@ $Cream: #dddcbe;
       border-radius: 10px;
       background-color: #78C0A8;
       color: #FCEBB6;
+      font-size: 1.3rem;
+
     }
     .inviteButton{
       border-radius: 20px;
       background-color: #FCEBB6;
       color: #78C0A8;
+      font-size: 1.3rem;
     }
   }
   ion-item{

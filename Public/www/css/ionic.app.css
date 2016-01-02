@@ -9528,6 +9528,8 @@ a.button {
   background-size: 100%;
   background-position: top;
   font-style: "Righteous"; }
+  .manageParty .list .item {
+    border: 5px, solid, white; }
   .manageParty .managePartyHeader {
     display: flex;
     width: 100%;
@@ -9549,12 +9551,13 @@ a.button {
     border-top: thin solid gray; }
     .manageParty .managePartyContent input {
       font-size: 1.2rem;
-      height: 10vh;
+      padding: 8px;
+      height: 6vh;
       width: 100%;
       background-color: #dddcbe;
       border-radius: 10px; }
     .manageParty .managePartyContent .item {
-      background-color: #F63B09;
+      background-color: #DD7A14;
       border-radius: 10px;
       font-style: "Righteous"; }
     .manageParty .managePartyContent .manageItem {
@@ -9570,11 +9573,13 @@ a.button {
     .manageParty .managePartyContent .manageButton {
       border-radius: 10px;
       background-color: #78C0A8;
-      color: #FCEBB6; }
+      color: #FCEBB6;
+      font-size: 1.3rem; }
     .manageParty .managePartyContent .inviteButton {
       border-radius: 20px;
       background-color: #FCEBB6;
-      color: #78C0A8; }
+      color: #78C0A8;
+      font-size: 1.3rem; }
   .manageParty ion-item {
     margin: 0; }
   .manageParty h1 {
