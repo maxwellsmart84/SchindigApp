@@ -40,7 +40,7 @@ public class Party {
 
     public Integer stretchGoal;
 
-    public Integer stretchStatus = 0;
+    public Double stretchStatus = 0.0;
 
     public Integer wizPosition = 1;
 
@@ -67,7 +67,7 @@ public class Party {
         this.partyDate = partyDate;
         this.local = local;
     }
-    public Party(User host, String partyName, String partyType, String description, String subType, LocalDateTime createDate, String partyDate, String local, String stretchName, Integer stretchGoal, Integer stretchStatus, Boolean byob, Boolean themeCheck, String theme, String parking) {
+    public Party(User host, String partyName, String partyType, String description, String subType, LocalDateTime createDate, String partyDate, String local, String stretchName, Integer stretchGoal, Double stretchStatus, Boolean byob, Boolean themeCheck, String theme, String parking) {
 
         this.host = host;
         this.partyName = partyName;
@@ -130,7 +130,7 @@ public class Party {
 
         return stretchGoal;
     }
-    public Integer getStretchStatus() {
+    public Double getStretchStatus() {
 
         return stretchStatus;
     }
@@ -202,7 +202,7 @@ public class Party {
 
         this.stretchGoal = stretchGoal;
     }
-    public void setStretchStatus(Integer stretchStatus) {
+    public void setStretchStatus(Double stretchStatus) {
 
         this.stretchStatus = stretchStatus;
     }

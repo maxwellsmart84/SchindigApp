@@ -255,8 +255,8 @@ public class Methods extends MainController {
         repo.save(user);
     }
 
-    public static String sendPayment(User guest, Party party, UserRepo repo, Integer amount) throws IOException {
-        String url = Venmo.getVenmoPaymentURL();
+    public static String sendPayment(User guest, Party party, UserRepo repo, Double amount) throws IOException {
+        String url = Venmo.getVenmoSandbox();
         URL object = new URL(url);
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         con.setDoOutput(true);
@@ -266,8 +266,8 @@ public class Methods extends MainController {
         con.setRequestMethod("POST");
 
         JSONObject json = new JSONObject();
-
-        String message = String.format("Schindig Party Payment of %d made to %s's %s.", amount, party.host.getFirstName(), party.getPartyName());
+        amount = .10;
+        String message = String.format("Schindig Party Payment of %s made to %s's %s.", String.valueOf(amount), party.host.getFirstName(), party.getPartyName());
 
         json.put("access_token", guest.getVenmoAccessToken());
         if (party.host.getVenmoID()!=null) {

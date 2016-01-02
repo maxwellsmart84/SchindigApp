@@ -154,7 +154,7 @@ public class MainController {
                     if (parties.count() < 10) {
                         Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
                                 LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-                                0, true, true, theme, "Valet");
+                                0.0, true, true, theme, "Valet");
                         user.hostCount += 1;
                         users.save(user);
                         parties.save(P);
@@ -517,7 +517,7 @@ public class MainController {
             }
             if (parameters.party.stretchStatus != null) {
                 if ((check.stretchStatus += parameters.party.stretchStatus) > check.stretchGoal) {
-                    Integer diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
+                    double diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
                     check.stretchStatus += (parameters.party.stretchStatus - diff);
                     response.sendError(200, check.stretchName + "'s goal has been fulfilled!");
                 } else {
@@ -756,7 +756,7 @@ public class MainController {
     public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         Party party = parties.findOne(p.partyID);
         User guest = users.findOne(p.userID);
-        Integer amount = p.amount;
+        Double amount = p.amount;
         if (guest.getVenmoID()==null) {
             response.sendError(400, "No Venmo account found.");
         }

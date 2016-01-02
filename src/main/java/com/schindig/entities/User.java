@@ -46,7 +46,7 @@ public class User {
     public Integer hostCount = 0;
     public Integer inviteCount = 0;
     public Integer invitedCount = 0;
-    private Integer contributions = 0;
+    private Double contributions = 0.0;
 
     private String venmoCode;
     private String venmoAccessToken;
@@ -187,11 +187,11 @@ public class User {
 
         this.venmoID = venmoID;
     }
-    public Integer getContributions() {
+    public Double getContributions() {
 
         return contributions;
     }
-    public void setContributions(Integer contributions) {
+    public void setContributions(Double contributions) {
 
         this.contributions = contributions;
     }

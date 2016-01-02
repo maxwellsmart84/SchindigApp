@@ -37,6 +37,6 @@ public class Parameters {
 
     public Integer listID;
 
-    public Integer amount;
+    public Double amount;
 
 }
