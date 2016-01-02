@@ -10,6 +10,8 @@
     var viewInvitedPartiesURL = ip +'/parties/user';
     var getOneInvitedPartyURL = ip +'/party';
     var rsvpURL = ip + '/party/rsvp';
+    var updatePartyUrl = ip + '/party/update';
+
 
     var postRsvp = function(userRsvp){
       return $http.post(rsvpURL, userRsvp);
@@ -30,12 +32,14 @@
         .success(function(data){
       });
     };
-    var getOneParty = function (partyID){
-      partyID= partyID;
-      return $http.get(ip + '/party/'+partyID)
-        .success(function(data){
-      });
-    };
+    var getOneParty = function (partyID, userID){
+       partyID = partyID;
+       userID = userID;
+       return $http.get(ip + '/party/' + partyID + '/' + userID)
+         .success(function(data){
+           console.log('what is this data', data);
+       });
+     };
     var getPartyFavor = function(partyID){
         partyID = partyID;
         return $http.get(ip + '/party/'+ partyID +'/favors')
@@ -48,6 +52,11 @@
           .success(function(data){
             console.log(data);
         });
+
+      };
+
+      var patchStretchStatus = function(stretchValue){
+        return $http.patch(updatePartyUrl, stretchValue);
       };
 
     return {
@@ -57,7 +66,8 @@
       getOneParty: getOneParty,
       getPartyFavor : getPartyFavor,
       favorClaim: favorClaim,
-      postRsvp: postRsvp
+      postRsvp: postRsvp,
+      patchStretchStatus: patchStretchStatus
     };
   });
 

@@ -7,7 +7,7 @@
     .factory('LoginRegisterService', function($http, $state, $q, $cordovaDevice, $cordovaToast){
 
 
-      var ip = 'http://10.0.10.65:8080';
+      var ip = 'http://localhost:8080';
 
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
@@ -27,7 +27,7 @@
           .success(function(data){
             console.log('Login Success: ', data);
             localStorage.setItem('userID', data);
-            $state.go('home')
+            $state.go('home');
           }).error(function(data){
               console.log('data', data.message);
               // $cordovaToast.show(data.message, 'short', 'bottom')
