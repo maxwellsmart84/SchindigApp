@@ -1,16 +1,11 @@
-<ion-view ng-init="loadOneFavor()">
-  <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
-  </ion-nav-bar>
-  <div class="bar bar-header bar-royal">
+<ion-view ng-init="loadOneFavor()" class="manageParty">
+  <div class="bar managePartyHeader item item-icon-right">
+    <button class="button button-positive">
+      <i class="icon ion-ios-telephone"></i>
+    </button>
       <h1 class= "title">Let's Manage Favors</h1>
-      <div class="buttons">
-        <button class="button button-icon icon ion-ios-minus"
-          ng-click="data.showDelete = !data.showDelete"></button>
-      </div>
    </div>
-   <ion-content >
+   <ion-content class="managePartyContent">
      <div class="list" >
        <div class="item item-input-inset">
          <button

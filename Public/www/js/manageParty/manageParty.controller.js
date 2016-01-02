@@ -61,8 +61,10 @@
         localStorage.setItem('partyID', party.partyID);
       };
       $scope.loadOne = function(){
+        console.log('does this fire?');
         var rawPartyID = +localStorage.getItem('OnePartyID');
-        ManagePartyService.getOneHostedParty(rawPartyID).then(function(data){
+        var userID = +localStorage.getItem('userID')
+        ManagePartyService.getOneHostedParty(rawPartyID, userID).then(function(data){
           console.log('data?', data);
           $scope.oneParty = data.data;
         });
@@ -154,10 +156,13 @@
           partyID: partyID,
           favorDump: vm.favorArray
         };
+
         EventWizardService.updatePartyFavorList(data)
           .success(function(data){
             vm.favorArray = [];
             $scope.loadOneFavorBrowse();
+            $scope.loadOneFavor();
+            $scope.onePartyFavor = data.data;
             $state.go('manageFavor');
         });
       };

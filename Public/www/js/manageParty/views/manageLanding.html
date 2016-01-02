@@ -1,18 +1,14 @@
-<ion-view>
-   <ion-nav-bar class="bar-stable">
-     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-     </ion-nav-back-button>
-   </ion-nav-bar>
-   <div class="bar bar-header bar-royal">
-       <h1 class= "title">Let's Manage Parties</h1>
-    </div>
-   <ion-content ng-init="loadHostedParties()">
+<ion-view class="manageParty">
+
+   <div class="bar managePartyHeader">
+       <h1>Let's Manage Parties</h1>
+  </div>
+   <ion-content class="managePartyContent" ng-init="loadHostedParties()">
      <ion-list
           can-swipe="listCanSwipe">
-      <h3>Parties You Are Hosting</h3>
       <ion-item
         ng-repeat="party in hostedParties"
-        class="card"
+        class="card managePartyCard"
         ng-model="party"
         ng-click="viewOne(party)">
        <div ui-sref="manageParty({partyID:party.partyID})" class="item item-text-wrap item-icon-right">

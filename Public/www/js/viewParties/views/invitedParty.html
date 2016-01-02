@@ -27,7 +27,18 @@
       <div class="row center">
         <div class="col">
             <h2>{{invPartyOne.stretchName}}</h2>
-            <progress max= "invPartyOne.stretchGoal"value="invPartyOne.stretchStatus"></progress>
+            <progress max="{{invPartyOne.stretchGoal}}" value="{{invPartyOne.stretchStatus}}"></progress>
+            <button
+              ng-show="chipIn"
+              ng-click="showStretchInput()">
+              Chip In!
+            </button>
+            <input type="number" placeholder="You Feelin' Generous?" ng-model="stretchValue" ng-show="stretchInput">
+            <button
+              ng-show="stretchInput"
+              ng-click="pledgeStretch(stretchValue)">
+              Chip In!
+            </button>
         </div>
       </div>
       <!-- <div

@@ -16,6 +16,43 @@
     ){
 
       var vm = this;
+
+
+
+      ///PATCH TO STRETCH STATUS//
+      $scope.pledgeStretch = function(stretchValue){
+        var userID = +localStorage.getItem('userID');
+        ViewPartyService.userGet(userID).then(function(data){
+          if(data.venmoID != null){
+            console.log('datadatadtadtast', data);
+          }
+        });
+        $scope.invPartyOne.stretchStatus += stretchValue;
+        var stretchStatusValue = $scope.invPartyOne.stretchStatus;
+        var partyID = +localStorage.getItem('oneInvPartyID');
+        var patchData = {
+          party: {
+            partyID: partyID,
+            stretchStatus: stretchStatusValue
+          }
+        };
+        ViewPartyService.patchStretchStatus(patchData)
+          .success(function(data){
+            console.log('success stretch', data);
+            $scope.chipIn = true;
+            $scope.stretchInput = false;
+            $scope.loadOneInvParty();
+        });
+      };
+
+      $scope.chipIn = true;
+      $scope.stretchInput = false;
+      $scope.showStretchInput = function(){
+        $scope.stretchInput = true;
+        $scope.chipIn = false;
+      };
+
+
       $scope.showInviteVar = false;
       $scope.showFavorVar = true;
       $scope.showInvite = function(){
@@ -115,7 +152,7 @@
         .error(function(data){
           console.log('error', data);
         });
-    }
+    };
 
       $scope.getOneInvParty = function (party){
         localStorage.setItem('oneInvPartyID', party.partyID);
@@ -152,7 +189,6 @@
         });
       };
       //HOSTED PARTIES GET
-      ///turn into init FUNCTION
       $scope.getAllHostedParties = function(){
         ViewPartyService.getHostedParties(userID)
           .success(function(hostData){
@@ -162,7 +198,7 @@
           .error(function(data){
             console.log('error', rawUserID);
           });
-      }
+      };
       $scope.getOneHostParty = function (party) {
         localStorage.setItem('oneHostPartyID', party.partyID);
       };
@@ -173,7 +209,6 @@
           $scope.hostPartyOne = data.data;
         });
       };
-
 
         //FAVOR CLAIMING//
       $scope.loadOneFavor = function(){
@@ -200,6 +235,7 @@
               .then(function(data){
                 favor.claimed = false;
                 favor.user = null;
+                $scope.loadOneFavor();
                 // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }
@@ -207,7 +243,7 @@
             return
             }
           });
-      }
+      };
       $scope.showFavorConfirm = function(favor){
         var favorClaimPopup = $ionicPopup.confirm ({
           title: 'Claim Party Favor?',
@@ -225,6 +261,7 @@
               .then(function(data){
                 favor.claimed = true;
                 favor.user = data.data.user;
+                $scope.loadOneFavor();
                 // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }
