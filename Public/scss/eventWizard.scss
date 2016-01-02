@@ -4,14 +4,16 @@
 .wizardDateTime {
   font-family: serif;
 }
-
+.schinDigHome {
+  position: fixed;
+  margin-left: 220px;
+}
 
 .wizard {
   font-family: "Showboat" serif;
   background-color: #F0EAD6;
   text-transform: uppercase;
-
-    ion-google-place {
+  ion-google-place {
     background-color: white;
   }
   .button {
@@ -20,7 +22,6 @@
     background-color: #680E34;
     text-transform: uppercase;
     color:white;
-
   }
   .button-small {
     font-size:1.2rem;
@@ -31,8 +32,6 @@
     text-transform: uppercase;
     background-color: #F0EAD6;
   }
-
-
   input {
     background-color: #F0EAD6;
     font-family: "Showboat";
@@ -48,7 +47,7 @@
       text-transform: uppercase;
       background-color: #F0EAD6;
     }
-    .wizardDateTime{
+    .wizardDateTime {
       color: gray;
       text-transform: uppercase;
     }

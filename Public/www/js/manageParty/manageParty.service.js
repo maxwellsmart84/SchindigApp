@@ -6,13 +6,14 @@
     .factory('ManagePartyService', function($http, $state){
       var vm = this;
 
-      var ip = 'http://10.0.10.65:8080';
+      var ip = 'http://localhost:8080';
       var viewHostedPartiesURL = ip + '/parties/host';
       var viewInvitedPartiesURL = ip +'/parties/user';
       var updatedHostedPartiesURL = ip + '/party/update';
       var deleteFavorUrl = ip + '/party/favor/delete';
       var deletePartyUrl = ip + '/party/delete';
       var addFavorToDataUrl = ip + "/favor/save";
+
 
       var addFavorToData = function(favorData) {
         return $http.post(addFavorToDataUrl, favorData);
@@ -42,18 +43,18 @@
             console.log('succes view', data);
         });
       };
-      var getOneHostedParty = function(partyID){
+      var getOneHostedParty = function(partyID, userID){
         console.log(partyID);
+        console.log('getting one party');
         partyID = partyID;
-        return $http.get(ip+'/party/'+partyID).success(function(data){
+        userID = userID;
+        return $http.get(ip+'/party/'+partyID+'/'+userID).success(function(data){
           console.log('one party', data);
         });
       };
       var getPartyFavor = function(partyID){
         partyID = partyID;
-        return $http.get(ip + '/party/'+ partyID +'/favors').success(function(data){
-          console.log('favor data', data);
-        });
+        return $http.get(ip + '/party/'+ partyID +'/favors')
       };
       var updatedHostedParties = function (data){
         return $http.patch(updatedHostedPartiesURL, data)

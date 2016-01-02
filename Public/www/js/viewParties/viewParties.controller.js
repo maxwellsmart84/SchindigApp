@@ -13,10 +13,48 @@
       $ionicPopup,
       $cordovaToast,
       ManagePartyService
-
     ){
 
       var vm = this;
+
+
+
+      ///PATCH TO STRETCH STATUS//
+      $scope.pledgeStretch = function(stretchValue){
+        var userID = +localStorage.getItem('userID');
+        ViewPartyService.userGet(userID).then(function(data){
+          if(data.data.venmoID != null){
+            console.log('DONDE ESTA LA DATA', data.data.venmoID);
+          } else {
+            return
+          }
+        });
+        $scope.invPartyOne.stretchStatus += stretchValue;
+        var stretchStatusValue = $scope.invPartyOne.stretchStatus;
+        var partyID = +localStorage.getItem('oneInvPartyID');
+        var patchData = {
+          party: {
+            partyID: partyID,
+            stretchStatus: stretchStatusValue
+          }
+        };
+        ViewPartyService.patchStretchStatus(patchData)
+          .success(function(data){
+            console.log('success stretch', data);
+            $scope.chipIn = true;
+            $scope.stretchInput = false;
+            $scope.loadOneInvParty();
+        });
+      };
+
+      $scope.chipIn = true;
+      $scope.stretchInput = false;
+      $scope.showStretchInput = function(){
+        $scope.stretchInput = true;
+        $scope.chipIn = false;
+      };
+
+
       $scope.showInviteVar = false;
       $scope.showFavorVar = true;
       $scope.showInvite = function(){
@@ -41,8 +79,8 @@
     //THIS IS DEFINITELY NOT USED, MAX..
 
     ///RSVP///
-    $scope.rsvpShowMainBool = true;
-    $scope.rsvpShowBool = false;
+
+
     $scope.rsvpShow = function(){
       var rsvpPopup = $ionicPopup.show ({
         title: 'Are You Going?',
@@ -50,30 +88,32 @@
           {
           text: 'Yes',
           onTap: function(){
-              return $scope.rsvp('Yes');
+              $scope.rsvp('Yes');
+              $scope.loadRSVPStatus();
+              rsvpPopup.close();
           }
           },
           {
           text: 'No',
           onTap: function(){
-                return $scope.rsvp('No');
+                $scope.rsvp('No');
+                $scope.loadRSVPStatus();
+                rsvpPopup.close();
             }
           },
           {
           text: 'Maybe',
           onTap: function(){
-                return $scope.rsvp('Maybe');
+                $scope.rsvp('Maybe');
+                $scope.loadRSVPStatus();
+                rsvpPopup.close();
             }
           },
         ]
       });
-      // $scope.rsvpShowBool = true;
-      // $scope.rsvpShowMainBool = false;
     };
 
     $scope.rsvp = function(rsvpStatus){
-      $scope.rsvpShowMainBool = true;
-      $scope.rsvpShowBool = false;
       console.log('what rsvp', rsvpStatus);
       var partyID = +localStorage.getItem('oneInvPartyID');
       var userID = +localStorage.getItem('userID');
@@ -82,18 +122,34 @@
         userID: userID,
         invites: {
           rsvpStatus: rsvpStatus
-        }
-      };
+          }
+        };
       console.log('userrsvp', userRsvp);
       ViewPartyService.postRsvp(userRsvp)
         .success(function(data){
           ManagePartyService.getInvitedPeeps(partyID).then(function(data){
-            console.log('load invited people', data.data);
+            console.log('load invited people', data);
             $scope.inviteList = data.data;
           });
           console.log('success', data);
+          // $cordovaToast.show(data.message, 'short', 'bottom')
+
         });
-    };
+      };
+        $scope.loadRSVPStatus = function(){
+          var rawPartyID = +localStorage.getItem('oneInvPartyID');
+          var userID = +localStorage.getItem('userID');
+          ViewPartyService.getOneParty(rawPartyID, userID).then(function(data){
+            $scope.rsvpShowData = data.data.rsvpStatus;
+            console.log("scopeRSVP", $scope.rsvpShowData);
+            if ($scope.rsvpShowData === null || undefined) {
+              $scope.rsvpShowData = "RSVP";
+            }
+            else {
+              $scope.rsvpShowData = data.data.rsvpStatus;
+            }
+          });
+        };
 
 
     //PARKING TOAST//
@@ -104,14 +160,17 @@
 
 
     //INVITED PARTIES GET
-    ViewPartyService.getInvitedParties(userID)
-      .success(function(invData){
-        console.log('parties success', invData);
-        $scope.invitedParties = invData;
-      })
-      .error(function(data){
-        console.log('error', data);
-      });
+    ///////////TURN INTO FUNCTION INIT/////
+    $scope.getAllInvitedParties = function(){
+      ViewPartyService.getInvitedParties(userID)
+        .success(function(invData){
+          console.log('parties success', invData);
+          $scope.invitedParties = invData;
+        })
+        .error(function(data){
+          console.log('error', data);
+        });
+    };
 
       $scope.getOneInvParty = function (party){
         localStorage.setItem('oneInvPartyID', party.partyID);
@@ -119,7 +178,8 @@
 
       $scope.loadOneInvParty = function(){
         var partyIdItem = +localStorage.getItem('oneInvPartyID');
-        ViewPartyService.getOneParty(partyIdItem).then(function(data){
+        var userID = +localStorage.getItem('userID');
+        ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
           console.log('invite data',data.data);
           if(data.data.byob === true){
             console.log('true');
@@ -141,31 +201,34 @@
       };
       $scope.loadInvitedPeople = function(){
         var rawPartyID = +localStorage.getItem('oneInvPartyID');
+        var userID = +localStorage.getItem('userID');
         ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
           console.log('load invited people', data.data);
           $scope.inviteList = data.data;
         });
       };
+
       //HOSTED PARTIES GET
-      ViewPartyService.getHostedParties(userID)
-        .success(function(hostData){
-          $scope.hostedParties = hostData;
-          console.log(hostData);
-        })
-        .error(function(data){
-          console.log('error', rawUserID);
-        });
+      $scope.getAllHostedParties = function(){
+        ViewPartyService.getHostedParties(userID)
+          .success(function(hostData){
+            $scope.hostedParties = hostData;
+            console.log('host success',hostData);
+          })
+          .error(function(data){
+            console.log('error', rawUserID);
+          });
+      };
       $scope.getOneHostParty = function (party) {
         localStorage.setItem('oneHostPartyID', party.partyID);
       };
       $scope.loadOneHostParty = function(){
         var partyIdItem = +localStorage.getItem('oneHostPartyID');
-        ViewPartyService.getOneParty(partyIdItem).then(function(data){
+        ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
           console.log('hostpartyData', data.data);
           $scope.hostPartyOne = data.data;
         });
       };
-
 
         //FAVOR CLAIMING//
       $scope.loadOneFavor = function(){
@@ -175,7 +238,32 @@
             $scope.onePartyFavor = data.data;
         });
       };
-
+      $scope.showFavorUnclaim = function(favor){
+        var favorClaimPopup = $ionicPopup.confirm ({
+          title: 'Unclaim Party Favor?',
+          template: 'Are you REALLY NOT going to bring this?'
+        });
+        favorClaimPopup.then(function(res){
+          console.log('que?',res);
+          if(res){
+            var data = {
+              userID: rawUserID,
+              listID: favor.listID
+            };
+            console.log('postFavor', data);
+            ViewPartyService.favorClaim(data)
+              .then(function(data){
+                favor.claimed = false;
+                favor.user = null;
+                $scope.loadOneFavor();
+                // $cordovaToast.show(data.data.message, 'short', 'bottom')
+            });
+          }
+          else {
+            return
+            }
+          });
+      };
       $scope.showFavorConfirm = function(favor){
         var favorClaimPopup = $ionicPopup.confirm ({
           title: 'Claim Party Favor?',
@@ -185,9 +273,6 @@
           console.log('que?',res);
           if(res){
             var data = {
-              favor: {
-              favorID: favor.favor.favorID
-              },
               userID: rawUserID,
               listID: favor.listID
             };
@@ -196,6 +281,8 @@
               .then(function(data){
                 favor.claimed = true;
                 favor.user = data.data.user;
+                $scope.loadOneFavor();
+                // $cordovaToast.show(data.data.message, 'short', 'bottom')
             });
           }
           else {
@@ -203,5 +290,33 @@
           }
           });
         };
+
+
+        ///PATCH TO STRETCH STATUS//
+      $scope.pledgeStretch = function(stretchValue){
+        $scope.invPartyOne.stretchStatus += stretchValue;
+        var stretchStatusValue = $scope.invPartyOne.stretchStatus;
+        var partyID = +localStorage.getItem('oneInvPartyID');
+        var patchData = {
+          party: {
+            partyID: partyID,
+            stretchStatus: stretchStatusValue
+          }
+        };
+        ViewPartyService.patchStretchStatus(patchData)
+          .success(function(data){
+            console.log('success stretch', data);
+            $scope.chipIn = true;
+            $scope.stretchInput = false;
+            $scope.loadOneInvParty();
+        });
+      };
+      $scope.chipIn = true;
+      $scope.stretchInput = false;
+      $scope.showStretchInput = function(){
+        $scope.stretchInput = true;
+        $scope.chipIn = false;
+      };
+
     });
 }());

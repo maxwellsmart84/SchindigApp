@@ -6,7 +6,7 @@
         <h1 class= "title-text-wrap"><span class="viewPartiesTextViewHeader">All Your Parties</span></h1>
       </div>
     </div>
-    <ion-content>
+    <ion-content ng-init="getAllInvitedParties();getAllHostedParties();">
     <div class= "list">
       <div class="item-text-wrap item-divider">
         <ion-padding>
@@ -24,10 +24,11 @@
           <h3>{{hostParty.partyDate | date: 'short'}}</h3>
         </div>
       </div>
+      <ion-padding></ion-padding>
       <div class="item-text-wrap item-divider">
-        <ion-padding>
           <h2><span class="hostHeadCard">Parties You Are Invited To</span></h2>
         </ion-padding>
+        <ion-padding></ion-padding>
       </div>
       <ion-item
           ui-sref= "invitedParty({partyID: invParty.partyID})"
@@ -42,6 +43,5 @@
             <h3>{{invParty.local}}</h3>
           </div>
       </ion-item>
-    </div>
   </ion-content>
 </ion-view>

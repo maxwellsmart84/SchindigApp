@@ -15,12 +15,10 @@
       ////GET WIZARD DATA////
       EventWizardService.getWizard().then(function(data){
         $scope.wizardItems = data;
-        console.log($scope.wizardItems);
         $scope.get = function(nameId) {
           var id = parseInt(nameId.nameId);
           for (var i = 0; i < data.data.length; i++) {
             if (i === id) {
-              console.log('wizard data',data.data[i]);
               return data.data[i-1];
             }
           }
@@ -44,10 +42,8 @@
     $scope.newWizPartyPost = function(partyType, local, partyName, partyDate){
       var rawUserID = +localStorage.getItem('userID');
       if(local === undefined){
-        console.log('undefined party ');
         // $cordovaToast.show('All Fields Required', 'short', 'bottom')
       } else {
-        console.log('this should be null',local);
         var item = {
           party: {
             partyDate: partyDate,
@@ -108,7 +104,6 @@
           themeCheck: themeStatus
         }
       };
-      console.log('first check', data);
       EventWizardService.updateWizData(data)
         .success(function(updatedWizData){
           $state.go('stretchgoal');
@@ -131,12 +126,10 @@
            partyID: partyID
          }
        };
-       console.log('party creation',data);
        EventWizardService.updateWizData(data)
         .success(function(updatedWizData){
-         console.log(data);
          $state.go('favors');
        });
      };
-   });
+    })
 }());

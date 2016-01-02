@@ -1,7 +1,6 @@
 .bar {
   background-color: transparent;
 }
-
 .viewPartiesDateTime {
   font-family: serif;
 }
@@ -16,9 +15,33 @@
   background-size: 280%;
   background-position:center;
 
+
+
+  progress {
+    appearance: none;
+    -webkit-appearance:none;
+    border-radius: 30px;
+    width:300px;
+    height:20px;
+  }
+  progress::-webkit-progress-value { background: blue; }
+
+
+  progress[value] {
+    -webkit-appearance:none;
+    appearance: none;
+    background-color: #ffe05d;
+  }
+
   .card {
-    background-color: rgba(#000000, 0.60);
     font-family: "Monoton";
+    padding-top: 15px;
+    margin:0;
+
+    .list-inset {
+      margin:0;
+      padding:0;
+    }
 
     h2 {
       text-align: center;
@@ -37,6 +60,7 @@
     background-color: white;
   }
 
+
   .button {
     border: solid white 1px;
     font-family: "Monoton";
@@ -47,15 +71,7 @@
     0 0 1px white,
     0 0 3px #ffffff,
     0 0 6px #5effd4;
-    :target {
-      color: white;
-      text-shadow:
-      0 0 1px white,
-      0 0 3px #ffffff,
-      0 0 6px #5effd4,
-      0 0 8px #fff,
-      0 0 12px #5effd4;
-    }
+
 
   }
   .button-small {
@@ -64,22 +80,34 @@
 //THIS IS FOR DROPDOWNS
   select {
     font-family: "Monton";
-      background-color: rgba(#000000, 0.60);
+      background-color: rgba(#000000, 0.70);
   }
 
 
   input {
-    background-color: rgba(#000000, 0.60);
+    background-color: rgba(#000000, 0.70);
     font-family: "Righteous";
 
     }
+  .item {
+    background-color: rgba(#000000, 0.70);
+    font-family: "Righteous";
+    margin-right: 20px;
+    h2 {
+      font-color: white;
+      font-family: "Monoton"
 
+    }
+    h3 {
+      font-family: "Monoton"
+    }
+  }
   .item-input {
     font-family: "Righteous";
-    background-color: rgba(#000000, 0.60);
+    background-color: rgba(#000000, 0.70);
       input {
       font-family: "Righteous";
-      background-color: rgba(#000000, 0.60);
+      background-color: rgba(#000000, 0.70);
     }
     .wizardDateTime {
       color: gray;
@@ -89,7 +117,7 @@
   .item-divider {
     padding:20px;
     text-align: center;
-    background-color: rgba(#000000, 0.60);
+    background-color: rgba(#000000, 0.70);
     font-family: "Righteous";
     h2 {
       font-size: 1.8rem;
@@ -101,16 +129,16 @@
     }
   }
   .item-content {
-    background-color: rgba(#000000, 0.60);
-    padding-right: 16px;
-    margin-right: 20px;
+    background-color: rgba(#000000, 0.70);
+    padding-right: 12px;
 
    }
 
   .item-text-wrap {
-    background-color: rgba(#000000, 0.60);
+    background-color: rgba(#000000, 0.70);
     border: solid rgba(#f7bef3, 0.6) 5px;
     border-radius: 10px;
+    text-align: center;
     // align-self: center;
 
     .hostHeadCard {
@@ -158,13 +186,12 @@
       text-align: center;
     }
   }
-
 }
 
 .viewPartiesHeader {
   border:solid rgba(#f7bef3, 0.6) 5px;
   border-radius: 20px;
-  background-color: rgba(#000000, 0.60);
+  background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
   h1 {
@@ -174,7 +201,6 @@
     align-self: center;
     justify-content: center;
   }
-
   .viewPartiesTextViewHeader {
     letter-spacing: 2px;
     font-family: "Monoton";
@@ -193,7 +219,7 @@
 .invitedPartiesHeader {
   border:solid rgba(#f7bef3, 0.6) 5px;
   border-radius: 20px;
-  background-color: rgba(#000000, 0.60);
+  background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
   h1 {
@@ -203,11 +229,10 @@
     align-self: center;
     justify-content: center;
   }
-
   .invitedPartiesTextViewHeader {
     letter-spacing: 2px;
     font-family: "Monoton";
-    font-size: 2.1rem;
+    font-size: 2rem;
     color:#fffc00;
     text-shadow:
     0 0 1px #fffc00,
@@ -217,5 +242,4 @@
     0 0 10px #ff5ea7,
     0 0 12px #ff5ea7;
   }
-
 }

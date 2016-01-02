@@ -5,7 +5,7 @@
     .module('eventWizard')
     .factory('EventWizardService', function($http, $state){
 
-      var ip = 'http://10.0.10.65:8080';
+      var ip = 'http://localhost:8080';
       var wizCreateUrl = ip + "/party/create";
       var wizUpdateUrl = ip + "/party/update";
       var favorUpdateUrl = ip + "/party/favor";
@@ -23,7 +23,7 @@
         return $http.get(getWizardUrl);
       };
       var updateWizData = function(updatedWizData){
-        return $http.patch(wizUpdateUrl, updatedWizData)
+        return $http.patch(wizUpdateUrl, updatedWizData);
       };
       var addFavorToData = function(favorData) {
         return $http.post(addFavorToDataUrl, favorData);
@@ -34,11 +34,9 @@
       var updatePartyFavorList = function (data){
         return $http.post(favorUpdateUrl, data);
       };
-
       var getFavors = function (partyID) {
         var favorGetUrl = ip + "/favor/" + partyID;
-        return $http.get(favorGetUrl)
-
+        return $http.get(favorGetUrl);
       };
       var postInviteData = function(inviteData){
         return $http.patch(invitePostUrl, inviteData);

@@ -1,24 +1,29 @@
 <ion-view>
-  <ion-content>
+  <ion-content class="login">
     <div class="list">
-      <label class="item item-input item-floating-label">
-        <span class="input-label"><strong>Username: </strong></span>
-        <input ng-model="username" type="text" placeholder="Enter Your Username">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label"><strong>Password: </strong></span>
-        <input ng-model="password" type="password" placeholder="Enter Your Password">
-      </label>
+      <div class="logo">
+        <h1>SCHINDIG</h1>
+      </div>
+      <div class="loginStuff">
+        <label class="item item-input item-floating-label">
+          <span class="input-label"><strong>Username: </strong></span>
+          <input ng-model="username" type="text" placeholder="Enter Your Username">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label"><strong>Password: </strong></span>
+          <input ng-model="password" type="password" placeholder="Enter Your Password">
+        </label>
+      </div>
+      <button
+        ng-click="login(username, password)"
+        class="button button-full button-positive">
+         Login
+      </button>
+      <button
+        ng-click="signUp()"
+        class="button button-full button-assertive animate-fade-slide-in-right">
+        Create New User
+      </button>
     </div>
-    <button
-      ng-click="login(username, password)"
-      class="button button-full button-positive">
-       Login
-    </button>
-    <button
-      ng-click="signUp()"
-      class="button button-full button-assertive animate-fade-slide-in-right">
-      Create New User
-    </button>
   </ion-content>
 </ion-view>
