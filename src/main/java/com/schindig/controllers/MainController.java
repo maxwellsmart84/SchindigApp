@@ -3,6 +3,7 @@ import com.schindig.entities.*;
 import com.schindig.services.*;
 import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
+import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,6 @@ public class MainController {
 
     @Autowired
     AuthRepo auth;
-
 
 
     @PostConstruct
@@ -179,7 +179,7 @@ public class MainController {
                 }
             }
         }
-        System.out.println("There have been "+ (users.count()+favors.count()+wizard.count()+favlists.count()+auth.count()+parties.count()) + " rows created.");
+        System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
     }
 
 
@@ -230,12 +230,13 @@ public class MainController {
 
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
+
         User u = users.findOneByUsername(user.username.toLowerCase());
-        if (u!=null) {
+        if (u != null) {
             response.sendError(400, "Username already exists.");
-        } else if (user.username.length()<5) {
+        } else if (user.username.length() < 5) {
             response.sendError(400, "Username must be at least five characters.");
-        } else if (user.password.length()<=5) {
+        } else if (user.password.length() <= 5) {
             response.sendError(400, "Password must be greater then five characters.");
         } else if (!Methods.charCheck(user.password)) {
             response.sendError(400, "Password may only contain letters or numbers.");
@@ -245,7 +246,7 @@ public class MainController {
             response.sendError(400, "Please enter a valid email address.");
         } else if (!Methods.phoneCheck(user.phone)) {
             response.sendError(400, "Please enter a phone number containing only digits.");
-        } else if (user.phone.length()!=10) {
+        } else if (user.phone.length() != 10) {
             response.sendError(400, "Phone number must be ten digits in length.");
         } else if (users.findByPhone(user.phone) != null) {
             response.sendError(400, "Phone number is already associated to an account.");
@@ -266,6 +267,7 @@ public class MainController {
 
     @RequestMapping(path = "/user/delete", method = RequestMethod.POST)
     public void deleteUser(@RequestBody User user, HttpServletResponse response) throws IOException {
+
         if (user.username.equals("admin")) {
             users.delete(user);
         } else {
@@ -275,6 +277,7 @@ public class MainController {
 
     @RequestMapping(path = "/user/all", method = RequestMethod.GET)
     public ArrayList<User> getAllUsers() {
+
         ArrayList<User> temp = (ArrayList<User>) users.findAll();
         temp = temp.stream()
                 .map(p -> {
@@ -287,6 +290,7 @@ public class MainController {
 
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     public User findOneUser(@PathVariable("id") int id) {
+
         User u = users.findOne(id);
         u.password = null;
         return u;
@@ -294,8 +298,9 @@ public class MainController {
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
+
         User user = users.findOneByUsername(p.user.username.toLowerCase());
-        if (user==null) {
+        if (user == null) {
             response.sendError(401, "Username not found.");
         } else if (!user.password.equals(p.user.password.toLowerCase())) {
             response.sendError(403, "Credentials do not match our records.");
@@ -313,6 +318,7 @@ public class MainController {
 
     @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
     public void logout(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
+
         Auth a = auth.findByDevice(p.device);
         auth.delete(a);
         response.sendError(200, "You've successfully been logged out.");
@@ -325,6 +331,7 @@ public class MainController {
 
     @RequestMapping(path = "/party/create", method = RequestMethod.POST)
     public Party createParty(@RequestBody Parameters params, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+
         User user = users.findOne(params.userID);
         Party p = params.party;
         p.host = user;
@@ -336,10 +343,11 @@ public class MainController {
 
     @RequestMapping(path = "/party/favor", method = RequestMethod.POST)
     public ArrayList<Favor> addPartyFavor(@RequestBody Parameters parameters, HttpServletResponse response) throws IOException {
+
         ArrayList<Favor> newDump = new ArrayList<>();
         Party party = parties.findOne(parameters.partyID);
         for (int i = 0; i < parameters.favorDump.size(); i++) {
-            if (parameters.favorDump.get(i).favorID!=null) {
+            if (parameters.favorDump.get(i).favorID != null) {
                 Favor fav = favors.findOne(parameters.favorDump.get(i).favorID);
                 fav.useCount += 1;
                 FavorList favorList = new FavorList(fav, party, false);
@@ -357,7 +365,7 @@ public class MainController {
                 newDump.add(fav);
             }
         }
-        response.sendError(200, "Favors added to " + party.partyName+"!");
+        response.sendError(200, "Favors added to " + party.partyName + "!");
         newDump = newDump.stream()
                 .sorted(Comparator.comparing(Favor::getFavorName))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -375,10 +383,10 @@ public class MainController {
             favItem.user = u;
             if (favItem.claimed) {
                 favItem.claimed = false;
-                response.sendError(200, "You're no longer bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
+                response.sendError(200, "You're no longer bringing " + favItem.favor.favorName + " to " + favItem.party.partyName + "!");
             } else {
                 favItem.claimed = true;
-                response.sendError(200, "You're now bringing "+ favItem.favor.favorName + " to " + favItem.party.partyName+"!");
+                response.sendError(200, "You're now bringing " + favItem.favor.favorName + " to " + favItem.party.partyName + "!");
             }
             favlists.save(favItem);
         }
@@ -390,7 +398,7 @@ public class MainController {
 
         ArrayList<FavorList> favorList = (ArrayList<FavorList>) favlists.findAll();
         ArrayList<FavorList> newList = favorList.stream().filter(fav -> fav.party.partyID == id).collect(Collectors.toCollection(ArrayList::new));
-        if (newList==null) {
+        if (newList == null) {
             return null;
         }
         return newList;
@@ -398,6 +406,7 @@ public class MainController {
 
     @RequestMapping(path = "/party/{id}/filter", method = RequestMethod.GET)
     public ArrayList<Favor> getUnusedFavors(@PathVariable("id") Integer id) {
+
         Party party = parties.findOne(id);
         ArrayList<FavorList> list = favlists.findAllByParty(party);
         ArrayList<Favor> check = (ArrayList<Favor>) favors.findAll();
@@ -414,6 +423,7 @@ public class MainController {
 
     @RequestMapping(path = "/party/invite", method = RequestMethod.POST)
     public void addInvite(@RequestBody Parameters parameters, HttpServletResponse response) throws Exception {
+
         Party party = parties.findOne(parameters.party.partyID);
         User user = users.findOne(parameters.user.userID);
         User host = party.host;
@@ -426,7 +436,9 @@ public class MainController {
 
     }
 
-    /**NEED TO CONFIRM**/
+    /**
+     * NEED TO CONFIRM
+     **/
     @RequestMapping(path = "/party/rsvp", method = RequestMethod.POST)
     public void rsvp(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
 
@@ -450,6 +462,7 @@ public class MainController {
 
     @RequestMapping(path = "/party/{id}/{userID}", method = RequestMethod.GET)
     public Party getParty(@PathVariable("id") Integer id, @PathVariable("userID") Integer userID) {
+
         Party party = parties.findOne(id);
         User u = users.findOne(userID);
         ArrayList<Invite> i = invites.findByParty(party);
@@ -473,7 +486,7 @@ public class MainController {
     public Party updateParty(@RequestBody Parameters parameters, HttpServletResponse response) throws MessagingException, IOException {
 
         Party check = parties.findOne(parameters.party.partyID);
-        if (parameters!=null) {
+        if (parameters != null) {
 
             if (parameters.party.description != null) {
                 check.description = parameters.party.description;
@@ -500,7 +513,13 @@ public class MainController {
                 check.stretchName = parameters.party.stretchName;
             }
             if (parameters.party.stretchStatus != null) {
-                check.stretchName += parameters.party.stretchStatus;
+                if ((check.stretchStatus += parameters.party.stretchStatus) > check.stretchGoal) {
+                    Integer diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
+                    check.stretchStatus += (parameters.party.stretchStatus - diff);
+                    response.sendError(200, check.stretchName + "'s goal has been fulfilled!");
+                } else {
+                    check.stretchStatus = parameters.party.stretchStatus;
+                }
             }
             if (parameters.party.theme != null) {
                 check.theme = parameters.party.theme;
@@ -527,9 +546,9 @@ public class MainController {
             parties.save(check);
             return check;
         }
-        if (parameters.inviteDump!=null) {
+        if (parameters.inviteDump != null) {
             response.sendError(200, "You sent " + parameters.inviteDump.size() + " invites out!");
-        } else if (parameters!=null) {
+        } else if (parameters != null) {
             response.sendError(200, "Updated " + check.partyName + "'s details.");
         } else {
             response.sendError(200, "No updates added.");
@@ -564,7 +583,9 @@ public class MainController {
         return partyList;
     }
 
-    /**NEED VALIDATOR**/
+    /**
+     * NEED VALIDATOR
+     **/
     @RequestMapping(path = "/party/delete", method = RequestMethod.POST)
     public void deleteParty(@RequestBody Party party, HttpServletResponse response) throws IOException {
 
@@ -597,18 +618,21 @@ public class MainController {
         // }
     }
 
-    /**NEED VALIDATION**/
+    /**
+     * NEED VALIDATION
+     **/
     @RequestMapping(path = "/party/favor/delete", method = RequestMethod.POST)
     public FavorList deletePartyFavor(@RequestBody Parameters parameters, HttpServletResponse response) throws IOException {
+
         FavorList f = favlists.findOne(parameters.listID);
 //        User u = f.party.host;
 //        if (f.party.host.userID == parameters.userID) {
-            Favor fav = f.favor;
-            fav.useCount -= 1;
-            response.sendError(200, fav.favorName + " has been removed from this party.");
-            favors.save(fav);
-            favlists.delete(f);
-            return f;
+        Favor fav = f.favor;
+        fav.useCount -= 1;
+        response.sendError(200, fav.favorName + " has been removed from this party.");
+        favors.save(fav);
+        favlists.delete(f);
+        return f;
 //        } else {
 //            response.sendError(400, "You're not authorized to remove favors from this party.");
 //        }
@@ -622,6 +646,7 @@ public class MainController {
 
     @RequestMapping(path = "/wizard", method = RequestMethod.GET)
     public ArrayList<Wizard> getPartyList() {
+
         ArrayList<Wizard> wiz = (ArrayList<Wizard>) wizard.findAll();
         wiz = wiz.stream()
                 .sorted(Comparator.comparing(Wizard::getPartyType))
@@ -650,6 +675,7 @@ public class MainController {
 
     @RequestMapping(path = "/favor/{id}", method = RequestMethod.GET)
     public ArrayList<Favor> getFavorList(@PathVariable("id") Integer id) {
+
         Party party = parties.findOne(id);
         ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
         all = all.stream()
@@ -661,9 +687,10 @@ public class MainController {
 
     @RequestMapping(path = "/favor/save", method = RequestMethod.POST)
     public Favor addFavorItem(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
+
         Favor fav = new Favor();
         Party party = parties.findOne(p.partyID);
-        if (p.favor.favorName==null || p.favor.favorName.isEmpty()){
+        if (p.favor.favorName == null || p.favor.favorName.isEmpty()) {
             response.sendError(400, "Please give this party favor a name.");
             return null;
         } else {
@@ -675,9 +702,12 @@ public class MainController {
         }
     }
 
-    /**VALIDATION!?**/
+    /**
+     * VALIDATION!?
+     **/
     @RequestMapping(path = "/favor/remove", method = RequestMethod.POST)
     public ArrayList<Favor> deleteFavorItem(@RequestBody Favor item) {
+
         favors.delete(item);
         ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
         all = all.stream()
@@ -702,6 +732,19 @@ public class MainController {
         stats.add(databaseStats);
 
         return new ArrayList<>();
+    }
+
+    @RequestMapping(path = "/venmo/{id}", method = RequestMethod.GET)
+    public void goVenmo(HttpServletResponse response, @PathVariable("id") Integer id) throws IOException {
+        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+id));
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public void saveVenmo(String code, Integer state, HttpServletResponse response) throws IOException {
+        HashMap<String, String> map = new HashMap<>();
+        User user = users.findOne(state);
+        user.setVenmoCode(code);
+        Methods.getVenmo(code, user, users);
     }
 }
 
