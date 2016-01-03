@@ -21,6 +21,8 @@ public class Parameters {
 
     public FavorList favorList;
 
+    public Contact contacts;
+
     public String rsvpStatus;
 
     public ArrayList<Favor> favorDump;
@@ -28,6 +30,8 @@ public class Parameters {
     public ArrayList<Invite> inviteDump;
 
     public ArrayList<FavorList> favorListDump;
+
+    public ArrayList<Contact> contactDump;
 
     public Integer partyID;
 
