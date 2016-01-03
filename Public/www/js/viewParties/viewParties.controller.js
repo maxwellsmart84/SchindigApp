@@ -21,9 +21,11 @@
       $scope.pledgeStretch = function(stretchValue){
         var userID = +localStorage.getItem('userID');
         ViewPartyService.userGet(userID).then(function(data){
+          console.log('WHO IS THIS USER');
           if(data.data.venmoID != null){
             console.log('DONDE ESTA LA DATA', data.data.venmoID);
           } else {
+            console.log('there is no VEnDMO');
             return
           }
         });
@@ -194,7 +196,7 @@
             data.data.theme = 'does not have a theme';
           }
           console.log('byob statsu', data.data.byob);
-          $scope.invPartyOne = data.data;
+          $scope.invPartyOne = data.data[0];
         });
       };
       $scope.loadInvitedPeople = function(){

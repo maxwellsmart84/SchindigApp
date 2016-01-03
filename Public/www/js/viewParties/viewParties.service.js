@@ -13,6 +13,7 @@
 
 
     var userGet = function(userID){
+      console.log('why isnt this frigin');
       return $http.get(ip + '/user/' + userID)
     };
     var venmoGet = function(partyID, userID){

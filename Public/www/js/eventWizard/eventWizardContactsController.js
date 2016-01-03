@@ -14,11 +14,6 @@
       var vm = this;
        //CORDOVA CONTACTS AND INVITATIONS //
        $scope.getContactList = function() {
-         var userID = +localStorage.getItem('userID');
-         var partyID = +localStorage.getItem('partyID');
-         EventWizardService.getContacts(userID, partyID).then(function(data){
-           if(data.data.length === 0){
-             console.log('DAS LENGTH VAS TOO SMALL');
              $cordovaContacts
              .find({})
              .then(function(result) {
@@ -34,23 +29,10 @@
                  console.log('this should be a name', el.name.formatted);
                  vm.contactsArray.push(oneUser)
                });
-               var userID = +localStorage.getItem('userID')
-               contactData = {
-                 userID: userID,
-                 contactDump: vm.contactsArray
-               }
-               EventWizardService.postContactsRoute(contactData).then(function(data){
-                 console.log('WHAT IS THIS DATA', data);
-                 $scope.contactName = data.data;
-               });
+               $scope.contactName = vm.contactsArray;
             }, function(error){
               console.log('error', error);
             });
-           } else {
-             console.log('what is this tufckinga data', data);
-             $scope.contactName = data.data;
-           }
-         });
        };
         $scope.isChecked = false;
 
@@ -59,6 +41,8 @@
         var myElements = '';
         var parsed = '';
         $scope.pushToContactArray = function(){
+          myElements = '';
+          vm.contactArray = [];
           myElements = document.getElementsByClassName('true');
            console.log('myelements', myElements.length);
             _.each(myElements, function(el,idx,array){
@@ -66,24 +50,23 @@
               console.log(parsed.name);
               vm.contactArray.push(parsed);
             });
+            vm.contactDataArray = [];
             console.log('how long is this', vm.contactArray.length);
         };
         ///CONTACT DOM STUFF
         vm.contactDataArray=[];
         var contactData = {};
         var data = {};
-        var inviteDump = [];
-        data.inviteDump = [];
 
         $scope.showConfirm = function() {
-          data.inviteDump = [];
+          vm.contactDataArray = [];
           if(vm.contactArray === []){
             $state.go('manageParty');
             return
           } else{
             var confirmPopup = $ionicPopup.confirm({
               title: 'Send Invitations',
-              template: 'Are you ready to send out Invites and Create your Party?'
+              template: 'Are you ready to send out Invites and View your Party?'
             });
             confirmPopup.then(function(res){
               if(res){
@@ -107,6 +90,7 @@
               });
               vm.contactArray = [];
               console.log('thisi s the lenght',data.inviteDump.length);
+              console.log('thisi s OTHER lenght',vm.contactDataArray.length);
                 EventWizardService
                   .updateWizData(data).success(function(data){
                     console.log('data', data);

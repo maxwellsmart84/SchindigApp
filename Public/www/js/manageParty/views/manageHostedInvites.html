@@ -2,11 +2,11 @@
   <div class="bar managePartyHeader">
       <h1>Let's Manage Invites</h1>
    </div>
-   <ion-content class="managePartyContent manageHostedInvites" ng-init="loadInvitedPeople()">
+   <ion-content class="managePartyContent manageHostedInvites" ng-init="loadInvitedPeople();loadOne();">
      <div class="button-bar">
        <button
          class="button button-small button-energized"
-         ng-click="showGuestList();loadInvitedPeople();">
+         ng-click="showGuestList();loadInvitedPeople();getOneHostedParty();">
          Guest List
        </button>
        <button
