@@ -9208,9 +9208,6 @@ a.button {
 .login {
   display: flex;
   justify-content: center; }
-  .login .scroll {
-    margin-top: 5%;
-    width: 80%; }
   .login h1 {
     text-align: center; }
   .login .logo {
@@ -9553,7 +9550,7 @@ a.button {
       border: none;
       align-self: center;
       justify-content: center;
-      font-size: 2.75rem;
+      font-size: 2.5rem;
       color: #FAF700;
       font-weight: bold;
       margin-bottom: 20px;
@@ -9605,14 +9602,12 @@ a.button {
   .manageParty .card {
     border-radius: 10px; }
     .manageParty .card .item {
-      background-color: #F63B09;
-      border-radius: 15px;
       background-color: #594544;
       border: solid #FF66A6 4px;
       box-shadow: -4px -4px 4px 5px #00B3A0, 4px 4px 4px 5px #00B3A0, -6px -6px 4px 8px #C1C71F, 6px 6px 4px 8px #C1C71F;
       border-radius: 10px;
       padding: 20px;
-      padding-right: 35px;
+      padding-right: 16%;
       color: #dddcbe;
       font-size: 1.2rem;
       justify-content: center;
@@ -9626,10 +9621,10 @@ a.button {
       border-radius: 20px;
       font-size: 1.3rem;
       padding: 5px;
-      color: black; }
+      color: #e0e0e0; }
     .manageParty .card p {
       font-family: "Righteous";
-      font-size: 1.3em;
+      font-size: 1.1em;
       font-weight: bold;
       padding: 2px;
       color: #dddcbe; }

@@ -6,7 +6,7 @@
     var vm = this;
 
 
-    var ip = 'http://localhost:8080';
+    var ip = 'http://10.0.10.50:8080';
 
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
