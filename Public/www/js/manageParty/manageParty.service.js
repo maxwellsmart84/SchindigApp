@@ -33,7 +33,7 @@
       };
       var getInvitedPeeps = function(partyID){
         return $http.get(ip+'/party/'+partyID+'/invites').success(function(data){
-          console.log('invite list',data);
+          console.log('invite list',data.length);
         });
       };
       var getHostedParties = function(userID){

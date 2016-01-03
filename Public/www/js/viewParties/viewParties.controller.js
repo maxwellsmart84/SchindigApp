@@ -17,14 +17,15 @@
     ){
 
       var vm = this;
-
       ///PATCH TO STRETCH STATUS//
       $scope.pledgeStretch = function(stretchValue){
         var userID = +localStorage.getItem('userID');
         ViewPartyService.userGet(userID).then(function(data){
+          console.log('WHO IS THIS USER');
           if(data.data.venmoID != null){
             console.log('DONDE ESTA LA DATA', data.data.venmoID);
           } else {
+            console.log('there is no VEnDMO');
             return
           }
         });
@@ -72,13 +73,12 @@
 
       var rawUserID = +localStorage.getItem('userID');
       var userID = {
-      userID: rawUserID
+        userID: rawUserID
     };
     //THIS IS PROBABLY USED, BLAKE IS STUPID
     //THIS IS DEFINITELY NOT USED, MAX..
 
     ///RSVP///
-
 
     $scope.rsvpShow = function(){
       var rsvpPopup = $ionicPopup.show ({
@@ -161,6 +161,7 @@
     //INVITED PARTIES GET
     ///////////TURN INTO FUNCTION INIT/////
     $scope.getAllInvitedParties = function(){
+
       ViewPartyService.getInvitedParties(userID)
         .success(function(invData){
           console.log('parties success', invData);
@@ -179,7 +180,7 @@
         var partyIdItem = +localStorage.getItem('oneInvPartyID');
         var userID = +localStorage.getItem('userID');
         ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
-          console.log('invite data',data.data);
+          console.log('invite data',data.data[1]);
           if(data.data.byob === true){
             console.log('true');
             data.data.byob = "Yes";
@@ -195,7 +196,7 @@
             data.data.theme = 'does not have a theme';
           }
           console.log('byob statsu', data.data.byob);
-          $scope.invPartyOne = data.data;
+          $scope.invPartyOne = data.data[1];
         });
       };
       $scope.loadInvitedPeople = function(){
