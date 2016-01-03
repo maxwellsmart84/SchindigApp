@@ -33,8 +33,8 @@ public interface InviteRepo extends CrudRepository<Invite, Integer> {
     @Query("SELECT i FROM Invite i WHERE party = ?1 AND user = ?1")
     Invite findByPartyAndUser(Party party, User user);
 
-    ArrayList<Invite> findAllByUser(User user);
-    ArrayList<Invite> findAllByPhone(String phone);
-    ArrayList<Invite> findAllByEmail(String email);
+    ArrayList<Invite> findAllByUserAndParty(User user, Party party);
+    ArrayList<Invite> findAllByPhoneAndParty(String phone, Party party);
+    ArrayList<Invite> findAllByEmailAndParty(String email, Party party);
 
 }

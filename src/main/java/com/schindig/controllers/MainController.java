@@ -5,9 +5,6 @@ import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
@@ -25,6 +22,9 @@ import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -60,6 +60,10 @@ public class MainController {
     @Autowired
     ContactRepo contacts;
 
+    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
+        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
 
     @PostConstruct
     public void init() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, InvalidKeyException, InvalidKeySpecException {
@@ -332,12 +336,11 @@ public class MainController {
         } else if (!user.password.equals(p.user.password.toLowerCase())) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
-//            Auth a = auth.findByDevice(p.device);
+            Auth a = auth.findByDevice(p.device);
 //            if (a==null) {
 //                Methods.newDevice(user, p.device, auth);
 //                return user.userID;
 //            }
-            return user.userID;
         }
         return null;
     }
@@ -562,78 +565,40 @@ public class MainController {
     }
 
     @RequestMapping(path = "/party/{partyID}/{userID}", method = RequestMethod.GET)
-    public HashMap<String,Object> getParty(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID) {
+    public ArrayList<Object> getParty(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID) {
 
         Party party = parties.findOne(partyID);
         User user = users.findOne(userID);
-        ArrayList<Object> payload = new ArrayList<>();
         ArrayList<Invite> inviteList = invites.findByParty(party);
-        HashMap<String,Object> test = new HashMap<>();
-        HashMap<String, Object> userDump = new HashMap<>();
-        HashMap<String, Object> inviteDump = new HashMap<>();
-        userDump.put("userID", user.userID);
-        userDump.put("username", user.username);
-        userDump.put("firstName", user.firstName);
-        userDump.put("lastName", user.lastName);
-        userDump.put("venmoID", user.getVenmoID());
-        test.put("user", userDump);
-        for (Invite i : inviteList) {
-            inviteDump.put("inviteID", i.inviteID);
-            if (i.user!=null) {
-                inviteDump.put("user", i.user.userID);
-            }
-            inviteDump.put("name", i.name);
-            inviteDump.put("sent", i.sent);
-            inviteDump.put("phone", i.phone);
-            inviteDump.put("email", i.email);
+        inviteList = inviteList.stream()
+                .filter(distinctByKey(Invite::getName))
+                .collect(Collectors.toCollection(ArrayList::new));
+        if (party.host!=user) {
+            party.rsvpStatus = invites.findByPartyAndUser(party, user).rsvpStatus;
+        } else {
+            party.rsvpStatus = null;
         }
-        test.put("inviteList", inviteDump);
-        test.put("party", party);
+        ArrayList<Object> payload = new ArrayList<>();
+        HashMap<String,Object> inviteDump = new HashMap<>();
+        HashMap<String, Object> userList = new HashMap<>();
+        userList.put("host", user.userID);
+        userList.put("firstName", user.firstName);
+        userList.put("lastName", user.lastName);
+        userList.put("venmoID", user.getVenmoID());
+        payload.add(userList);
+
+        for (Invite invite : inviteList) {
+            HashMap<String, Object> newMap = new HashMap<>();
+            newMap.put("inviteID", invite.inviteID);
+            newMap.put("guest", invite.user);
+            newMap.put("phone", invite.phone);
+            newMap.put("email", invite.email);
+            newMap.put("name", invite.name);
+            inviteDump.put(String.valueOf(invite.inviteID), newMap);
+        }
         payload.add(party);
-        payload.add(inviteList);
-//        if (u == party.host) {
-//            for (Invite inv : i) {
-//                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
-//                for (int user = 1; user < userCheck.size(); user++) {
-//                    Invite invite = userCheck.get(user);
-//                    invites.delete(invite);
-//                }
-//                ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
-//                for (int user = 1; user < phoneCheck.size(); user++) {
-//                    Invite invite = phoneCheck.get(user);
-//                    invites.delete(invite);
-//                }
-//                ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
-//                for (int user = 1; user < emailCheck.size(); user++) {
-//                    Invite invite = emailCheck.get(user);
-//                    invites.delete(invite);
-//                }
-//            }
-//            return party;
-//        } else {
-//            for (Invite inv : i) {
-//                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
-//                    for (int user = 1; user < userCheck.size(); user++) {
-//                        Invite invite = userCheck.get(user);
-//                        invites.delete(invite);
-//                    }
-//                    ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
-//                    for (int user = 1; user < phoneCheck.size(); user++) {
-//                        Invite invite = phoneCheck.get(user);
-//                        invites.delete(invite);
-//                    }
-//                    ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
-//                    for (int user = 1; user < emailCheck.size(); user++) {
-//                        Invite invite = emailCheck.get(user);
-//                        invites.delete(invite);
-//                    }
-//                if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
-//                    party.rsvpStatus = inv.rsvpStatus;
-//                    break;
-//                }
-//            }
-//        }
-        return test;
+        payload.add(inviteDump);
+        return payload;
     }
 
     @RequestMapping(path = "/party/{id}/invites", method = RequestMethod.GET)
@@ -692,27 +657,11 @@ public class MainController {
                 check.theme = parameters.party.theme;
             }
             if (parameters.inviteDump != null) {
-                ArrayList<Invite> inviteList = invites.findByParty(check);
-                if (inviteList.size() != 0) {
-                    for (Invite invite : parameters.inviteDump) {
-                        for (Invite cuurentInvite : inviteList) {
-                            if (!invite.phone.equals(cuurentInvite.phone) || !invite.email.equals(cuurentInvite.email)) {
-                                Methods.newInvite(invite, invites, check);
+                for (Invite invite : parameters.inviteDump) {
+                    Methods.newInvite(invite, invites, check);
 //                      Methods.sendInvite(invite, p.host, p);
-                                invite.sent = true;
-                                check.host.inviteCount += 1;
-                                users.save(check.host);
-                            }
-                        }
-                    }
-                } else {
-                    for (Invite invite : parameters.inviteDump) {
-                        Methods.newInvite(invite, invites, check);
-//                      Methods.sendInvite(invite, p.host, p);
-                        invite.sent = true;
-                        check.host.inviteCount += 1;
-                        users.save(check.host);
-                    }
+                    invite.sent = true;
+                    check.host.inviteCount += 1;
                 }
             }
             if (parameters.party.byob) {
