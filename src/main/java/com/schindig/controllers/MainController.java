@@ -336,11 +336,12 @@ public class MainController {
         } else if (!user.password.equals(p.user.password.toLowerCase())) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
-            Auth a = auth.findByDevice(p.device);
+//            Auth a = auth.findByDevice(p.device);
 //            if (a==null) {
 //                Methods.newDevice(user, p.device, auth);
 //                return user.userID;
 //            }
+            return user.userID;
         }
         return null;
     }
@@ -576,7 +577,7 @@ public class MainController {
         if (party.host!=user) {
             party.rsvpStatus = invites.findByPartyAndUser(party, user).rsvpStatus;
         } else {
-            party.rsvpStatus = null;
+            party.rsvpStatus = "Undefined";
         }
         ArrayList<Object> payload = new ArrayList<>();
         HashMap<String,Object> inviteDump = new HashMap<>();
