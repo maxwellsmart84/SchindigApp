@@ -6,7 +6,7 @@
     .factory('ManagePartyService', function($http, $state){
       var vm = this;
 
-      var ip = 'http://10.0.10.72:8080';
+      var ip = 'http://10.0.10.50:8080';
       var viewHostedPartiesURL = ip + '/parties/host';
       var viewInvitedPartiesURL = ip +'/parties/user';
       var updatedHostedPartiesURL = ip + '/party/update';
@@ -33,7 +33,7 @@
       };
       var getInvitedPeeps = function(partyID){
         return $http.get(ip+'/party/'+partyID+'/invites').success(function(data){
-          console.log('invite list',data);
+          console.log('invite list',data.length);
         });
       };
       var getHostedParties = function(userID){

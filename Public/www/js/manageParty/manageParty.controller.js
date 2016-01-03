@@ -63,14 +63,14 @@
       };
       $scope.loadOne = function(){
         console.log('does this fire?');
-        var rawPartyID = +localStorage.getItem('OnePartyID');
+        var rawPartyID = +localStorage.getItem('partyID');
         var userID = +localStorage.getItem('userID')
-        ManagePartyService.getOneHostedParty(rawPartyID, userID)
-          .then(function(data){
-            console.log('data?', data);
-            $scope.oneParty = data.data;
-            $scope.showInviteVar = false;
-            
+        ManagePartyService
+          .getOneHostedParty(rawPartyID, userID)
+            .then(function(data){
+              console.log('data?', data.data[1]);
+              $scope.oneParty = data.data[1];
+              $scope.showInviteVar = false;
         });
       };
       $scope.loadOneFavor = function(){
@@ -83,8 +83,9 @@
       };
       $scope.loadInvitedPeople = function(){
         var rawPartyID = +localStorage.getItem('OnePartyID');
+        console.log('what is this id', rawPartyID);
         ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
-          console.log('load invited people', data.data);
+          console.log('load invited people', data);
           $scope.inviteList = data.data;
         });
       };
@@ -147,11 +148,7 @@
         $scope.showInviteVar = false;
         $scope.showGuestListVar = true;
         console.log('invite var', $scope.showInviteVar);
-
       };
-
-
-
 
 
       $scope.goToFavorBrowse = function(){

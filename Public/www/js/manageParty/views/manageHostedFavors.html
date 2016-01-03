@@ -1,19 +1,20 @@
-<ion-view class="manageParty" ng-init="loadOneFavor()">
-  <div class="bar managePartyHeader">
-    <h1>Let's Manage Favors</h1>
-   </div>
+
+<ion-view ng-init="loadOneFavor()" class="manageParty">
+  <ion-nav-bar>
+  </ion-nav-bar>
+  <div class="bar bar-header">
+    <div class="managePartyHeader">
+      <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Favors</span></h1>
+    </div>
+  </div>
    <ion-content class="managePartyContent" >
-     <div class="list" >
-       <div class="item item-input-inset">
          <button
            ng-click="goToFavorBrowse();loadOneFavorBrowse();"
-           class="button button-full button-assertive">
-           Add More Favors
+           class="button button-full addFavorsButton">
+           <strong>ADD MORE FAVORS</strong>
          </button>
-       </div>
-     </div>
     <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
-      <ion-item>
+      <ion-item class="manageItem">
         {{item.favor.favorName}}
         <ion-delete-button
             class="ion-minus-circled"

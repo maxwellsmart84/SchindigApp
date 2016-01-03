@@ -155,33 +155,42 @@ $fontMarker: "Permanent Marker";
   color:#c1f6f3;
   text-shadow: 0px 0px 10px #c1f6f3;
 }
-.login{
+.login {
   display: flex;
   justify-content: center;
-  background-color: blue;
-  .scroll{
-    margin-top: 90px;
-    width: 80%;
-  }
-  img{
-    border-radius: 20px;
-    width: 50px;
-    margin: 0 auto;
-  }
+  // // .scroll{
+  // //   margin-top: 5%;
+  // //   width: 80%;
+  // }
+
   h1{
     text-align: center;
   }
   .logo{
-    background-color: rgb(84, 228, 230);
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 90px;
+    color:black;
+    text-shadow: 0px 0px 7px black;
+    font-family: "Righteous";
+    text-align:  center;
+    h1 {
+      font-size: 4rem;
+    }
+    .logoImg {
+      height: 25vh;
+      width:80%;
+    }
   }
   .loginStuff{
-    background-color: rgb(84, 228, 230);
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
+    input {
+      background-color: white;
+    }
   }
 }
 .createUser{
-  background-color: blue;
+  background-color: white;
   h1{
     color: white;
   }
