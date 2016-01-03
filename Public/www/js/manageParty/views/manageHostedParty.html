@@ -1,8 +1,22 @@
 <ion-view class="manageParty">
-  <div class="bar managePartyHeader">
-    <h1>Let's Manage Parties</h1>
-  </div>
+  <ion-nav-bar>
+  </ion-nav-bar>
+    <div class="bar bar-header">
+      <div class="managePartyHeader">
+        <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Parties</span></h1>
+      </div>
+    </div>
   <ion-content class="managePartyContent" ng-init="loadOne()">
+    <button
+      ng-click="goToManageFavor()"
+      class="button button-full manageButton button-assertive">
+      Manage Favors
+    </button>
+    <button
+      ng-click="goToManageInvites()"
+      class="button inviteButton button-full button-royal">
+      Manage Invites
+    </button>
     <ion-list>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right manageItem">
@@ -49,7 +63,7 @@
       </ion-item>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right manageItem">
-            <strong>Where The Party At? <br></strong>{{oneParty.local}}
+            <strong>Edit Location</strong>
             <button
               ng-hide="edit"
               ng-click="edit = true"
@@ -131,16 +145,6 @@
           </strong>
         </div>
       </ion-toggle> -->
-      <button
-        ng-click="goToManageFavor()"
-        class="button button-full manageButton button-assertive">
-        Manage Favors
-      </button>
-      <button
-        ng-click="goToManageInvites()"
-        class="button inviteButton button-full button-royal">
-        Manage Invites
-      </button>
     </ion-list>
   </ion-content>
 </ion-view>

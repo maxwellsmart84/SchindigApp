@@ -1,8 +1,9 @@
 <ion-view>
   <ion-content class="login">
-    <div class="list">
       <div class="logo">
-        <h1>SCHINDIG</h1>
+        <h1>Schindig</h1>
+        <h4><em>Let's Get This Party Started</em><h4>
+        <img class="logoImg" src="img/SchindigLogo.png" alt="">
       </div>
       <div class="loginStuff">
         <label class="item item-input item-floating-label">
@@ -16,14 +17,13 @@
       </div>
       <button
         ng-click="login(username, password)"
-        class="button button-full button-positive">
+        class="button button-full">
          Login
       </button>
       <button
         ng-click="signUp()"
-        class="button button-full button-assertive animate-fade-slide-in-right">
+        class="button button-full animate-fade-slide-in-right">
         Create New User
       </button>
-    </div>
   </ion-content>
 </ion-view>

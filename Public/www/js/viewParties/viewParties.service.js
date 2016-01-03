@@ -5,7 +5,9 @@
   .factory('ViewPartyService', function($http, $state){
     var vm = this;
 
-    var ip = 'http://10.0.10.72:8080';
+
+    var ip = 'http://10.0.10.50:8080';
+
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
     var rsvpURL = ip + '/party/rsvp';
@@ -13,13 +15,13 @@
 
 
     var userGet = function(userID){
-      return $http.get(ip + '/user/' + userID)
+      return $http.get(ip + '/user/' + userID);
     };
     var venmoGet = function(partyID, userID){
       return $http.get(ip+partyID+userID);
     };
     var patchStretchStatus = function(stretchValue){
-      return $http.patch(updatePartyUrl, stretchValue)
+      return $http.patch(updatePartyUrl, stretchValue);
     };
     var postRsvp = function(userRsvp){
       return $http.post(rsvpURL, userRsvp);
