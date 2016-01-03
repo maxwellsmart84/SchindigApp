@@ -62,10 +62,14 @@ $LightOrange: #DD7A14;
       border-radius: 10px;
       font-style: "Righteous";
 
-
     }
     .manageItem{
       background-color: $Brown;
+      border:solid $Pink 4px;
+      box-shadow:   -4px -4px 4px 5px $Blue,
+                    4px 4px 4px 5px $Blue,
+                    -6px -6px 4px 8px $Green,
+                    6px 6px 4px 8px $Green;
       border-radius: 10px;
       padding:20px;
       padding-right: 35px;

@@ -27,10 +27,9 @@
     height:50px;
   }
   progress::-webkit-progress-value {
-    background: rgba(150, 255, 161, 0.8);
-    box-shadow: 2px 2px 4px 4px #fffe6c;
+    background: rgba(255, 245, 0, 1);
+    box-shadow: 0px 0px 6px 4px #ff6cf9,
   }
-
 
   progress[value] {
     -webkit-appearance:none;
@@ -70,7 +69,6 @@
     background-color: white;
   }
 
-
   .button {
     border: solid white 1px;
     font-family: "Monoton";
@@ -89,6 +87,9 @@
     0 0 8px #fafafa,
     0 0 10px #ff5ea7,
     0 0 12px #ff5ea7;
+    .ng-click-active {
+        color:red;
+    }
 
 
   }
@@ -96,8 +97,16 @@
     margin-top: 2vh;
     font-size:1.53rem;
     height:12vh;
+}
 
+  .button-active {
+    color: white;
+    text-shadow:
+    0 0 1px white,
+    0 0 3px #ffffff,
+    0 0 6px #5effd4;
   }
+
 //THIS IS FOR DROPDOWNS
   select {
     font-family: "Monton";
@@ -259,11 +268,14 @@
 }
 
 .viewPartiesHeader {
-  border:solid rgba(#f7bef3, 0.6) 5px;
+  border:solid rgba(#f7bef3, 0.6) 2px;
+  box-shadow:
+    inset 0px 0px 10px 10px rgba(#f7bef3, 0.8);
   border-radius: 20px;
   background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
+  height:34vh;
   h1 {
     margin: 0;
     text-align: center;
@@ -287,22 +299,29 @@
 }
 
 .invitedPartiesHeader {
-  border:solid rgba(#f7bef3, 0.6) 5px;
+  border:solid #f7bef3 2px;
+  box-shadow:
+  inset 0px 0px 8px 8px rgba(#f7bef3, 0.8);
   border-radius: 20px;
   background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
-  h1 {
+  height:34vh;
+    h1 {
     margin: 0;
     text-align: center;
     border:none;
     align-self: center;
     justify-content: center;
+    line-height: 5.5vh;
+
+    padding-right: 5px;
   }
   .invitedPartiesTextViewHeader {
     letter-spacing: 2px;
+    width: 100%;
     font-family: "Monoton";
-    font-size: 2rem;
+    font-size: 1.75rem;
     color:#fffc00;
     text-shadow:
     0 0 1px #fffc00,

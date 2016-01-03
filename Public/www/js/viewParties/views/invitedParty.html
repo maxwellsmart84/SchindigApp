@@ -1,13 +1,11 @@
 <ion-view class="viewParties">
   <ion-nav-bar>
   </ion-nav-bar>
-  <div class="bar bar-header">
     <div class="invitedPartiesHeader">
-      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyName}}</span></h1>
-      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">@</span></h1>
-      <h1 class= "title-text-wrap"><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyDate | date: 'short'}}</span></h1>
+      <h1><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyName}}</span></h1>
+      <h1><span class="invitedPartiesTextViewHeader">@</span></h1>
+      <h1><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyDate | date: 'short'}}</span></h1>
     </div>
-  </div>
   <ion-content ng-init="loadOneInvParty();loadOneFavor();loadRSVPStatus()">
   <br>
   <div class="item-text-wrap">
@@ -61,15 +59,16 @@
     <ion-padding></ion-padding>
     <div class="button-bar">
       <button
+        ng-model="button"
         class="button button-small button-energized"
         ng-click="showFavor()">
         Favors
-      </button>
+      </button></a>
       <button
         ng-click="showInvite();loadInvitedPeople();"
         class="button button-small button-energized">
         Invites
-      </button>
+      </button></a>
     </div>
     <ion-list
       ng-model="showFavorVar"

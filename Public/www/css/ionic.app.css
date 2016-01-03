@@ -9344,8 +9344,8 @@ a.button {
     width: 280px;
     height: 50px; }
   .viewParties progress::-webkit-progress-value {
-    background: rgba(150, 255, 161, 0.8);
-    box-shadow: 2px 2px 4px 4px #fffe6c; }
+    background: #fff500;
+    box-shadow: 0px 0px 6px 4px #ff6cf9; }
   .viewParties progress[value] {
     -webkit-appearance: none;
     appearance: none;
@@ -9378,10 +9378,15 @@ a.button {
     background-color: rgba(0, 0, 0, 0.7);
     color: #fffc00;
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
+    .viewParties .button .ng-click-active {
+      color: red; }
   .viewParties .button-small {
     margin-top: 2vh;
     font-size: 1.53rem;
     height: 12vh; }
+  .viewParties .button-active {
+    color: white;
+    text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4; }
   .viewParties select {
     font-family: "Monton";
     background-color: rgba(0, 0, 0, 0.7); }
@@ -9485,11 +9490,13 @@ a.button {
       text-align: center; }
 
 .viewPartiesHeader {
-  border: solid rgba(247, 190, 243, 0.6) 5px;
+  border: solid rgba(247, 190, 243, 0.6) 2px;
+  box-shadow: inset 0px 0px 10px 10px rgba(247, 190, 243, 0.8);
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  width: 100%; }
+  width: 100%;
+  height: 34vh; }
   .viewPartiesHeader h1 {
     margin: 0;
     text-align: center;
@@ -9504,21 +9511,26 @@ a.button {
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
 
 .invitedPartiesHeader {
-  border: solid rgba(247, 190, 243, 0.6) 5px;
+  border: solid #f7bef3 2px;
+  box-shadow: inset 0px 0px 8px 8px rgba(247, 190, 243, 0.8);
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  width: 100%; }
+  width: 100%;
+  height: 34vh; }
   .invitedPartiesHeader h1 {
     margin: 0;
     text-align: center;
     border: none;
     align-self: center;
-    justify-content: center; }
+    justify-content: center;
+    line-height: 5.5vh;
+    padding-right: 5px; }
   .invitedPartiesHeader .invitedPartiesTextViewHeader {
     letter-spacing: 2px;
+    width: 100%;
     font-family: "Monoton";
-    font-size: 2rem;
+    font-size: 1.75rem;
     color: #fffc00;
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
 
@@ -9562,6 +9574,8 @@ a.button {
       font-style: "Righteous"; }
     .manageParty .managePartyContent .manageItem {
       background-color: #594544;
+      border: solid #FF66A6 4px;
+      box-shadow: -4px -4px 4px 5px #00B3A0, 4px 4px 4px 5px #00B3A0, -6px -6px 4px 8px #C1C71F, 6px 6px 4px 8px #C1C71F;
       border-radius: 10px;
       padding: 20px;
       padding-right: 35px;
