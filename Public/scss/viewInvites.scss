@@ -1,3 +1,5 @@
+
+
 .bar {
   background-color: transparent;
 }
@@ -21,16 +23,23 @@
     appearance: none;
     -webkit-appearance:none;
     border-radius: 30px;
-    width:300px;
-    height:20px;
+    width:280px;
+    height:50px;
   }
-  progress::-webkit-progress-value { background: blue; }
-
+  progress::-webkit-progress-value {
+    background: rgba(255, 245, 0, 1);
+    box-shadow: 0px 0px 6px 4px #ff6cf9,
+  }
 
   progress[value] {
     -webkit-appearance:none;
     appearance: none;
     background-color: #ffe05d;
+  }
+
+  .list {
+    background-color: transparent;
+    margin-right:1.8%;
   }
 
   .card {
@@ -60,23 +69,44 @@
     background-color: white;
   }
 
-
   .button {
     border: solid white 1px;
     font-family: "Monoton";
     font-size: 2rem;
     background-color: rgba(#000000, 0.70);
+    // color: white;
+    // text-shadow:
+    // 0 0 1px white,
+    // 0 0 3px #ffffff,
+    // 0 0 6px #5effd4;
+    color:#fffc00;
+    text-shadow:
+    0 0 1px #fffc00,
+    0 0 3px #ff5ea7,
+    0 0 6px #fffc00,
+    0 0 8px #fafafa,
+    0 0 10px #ff5ea7,
+    0 0 12px #ff5ea7;
+    .ng-click-active {
+        color:red;
+    }
+
+
+  }
+  .button-small {
+    margin-top: 2vh;
+    font-size:1.53rem;
+    height:12vh;
+}
+
+  .button-active {
     color: white;
     text-shadow:
     0 0 1px white,
     0 0 3px #ffffff,
     0 0 6px #5effd4;
-
-
   }
-  .button-small {
-    font-size:1.2rem;
-  }
+
 //THIS IS FOR DROPDOWNS
   select {
     font-family: "Monton";
@@ -92,14 +122,50 @@
   .item {
     background-color: rgba(#000000, 0.70);
     font-family: "Righteous";
-    margin-right: 20px;
+    color: white;
+    margin-left: 1%;
+    border-radius: 10px;
+    // border: solid rgba(#f7bef3, 0.6) 5px;
+    // margin-top: 5px;
+    // margin-bottom: 5px;
+    // margin-right:5px;
+    // margin-left: 5px;
     h2 {
-      font-color: white;
-      font-family: "Monoton"
-
+      font-family: "Monoton";
+      color:#ff94d7;
+      font-size: 1.2rem;
+      text-shadow: 0 0 1px #ff94d7;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
     h3 {
-      font-family: "Monoton"
+      font-family: "Righteous";
+      color:white;
+      text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    h4 {
+      font-family: "Monoton";
+      font-size: 1.5rem;
+      color: white;
+      text-shadow:
+        0 0 1px white,
+        0 0 3px #ffffff,
+        0 0 6px #5effd4;
+    }
+    .favorClaimed {
+      background-color: rgba(#000000, 0.70);
+      box-shadow: 2px 2px 6px 6px #f7bef3;
+      border: solid rgba(#f7bef3, 0.6) 5px;
+
+    }
+    .favorUnclaimed {
+      border: solid rgba(#f7bef3, 0.6) 5px;
+      text-align: center;
+    }
+    .invitedPeeps {
+      text-align: center;
     }
   }
   .item-input {
@@ -139,6 +205,10 @@
     border: solid rgba(#f7bef3, 0.6) 5px;
     border-radius: 10px;
     text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right:5px;
+    margin-left: 5px;
     // align-self: center;
 
     .hostHeadCard {
@@ -168,8 +238,16 @@
       color:white;
       text-shadow: 0 0 1px #ff94d7, 0 0 3px #ff94d7;
       font-size: 1.3rem;
-      padding-top: 2vh;
       font-weight: bold;
+    }
+    h4 {
+      font-family: "Monoton";
+      font-size: 1.5rem;
+      color: white;
+      text-shadow:
+        0 0 1px white,
+        0 0 3px #ffffff,
+        0 0 6px #5effd4;
     }
   }
   .wizStretchExpl {
@@ -186,14 +264,18 @@
       text-align: center;
     }
   }
+
 }
 
 .viewPartiesHeader {
-  border:solid rgba(#f7bef3, 0.6) 5px;
+  border:solid rgba(#f7bef3, 0.6) 2px;
+  box-shadow:
+    inset 0px 0px 10px 10px rgba(#f7bef3, 0.8);
   border-radius: 20px;
   background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
+  height:34vh;
   h1 {
     margin: 0;
     text-align: center;
@@ -217,22 +299,29 @@
 }
 
 .invitedPartiesHeader {
-  border:solid rgba(#f7bef3, 0.6) 5px;
+  border:solid #f7bef3 2px;
+  box-shadow:
+  inset 0px 0px 8px 8px rgba(#f7bef3, 0.8);
   border-radius: 20px;
   background-color: rgba(#000000, 0.70);
   display: flex;
   width:100%;
-  h1 {
+  height:34vh;
+    h1 {
     margin: 0;
     text-align: center;
     border:none;
     align-self: center;
     justify-content: center;
+    line-height: 5.5vh;
+
+    padding-right: 5px;
   }
   .invitedPartiesTextViewHeader {
     letter-spacing: 2px;
+    width: 100%;
     font-family: "Monoton";
-    font-size: 2rem;
+    font-size: 1.75rem;
     color:#fffc00;
     text-shadow:
     0 0 1px #fffc00,

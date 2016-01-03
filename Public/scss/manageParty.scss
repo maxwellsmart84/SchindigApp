@@ -1,140 +1,117 @@
+$Brown: #594544;
+$Gold: #FFB312;
+$Pink: #FF66A6;
+$DullPink: #E26291;
+$Green: #C1C71F;
+$Blue: #00B3A0;
+$Yellow: #FAF700;
+$DullYellow: #dfd823;
+$Orange: #F63B09;
+$Red: #F60024;
+$PinkFire: #F7007B;
+$White: #e0e0e0;
+$Cream: #dddcbe;
+$LightOrange: #DD7A14;
+
 .manageParty {
-
-
-  ///////////MANAGE INVITES///////
-  .manageHostedInvites{
-    ion-list{
-      .item{
-        text-align: center;
-        background-color: red;
-      }
-      ion-item{
-        h3{
-          color: black;
-        }
-      }
-      .invitesSub{
-        h3{
-          color: blue;
-          text-align: center;
-        }
-        background-color: orange;
-      }
-    }
-  }
-
-  ///MANAGE BROWSE PARTIES////
-  .manageBrowseFavor{
-    .topListButtonAndLabel{
-      display: flex;
-      .addFavorToDataButton{
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        border-radius: 10px;
-        margin-top: 5px;
-      }
-      input{
-        text-align: center;
-      }
-    }
-    .submitFavorsButton{
-      display: flex;
-      button{
-        margin: 0 auto;
-        width: 90%;
-        border-radius: 10px;
-      }
-      margin-bottom: 10px;
-    }
-    .favorsList{
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      .favorItem{
-        margin: 0 auto;
-        margin-bottom: 10px;
-        background-color: blue;
-        justify-content: center;
-        align-items: center;
-
-        .item-content{
-          margin: 0;
-          text-align: center;
-          ion-item{
-            background-color: red;
-            text-align: center;
-            margin: 0;
-          }
-        }
-      }
-    }
-  }
-
-
-  //////////
-
-  .bar {
-    height: 50px;
-    .title {
-      font-size: 40px;
-      font-family: 'Acme', sans-serif;
-      margin: 0;
-    }
-  }
-  .addFavorButton{
-    position: relative;
-    z-index: 100;
-  }
   display: flex;
-  background:
-  linear-gradient(
-     rgba(0, 0, 0, 0.1),
-     rgba(0, 0, 0, 0.2)
-   ),
-   url("../img/manageParty1.jpg");
+  background-color: $Cream;
   background-size: 100%;
   background-position: top;
-  .managePartyHeader {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin: 0 auto;
-    h1 {
-      color: #FBDE03;
-      margin-bottom: 20px;
+  font-style: "Righteous";
+
+  .list {
+    .item {
+      border: 5px, solid, white;
     }
   }
+  .managePartyHeader {
+    display: flex;
+    width:100%;
+    text-align: center;
+    background-color: $Brown;
+    h1 {
+      margin: 0;
+      text-align: center;
+      border:none;
+      align-self: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: $Yellow;
+      font-weight: bold;
+      margin-bottom: 20px;
+      margin-left: 8%;
+      text-shadow:   -7px 5px 1px $Gold,
+                     -14px 10px 1px $Orange,
+                     -21px 15px 1px $Red,
+                     -28px 20px 1px $PinkFire,
+      }
+    }
+
   .managePartyContent{
-    margin-top: 90px;
     border-top: thin solid gray;
     input{
-      height: 50px;
+      font-size: 1.2rem;
+      padding:8px;
+      height: 6vh;
       width: 100%;
+      background-color: $Cream;
+      border-radius: 10px;
     }
     .item{
-      background-color: #5E412F;
-      border-radius: 15px;
+      background-color: $LightOrange;
+      border-radius: 10px;
+      font-style: "Righteous";
+
     }
     .manageItem{
-      background-color: #FCEBB6;
+      background-color: $Brown;
+      border:solid $Pink 4px;
+      box-shadow:   -4px -4px 4px 5px $Blue,
+                    4px 4px 4px 5px $Blue,
+                    -6px -6px 4px 8px $Green,
+                    6px 6px 4px 8px $Green;
       border-radius: 10px;
-      padding: 10px;
+      padding:20px;
       padding-right: 35px;
-    }
+      color: $Cream;
+      font-size: 1.2rem;
+      justify-content: center;
+      font-family: "Righteous";
+      margin-bottom: 8%;
+        }
+        .ion-minus-circled {
+          background-color: $DullPink;
+        }
+        .item-content {
+          background-color: #dfd823;
+          color:$Brown;
+          padding:5px;;
+        }
     .button-icon{
-      bottom: 20px;
+      padding-bottom: 12%;
     }
     .manageButton{
       border-radius: 20px;
+      border:solid $Green 2px;
       background-color: #78C0A8;
-      color: #FCEBB6;
+      color: $Brown;
+      font-size: 1.3rem;
+
     }
     .inviteButton{
       border-radius: 20px;
-      background-color: #FCEBB6;
-      color: #78C0A8;
+      border:solid #78C0A8 3px;
+      background-color: $Green;
+      color: $Brown;
+      font-size: 1.3rem;
+    }
+    .addFavorsButton {
+      border-radius: 20px;
+      border:solid $LightOrange 3px;
+      background-color: $Brown;
+      color: $DullYellow;
+      font-size: 1.3rem;
     }
   }
   ion-item{
@@ -150,23 +127,39 @@
   .card {
     border-radius: 10px;
     .item {
-      background-color: #E7450D;
-      border-radius: 15px;
+      background-color: $Brown;
+      border:solid $Pink 4px;
+      box-shadow:   -4px -4px 4px 5px $Blue,
+                    4px 4px 4px 5px $Blue,
+                    -6px -6px 4px 8px $Green,
+                    6px 6px 4px 8px $Green;
+      border-radius: 10px;
+      padding:20px;
+      padding-right: 16%;
+      color: $Cream;
+      font-size: 1.2rem;
+      justify-content: center;
+      font-family: "Righteous"
+
     }
     .item-content{
-      background-color: #FBDE03;
+      background-color: $Gold;
       padding-right: 20px;
     }
     h3 {
-      background-color: #FBDE03;
+      background-color: $Green;
       text-align: center;
       border-radius: 20px;
+      font-size: 1.3rem;
+      padding:5px;
+      color:$White;
     }
     p {
       font-family: "Righteous";
-      font-size: 1.2em;
+      font-size: 1.1em;
+      font-weight: bold;
       padding:2px;
-      color:rgba(#ffffff, 0.9);
+      color:$Cream;
     }
   }
 }
