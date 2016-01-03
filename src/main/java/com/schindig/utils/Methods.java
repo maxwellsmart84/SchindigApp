@@ -62,6 +62,7 @@ public class Methods extends MainController {
     public static void newInvite(Invite i, InviteRepo inv, Party p) {
         Invite invite = new Invite();
         invite.party = p;
+
         invite.email = i.email;
         invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+1", "");
         invite.name = i.name;
@@ -256,7 +257,7 @@ public class Methods extends MainController {
     }
 
     public static String sendPayment(User guest, Party party, UserRepo repo, Double amount) throws IOException {
-        String url = Venmo.getVenmoSandbox();
+        String url = Venmo.getVenmoPaymentURL();
         URL object = new URL(url);
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         con.setDoOutput(true);
