@@ -332,14 +332,13 @@ public class MainController {
         } else if (!user.password.equals(p.user.password.toLowerCase())) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
+//            Auth a = auth.findByDevice(p.device);
+//            if (a==null) {
+//                Methods.newDevice(user, p.device, auth);
+//                return user.userID;
+//            }
             return user.userID;
         }
-
-//        Auth a = auth.findByDevice(p.device);
-//        if (a==null) {
-//            Methods.newDevice(user, p.device, auth);
-//            return user.userID;
-//        }
         return null;
     }
 
@@ -570,25 +569,26 @@ public class MainController {
         ArrayList<Object> payload = new ArrayList<>();
         ArrayList<Invite> inviteList = invites.findByParty(party);
         HashMap<String,Object> test = new HashMap<>();
-        HashMap<String, Object> userTest = new HashMap<>();
-        HashMap<String, Object> inviteTest = new HashMap<>();
-        userTest.put("userID", user.userID);
-        userTest.put("username", user.username);
-        userTest.put("firstName", user.firstName);
-        userTest.put("lastName", user.lastName);
-        userTest.put("venmoID", user.getVenmoID());
-        test.put("user", userTest);
+        HashMap<String, Object> userDump = new HashMap<>();
+        HashMap<String, Object> inviteDump = new HashMap<>();
+        userDump.put("userID", user.userID);
+        userDump.put("username", user.username);
+        userDump.put("firstName", user.firstName);
+        userDump.put("lastName", user.lastName);
+        userDump.put("venmoID", user.getVenmoID());
+        test.put("user", userDump);
         for (Invite i : inviteList) {
-            inviteTest.put("inviteID", i.inviteID);
+            inviteDump.put("inviteID", i.inviteID);
             if (i.user!=null) {
-                inviteTest.put("user", i.user.userID);
+                inviteDump.put("user", i.user.userID);
             }
-            inviteTest.put("name", i.name);
-            inviteTest.put("sent", i.sent);
-            inviteTest.put("phone", i.phone);
-            inviteTest.put("email", i.email);
+            inviteDump.put("name", i.name);
+            inviteDump.put("sent", i.sent);
+            inviteDump.put("phone", i.phone);
+            inviteDump.put("email", i.email);
         }
-        test.put("inviteList", inviteTest);
+        test.put("inviteList", inviteDump);
+        test.put("party", party);
         payload.add(party);
         payload.add(inviteList);
 //        if (u == party.host) {
