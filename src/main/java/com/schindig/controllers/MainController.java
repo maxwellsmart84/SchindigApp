@@ -5,6 +5,9 @@ import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
@@ -53,6 +56,9 @@ public class MainController {
 
     @Autowired
     AuthRepo auth;
+
+    @Autowired
+    ContactRepo contacts;
 
 
     @PostConstruct
@@ -182,6 +188,24 @@ public class MainController {
                 }
             }
         }
+        String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
+        String theme = "This is just a placeholder for what could be an insane theme.";
+        String local = "220 E Bryan St, Savannah, GA 31401";
+        String stretchName = "One insane crazy impossible goal.";
+        User user = users.findOneByUsername("venmo");
+        Party P = new Party(user, "Insert Party Name Here", "Christmas", description, null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
+                0.0, true, true, theme, "Valet");
+        parties.save(P);
+        Invite i = new Invite();
+        i.user = users.findOneByUsername("admin");
+        i.email = i.user.email;
+        i.phone = i.user.phone;
+        i.name = i.user.firstName.concat(" "+ i.user.lastName);
+        i.party = P;
+        user.hostCount += 1;
+        users.save(user);
+        invites.save(i);
         System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
     }
 
@@ -328,6 +352,81 @@ public class MainController {
 
     }
 
+    @RequestMapping(path = "/user/contacts", method = RequestMethod.POST)
+    public ArrayList<Contact> contactDB(@RequestBody Parameters p, HttpServletResponse response) {
+        User user = users.findOne(p.userID);
+        ArrayList<Contact> oldContacts = contacts.findAllByUser(user);
+        if (p.contactDump!=null) {
+            if (oldContacts.size() == 0) {
+                for (int i = 0; i < p.contactDump.size(); i++) {
+                    Contact thisContact = new Contact();
+                    thisContact.user = user;
+                    if (p.contactDump.get(i).name != null) {
+                        thisContact.name = p.contactDump.get(i).name.trim();
+                    }
+                    if (p.contactDump.get(i).phone != null) {
+                        thisContact.phone = p.contactDump.get(i).phone.trim().replace(" ", "").replace("(", "").replace(")", "").replace("-", "");
+                    }
+//                if (p.contactDump.get(i).email!=null) {
+//                thisContact.email = p.contactDump.get(i).email.trim();
+//                }
+                    contacts.save(thisContact);
+                }
+            } else {
+                for (Contact c : oldContacts) {
+                    for (int i = 0; i < p.contactDump.size(); i++) {
+                        if (!c.name.equals(p.contactDump.get(i).name.trim())) {
+                            Contact thisContact = new Contact();
+                            thisContact.user = user;
+                            if (p.contactDump.get(i).name != null) {
+                                thisContact.name = p.contactDump.get(i).name.trim();
+                            }
+                            if (p.contactDump.get(i).phone != null) {
+                                thisContact.phone = p.contactDump.get(i).phone.trim().replace(" ", "").replace("(", "").replace(")", "").replace("-", "");
+                            }
+//                        if (p.contactDump.get(i).email!=null) {
+//                            thisContact.email = p.contactDump.get(i).email.trim();
+//                        }
+                            contacts.save(thisContact);
+                        }
+                    }
+                }
+            }
+        }
+        return contacts.findAllByUser(users.findOne(3));
+    }
+
+
+
+    @RequestMapping(path = "/{partyID}/{userID}/contacts", method = RequestMethod.GET)
+    public ArrayList<Contact> getContacts(@PathVariable("userID") Integer userID, @PathVariable("partyID") Integer partyID) {
+        Party p = parties.findOne(partyID);
+        User u = users.findOne(userID);
+        ArrayList<Contact> returnList = new ArrayList<>();
+        ArrayList<Contact> contactList = contacts.findAllByUser(u);
+        contactList = contactList.stream()
+                .sorted(Comparator.comparing(Contact::getName))
+                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Invite> inviteList = invites.findByParty(p);
+        for (Contact contact : contactList) {
+            for (Invite invite : inviteList) {
+                if (invite.phone.equals(contact.phone)) {
+
+                    returnList.add(contact);
+                }
+            }
+        }
+        if (returnList.size()==0) {
+            if (contactList!=null) {
+                return contactList;
+            } else {
+                return null;
+            }
+        } else {
+            return returnList;
+        }
+    }
+
     /**
      * ALL PARTY RELATED ROUTES
      **/
@@ -463,19 +562,78 @@ public class MainController {
         users.save(user);
     }
 
-    @RequestMapping(path = "/party/{id}/{userID}", method = RequestMethod.GET)
-    public Party getParty(@PathVariable("id") Integer id, @PathVariable("userID") Integer userID) {
+    @RequestMapping(path = "/party/{partyID}/{userID}", method = RequestMethod.GET)
+    public HashMap<String,Object> getParty(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID) {
 
-        Party party = parties.findOne(id);
-        User u = users.findOne(userID);
-        ArrayList<Invite> i = invites.findByParty(party);
-        for (Invite inv : i) {
-            if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
-                party.rsvpStatus = inv.rsvpStatus;
-                break;
+        Party party = parties.findOne(partyID);
+        User user = users.findOne(userID);
+        ArrayList<Object> payload = new ArrayList<>();
+        ArrayList<Invite> inviteList = invites.findByParty(party);
+        HashMap<String,Object> test = new HashMap<>();
+        HashMap<String, Object> userTest = new HashMap<>();
+        HashMap<String, Object> inviteTest = new HashMap<>();
+        userTest.put("userID", user.userID);
+        userTest.put("username", user.username);
+        userTest.put("firstName", user.firstName);
+        userTest.put("lastName", user.lastName);
+        userTest.put("venmoID", user.getVenmoID());
+        test.put("user", userTest);
+        for (Invite i : inviteList) {
+            inviteTest.put("inviteID", i.inviteID);
+            if (i.user!=null) {
+                inviteTest.put("user", i.user.userID);
             }
+            inviteTest.put("name", i.name);
+            inviteTest.put("sent", i.sent);
+            inviteTest.put("phone", i.phone);
+            inviteTest.put("email", i.email);
         }
-        return party;
+        test.put("inviteList", inviteTest);
+        payload.add(party);
+        payload.add(inviteList);
+//        if (u == party.host) {
+//            for (Invite inv : i) {
+//                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
+//                for (int user = 1; user < userCheck.size(); user++) {
+//                    Invite invite = userCheck.get(user);
+//                    invites.delete(invite);
+//                }
+//                ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
+//                for (int user = 1; user < phoneCheck.size(); user++) {
+//                    Invite invite = phoneCheck.get(user);
+//                    invites.delete(invite);
+//                }
+//                ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
+//                for (int user = 1; user < emailCheck.size(); user++) {
+//                    Invite invite = emailCheck.get(user);
+//                    invites.delete(invite);
+//                }
+//            }
+//            return party;
+//        } else {
+//            for (Invite inv : i) {
+//                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
+//                    for (int user = 1; user < userCheck.size(); user++) {
+//                        Invite invite = userCheck.get(user);
+//                        invites.delete(invite);
+//                    }
+//                    ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
+//                    for (int user = 1; user < phoneCheck.size(); user++) {
+//                        Invite invite = phoneCheck.get(user);
+//                        invites.delete(invite);
+//                    }
+//                    ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
+//                    for (int user = 1; user < emailCheck.size(); user++) {
+//                        Invite invite = emailCheck.get(user);
+//                        invites.delete(invite);
+//                    }
+//                if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
+//                    party.rsvpStatus = inv.rsvpStatus;
+//                    break;
+//                }
+//            }
+//        }
+        return test;
     }
 
     @RequestMapping(path = "/party/{id}/invites", method = RequestMethod.GET)
@@ -483,6 +641,12 @@ public class MainController {
 
         Party p = parties.findOne(id);
         return invites.findByParty(p);
+    }
+
+    @RequestMapping(path = "/party/{id}/sendInvites", method = RequestMethod.POST)
+    public void sendInvites(@PathVariable("id") Integer id, HttpServletResponse response) throws MessagingException, IOException {
+        Party p = parties.findOne(id);
+
     }
 
     @RequestMapping(path = "/party/update", method = RequestMethod.PATCH)
@@ -515,7 +679,7 @@ public class MainController {
             if (parameters.party.stretchName != null) {
                 check.stretchName = parameters.party.stretchName;
             }
-            if (parameters.party.stretchStatus != null) {
+            if (parameters.party.stretchStatus != null && parameters.party.stretchStatus != 0.0) {
                 if ((check.stretchStatus += parameters.party.stretchStatus) > check.stretchGoal) {
                     double diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
                     check.stretchStatus += (parameters.party.stretchStatus - diff);
@@ -527,21 +691,35 @@ public class MainController {
             if (parameters.party.theme != null) {
                 check.theme = parameters.party.theme;
             }
+            if (parameters.inviteDump != null) {
+                ArrayList<Invite> inviteList = invites.findByParty(check);
+                if (inviteList.size() != 0) {
+                    for (Invite invite : parameters.inviteDump) {
+                        for (Invite cuurentInvite : inviteList) {
+                            if (!invite.phone.equals(cuurentInvite.phone) || !invite.email.equals(cuurentInvite.email)) {
+                                Methods.newInvite(invite, invites, check);
+//                      Methods.sendInvite(invite, p.host, p);
+                                invite.sent = true;
+                                check.host.inviteCount += 1;
+                                users.save(check.host);
+                            }
+                        }
+                    }
+                } else {
+                    for (Invite invite : parameters.inviteDump) {
+                        Methods.newInvite(invite, invites, check);
+//                      Methods.sendInvite(invite, p.host, p);
+                        invite.sent = true;
+                        check.host.inviteCount += 1;
+                        users.save(check.host);
+                    }
+                }
+            }
             if (parameters.party.byob) {
                 check.byob = true;
             }
             if (parameters.party.parking != null) {
                 check.parking = parameters.party.parking;
-            }
-            if (parameters.inviteDump != null) {
-                for (int i = 0; i < parameters.inviteDump.size(); i++) {
-                    Invite invite = parameters.inviteDump.get(i);
-                    Methods.newInvite(invite, invites, check);
-//                Methods.sendInvite(invite, check.host, check);
-                    invite.sent = true;
-                    check.host.inviteCount += 1;
-                    users.save(check.host);
-                }
             }
             if (parameters.party.wizPosition != null) {
                 check.wizPosition = parameters.party.wizPosition;
@@ -549,9 +727,7 @@ public class MainController {
             parties.save(check);
             return check;
         }
-        if (parameters.inviteDump != null) {
-            response.sendError(200, "You sent " + parameters.inviteDump.size() + " invites out!");
-        } else if (parameters != null) {
+        if (parameters != null) {
             response.sendError(200, "Updated " + check.partyName + "'s details.");
         } else {
             response.sendError(200, "No updates added.");
@@ -752,11 +928,11 @@ public class MainController {
         response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
     }
 
-    @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
-    public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
-        Party party = parties.findOne(p.partyID);
-        User guest = users.findOne(p.userID);
-        Double amount = p.amount;
+    @RequestMapping(path = "/venmo/payment/{partyID}/{userID}", method = RequestMethod.GET)
+    public void venmoPayment(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID, HttpServletResponse response) throws IOException {
+        Party party = parties.findOne(partyID);
+        User guest = users.findOne(userID);
+        Double amount = 0.10;
         if (guest.getVenmoID()==null) {
             response.sendError(400, "No Venmo account found.");
         }
