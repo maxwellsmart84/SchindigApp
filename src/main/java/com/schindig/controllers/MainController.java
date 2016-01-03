@@ -5,6 +5,9 @@ import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
@@ -413,10 +416,14 @@ public class MainController {
                 }
             }
         }
-        if (returnList!=null) {
-            return returnList;
+        if (returnList.size()==0) {
+            if (contactList!=null) {
+                return contactList;
+            } else {
+                return null;
+            }
         } else {
-            return contactList;
+            return returnList;
         }
     }
 
@@ -555,55 +562,78 @@ public class MainController {
         users.save(user);
     }
 
-    @RequestMapping(path = "/party/{id}/{userID}", method = RequestMethod.GET)
-    public Party getParty(@PathVariable("id") Integer id, @PathVariable("userID") Integer userID) {
+    @RequestMapping(path = "/party/{partyID}/{userID}", method = RequestMethod.GET)
+    public HashMap<String,Object> getParty(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID) {
 
-        Party party = parties.findOne(id);
-        User u = users.findOne(userID);
-        ArrayList<Invite> i = invites.findByParty(party);
-        if (u == party.host) {
-            for (Invite inv : i) {
-                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
-                for (int user = 1; user < userCheck.size(); user++) {
-                    Invite invite = userCheck.get(user);
-                    invites.delete(invite);
-                }
-                ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
-                for (int user = 1; user < phoneCheck.size(); user++) {
-                    Invite invite = phoneCheck.get(user);
-                    invites.delete(invite);
-                }
-                ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
-                for (int user = 1; user < emailCheck.size(); user++) {
-                    Invite invite = emailCheck.get(user);
-                    invites.delete(invite);
-                }
+        Party party = parties.findOne(partyID);
+        User user = users.findOne(userID);
+        ArrayList<Object> payload = new ArrayList<>();
+        ArrayList<Invite> inviteList = invites.findByParty(party);
+        HashMap<String,Object> test = new HashMap<>();
+        HashMap<String, Object> userTest = new HashMap<>();
+        HashMap<String, Object> inviteTest = new HashMap<>();
+        userTest.put("userID", user.userID);
+        userTest.put("username", user.username);
+        userTest.put("firstName", user.firstName);
+        userTest.put("lastName", user.lastName);
+        userTest.put("venmoID", user.getVenmoID());
+        test.put("user", userTest);
+        for (Invite i : inviteList) {
+            inviteTest.put("inviteID", i.inviteID);
+            if (i.user!=null) {
+                inviteTest.put("user", i.user.userID);
             }
-            return party;
-        } else {
-            for (Invite inv : i) {
-                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
-                    for (int user = 1; user < userCheck.size(); user++) {
-                        Invite invite = userCheck.get(user);
-                        invites.delete(invite);
-                    }
-                    ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
-                    for (int user = 1; user < phoneCheck.size(); user++) {
-                        Invite invite = phoneCheck.get(user);
-                        invites.delete(invite);
-                    }
-                    ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
-                    for (int user = 1; user < emailCheck.size(); user++) {
-                        Invite invite = emailCheck.get(user);
-                        invites.delete(invite);
-                    }
-                if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
-                    party.rsvpStatus = inv.rsvpStatus;
-                    break;
-                }
-            }
+            inviteTest.put("name", i.name);
+            inviteTest.put("sent", i.sent);
+            inviteTest.put("phone", i.phone);
+            inviteTest.put("email", i.email);
         }
-        return party;
+        test.put("inviteList", inviteTest);
+        payload.add(party);
+        payload.add(inviteList);
+//        if (u == party.host) {
+//            for (Invite inv : i) {
+//                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
+//                for (int user = 1; user < userCheck.size(); user++) {
+//                    Invite invite = userCheck.get(user);
+//                    invites.delete(invite);
+//                }
+//                ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
+//                for (int user = 1; user < phoneCheck.size(); user++) {
+//                    Invite invite = phoneCheck.get(user);
+//                    invites.delete(invite);
+//                }
+//                ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
+//                for (int user = 1; user < emailCheck.size(); user++) {
+//                    Invite invite = emailCheck.get(user);
+//                    invites.delete(invite);
+//                }
+//            }
+//            return party;
+//        } else {
+//            for (Invite inv : i) {
+//                ArrayList<Invite> userCheck = invites.findAllByUser(inv.user);
+//                    for (int user = 1; user < userCheck.size(); user++) {
+//                        Invite invite = userCheck.get(user);
+//                        invites.delete(invite);
+//                    }
+//                    ArrayList<Invite> phoneCheck = invites.findAllByPhone(inv.phone);
+//                    for (int user = 1; user < phoneCheck.size(); user++) {
+//                        Invite invite = phoneCheck.get(user);
+//                        invites.delete(invite);
+//                    }
+//                    ArrayList<Invite> emailCheck = invites.findAllByEmail(inv.email);
+//                    for (int user = 1; user < emailCheck.size(); user++) {
+//                        Invite invite = emailCheck.get(user);
+//                        invites.delete(invite);
+//                    }
+//                if (inv.phone.equals(u.phone) || inv.email.equals(u.email) || inv.user == u) {
+//                    party.rsvpStatus = inv.rsvpStatus;
+//                    break;
+//                }
+//            }
+//        }
+        return test;
     }
 
     @RequestMapping(path = "/party/{id}/invites", method = RequestMethod.GET)
@@ -649,7 +679,7 @@ public class MainController {
             if (parameters.party.stretchName != null) {
                 check.stretchName = parameters.party.stretchName;
             }
-            if (parameters.party.stretchStatus != null && parameters.party.stretchStatus!=0.0) {
+            if (parameters.party.stretchStatus != null && parameters.party.stretchStatus != 0.0) {
                 if ((check.stretchStatus += parameters.party.stretchStatus) > check.stretchGoal) {
                     double diff = (check.stretchStatus += parameters.party.stretchStatus) - check.stretchGoal;
                     check.stretchStatus += (parameters.party.stretchStatus - diff);
@@ -663,14 +693,26 @@ public class MainController {
             }
             if (parameters.inviteDump != null) {
                 ArrayList<Invite> inviteList = invites.findByParty(check);
-                Integer count = 0;
-                for (Invite invite : parameters.inviteDump) {
-                    Methods.newInvite(invite, invites, check);
+                if (inviteList.size() != 0) {
+                    for (Invite invite : parameters.inviteDump) {
+                        for (Invite cuurentInvite : inviteList) {
+                            if (!invite.phone.equals(cuurentInvite.phone) || !invite.email.equals(cuurentInvite.email)) {
+                                Methods.newInvite(invite, invites, check);
 //                      Methods.sendInvite(invite, p.host, p);
-                    invite.sent = true;
-                    check.host.inviteCount += 1;
-                    users.save(check.host);
-                    count += 1;
+                                invite.sent = true;
+                                check.host.inviteCount += 1;
+                                users.save(check.host);
+                            }
+                        }
+                    }
+                } else {
+                    for (Invite invite : parameters.inviteDump) {
+                        Methods.newInvite(invite, invites, check);
+//                      Methods.sendInvite(invite, p.host, p);
+                        invite.sent = true;
+                        check.host.inviteCount += 1;
+                        users.save(check.host);
+                    }
                 }
             }
             if (parameters.party.byob) {
