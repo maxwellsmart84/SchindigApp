@@ -575,9 +575,10 @@ public class MainController {
                 .filter(distinctByKey(Invite::getName))
                 .collect(Collectors.toCollection(ArrayList::new));
         if (party.host!=user) {
-            party.rsvpStatus = invites.findByPartyAndUser(party, user).rsvpStatus;
+            Invite rsvp  = invites.findByPartyAndEmail(party, user.email);
+            party.rsvpStatus = rsvp.rsvpStatus;
         } else {
-            party.rsvpStatus = "Undefined";
+            party.rsvpStatus = "You're the host!";
         }
         ArrayList<Object> payload = new ArrayList<>();
         HashMap<String,Object> inviteDump = new HashMap<>();
@@ -704,8 +705,10 @@ public class MainController {
         ArrayList<Party> partyList = new ArrayList();
         for (Invite invite : inviteList) {
             if (u.email.equals(invite.email)) {
+                if (invite.email!=null && invite.user!=invite.party.host)
                 partyList.add(invite.party);
             } else if (u.phone.equals(invite.phone)) {
+                if (invite.phone!=null && invite.user!=invite.party.host)
                 partyList.add(invite.party);
             }
         }
@@ -878,11 +881,11 @@ public class MainController {
         response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
     }
 
-    @RequestMapping(path = "/venmo/payment/{partyID}/{userID}", method = RequestMethod.GET)
-    public void venmoPayment(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID, HttpServletResponse response) throws IOException {
-        Party party = parties.findOne(partyID);
-        User guest = users.findOne(userID);
-        Double amount = 0.10;
+    @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
+    public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
+        Party party = parties.findOne(p.partyID);
+        User guest = users.findOne(p.userID);
+        Double amount = Double.valueOf(p.amount);
         if (guest.getVenmoID()==null) {
             response.sendError(400, "No Venmo account found.");
         }
