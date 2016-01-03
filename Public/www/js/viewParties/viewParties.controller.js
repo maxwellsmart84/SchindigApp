@@ -20,6 +20,9 @@
       ///PATCH TO STRETCH STATUS//
       $scope.pledgeStretch = function(stretchValue){
         var userID = +localStorage.getItem('userID');
+        var pledgePopup = $ionicPopup.show ({
+
+        })
         ViewPartyService.userGet(userID).then(function(data){
           console.log('WHO IS THIS USER');
           if(data.data.venmoID != null){
@@ -77,6 +80,7 @@
     };
     //THIS IS PROBABLY USED, BLAKE IS STUPID
     //THIS IS DEFINITELY NOT USED, MAX..
+    //MAX WON THIS ARGUMENT
 
     ///RSVP///
 
@@ -108,6 +112,12 @@
                 rsvpPopup.close();
             }
           },
+          {
+          text: 'Cancel',
+          onTap: function(){
+            return;
+          }
+        },
         ]
       });
     };
