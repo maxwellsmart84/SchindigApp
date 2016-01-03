@@ -1,9 +1,11 @@
 $Brown: #594544;
 $Gold: #FFB312;
 $Pink: #FF66A6;
+$DullPink: #E26291;
 $Green: #C1C71F;
 $Blue: #00B3A0;
 $Yellow: #FAF700;
+$DullYellow: #dfd823;
 $Orange: #F63B09;
 $Red: #F60024;
 $PinkFire: #F7007B;
@@ -75,22 +77,40 @@ $LightOrange: #DD7A14;
       color: $Cream;
       font-size: 1.2rem;
       justify-content: center;
-      font-family: "Righteous"
+      font-family: "Righteous";
+      margin-bottom: 8%;
+        }
+        .ion-minus-circled {
+          background-color: $DullPink;
+        }
+        .item-content {
+          background-color: #dfd823;
+          color:$Brown;
+          padding:5px;;
         }
     .button-icon{
       padding-bottom: 12%;
     }
     .manageButton{
-      border-radius: 10px;
+      border-radius: 20px;
+      border:solid $Green 2px;
       background-color: #78C0A8;
-      color: #FCEBB6;
+      color: $Brown;
       font-size: 1.3rem;
 
     }
     .inviteButton{
       border-radius: 20px;
-      background-color: #FCEBB6;
-      color: #78C0A8;
+      border:solid #78C0A8 3px;
+      background-color: $Green;
+      color: $Brown;
+      font-size: 1.3rem;
+    }
+    .addFavorsButton {
+      border-radius: 20px;
+      border:solid $LightOrange 3px;
+      background-color: $Brown;
+      color: $DullYellow;
       font-size: 1.3rem;
     }
   }

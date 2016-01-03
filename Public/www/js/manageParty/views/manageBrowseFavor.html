@@ -1,8 +1,17 @@
-<ion-view class="manageParty" ng-init="loadOneFavorBrowse()">
-    <div class="bar managePartyHeader">
-        <h1>CHECK/UNCHECK YOUR FAVORS</h1>
-     </div>
-     <ion-content class = "managePartyContent manageBrowseFavor">
+<ion-view class="manageParty">
+  <ion-nav-bar>
+  </ion-nav-bar>
+  <div class="bar bar-header">
+    <div class="managePartyHeader">
+      <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Favors</span></h1>
+    </div>
+  </div>
+     <ion-content class ="managePartyContent">
+       <button
+         ng-click="addFavorToData(favorDoo);"
+         class="addFavorToDataButton button button-small ">
+         Submit new Favor
+       </button>
       <ul class="list">
         <div class="list topListButtonAndLabel">
           <div class="item">

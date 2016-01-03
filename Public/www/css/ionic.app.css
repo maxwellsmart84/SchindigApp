@@ -9579,18 +9579,33 @@ a.button {
       color: #dddcbe;
       font-size: 1.2rem;
       justify-content: center;
-      font-family: "Righteous"; }
+      font-family: "Righteous";
+      margin-bottom: 8%; }
+    .manageParty .managePartyContent .ion-minus-circled {
+      background-color: #E26291; }
+    .manageParty .managePartyContent .item-content {
+      background-color: #dfd823;
+      color: #594544;
+      padding: 5px; }
     .manageParty .managePartyContent .button-icon {
       padding-bottom: 12%; }
     .manageParty .managePartyContent .manageButton {
-      border-radius: 10px;
+      border-radius: 20px;
+      border: solid #C1C71F 2px;
       background-color: #78C0A8;
-      color: #FCEBB6;
+      color: #594544;
       font-size: 1.3rem; }
     .manageParty .managePartyContent .inviteButton {
       border-radius: 20px;
-      background-color: #FCEBB6;
-      color: #78C0A8;
+      border: solid #78C0A8 3px;
+      background-color: #C1C71F;
+      color: #594544;
+      font-size: 1.3rem; }
+    .manageParty .managePartyContent .addFavorsButton {
+      border-radius: 20px;
+      border: solid #DD7A14 3px;
+      background-color: #594544;
+      color: #dfd823;
       font-size: 1.3rem; }
   .manageParty ion-item {
     margin: 0; }
