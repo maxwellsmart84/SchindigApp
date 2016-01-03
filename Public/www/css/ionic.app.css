@@ -9581,7 +9581,8 @@ a.button {
       padding-right: 35px;
       color: #dddcbe;
       font-size: 1.2rem;
-      justify-content: center; }
+      justify-content: center;
+      font-family: "Righteous"; }
     .manageParty .managePartyContent .button-icon {
       padding-bottom: 12%; }
     .manageParty .managePartyContent .manageButton {
@@ -9605,7 +9606,17 @@ a.button {
     border-radius: 10px; }
     .manageParty .card .item {
       background-color: #F63B09;
-      border-radius: 15px; }
+      border-radius: 15px;
+      background-color: #594544;
+      border: solid #FF66A6 4px;
+      box-shadow: -4px -4px 4px 5px #00B3A0, 4px 4px 4px 5px #00B3A0, -6px -6px 4px 8px #C1C71F, 6px 6px 4px 8px #C1C71F;
+      border-radius: 10px;
+      padding: 20px;
+      padding-right: 35px;
+      color: #dddcbe;
+      font-size: 1.2rem;
+      justify-content: center;
+      font-family: "Righteous"; }
     .manageParty .card .item-content {
       background-color: #FFB312;
       padding-right: 20px; }

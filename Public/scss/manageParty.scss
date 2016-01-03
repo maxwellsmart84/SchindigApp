@@ -75,6 +75,7 @@ $LightOrange: #DD7A14;
       color: $Cream;
       font-size: 1.2rem;
       justify-content: center;
+      font-family: "Righteous";
         }
     .button-icon{
       padding-bottom: 12%;
@@ -108,6 +109,19 @@ $LightOrange: #DD7A14;
     .item {
       background-color: $Orange;
       border-radius: 15px;
+      background-color: $Brown;
+      border:solid $Pink 4px;
+      box-shadow:   -4px -4px 4px 5px $Blue,
+                    4px 4px 4px 5px $Blue,
+                    -6px -6px 4px 8px $Green,
+                    6px 6px 4px 8px $Green;
+      border-radius: 10px;
+      padding:20px;
+      padding-right: 35px;
+      color: $Cream;
+      font-size: 1.2rem;
+      justify-content: center;
+      font-family: "Righteous";
     }
     .item-content{
       background-color: $Gold;
