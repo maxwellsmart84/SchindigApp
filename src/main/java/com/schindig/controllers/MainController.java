@@ -868,6 +868,7 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, @PathVariable("partyID") Integer partyID) throws IOException {
+        response.setHeader("Origin", "http://104.236.244.159:8100");
         response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+":"+userID));
     }
 
