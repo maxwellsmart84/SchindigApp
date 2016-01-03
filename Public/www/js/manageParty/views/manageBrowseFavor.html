@@ -1,18 +1,12 @@
-<ion-view ng-init="loadOneFavorBrowse()">
-    <ion-nav-bar class="bar-stable">
-
-    </ion-nav-bar>
-    <div class=" wizardHeader bar bar-header bar-royal">
-        <h1 class= "title">CHECK/UNCHECK YOUR FAVORS</h1>
+<ion-view class="manageParty" ng-init="loadOneFavorBrowse()">
+    <div class="bar managePartyHeader">
+        <h1>CHECK/UNCHECK YOUR FAVORS</h1>
      </div>
-     <ion-content>
+     <ion-content class = "managePartyContent manageBrowseFavor">
       <ul class="list">
-        <div class="item item-divider">
-          COMMONLY BOUGHT FAVORS FOR YOUR PARTY TYPE:
-        </div>
-        <div class="list">
-          <div class="item item-input-inset">
-            <label class="item-input-wrapper">
+        <div class="list topListButtonAndLabel">
+          <div class="item">
+            <label class="topListLabel item-input-wrapper">
               <input
                 ng-model="favorDoo"
                 type="text"
@@ -20,26 +14,31 @@
             </label>
             <button
               ng-click="addFavorToData(favorDoo);"
-              class="button button-small">
+              class="addFavorToDataButton button button-small ">
               Submit new Favor
             </button>
           </div>
         </div>
-        <button
-          ng-click="pushToFavorArray();loadOneFavorBrowse();goBackToManage();"
-          class="button button-full button-positive">
-          SUBMIT YOUR NEW FAVORS
-        </button>
-        <ion-checkbox
-          ng-repeat="item in browseFavors | filter: favorDoo"
-          ng-click="favorCheck = !favorCheck">
-          <ion-item
-            ng-model="favorCheck"
-            id="{{item}}"
-            ng-class="favorCheck ? 'yes' : 'no'">
-            {{item.favorName}}
-          </ion-item>
-        </ion-checkbox>
+        <div class="submitFavorsButton">
+          <button
+            ng-click="pushToFavorArray();loadOneFavorBrowse();goBackToManage();"
+            class="addFavorButton button button-full button-positive">
+            SUBMIT YOUR NEW FAVORS
+          </button>
+        </div>
+        <div class="favorsList">
+          <ion-checkbox
+            ng-repeat="item in browseFavors | filter: favorDoo"
+            ng-click="favorCheck = !favorCheck"
+            class="favorItem">
+            <ion-item
+              ng-model="favorCheck"
+              id="{{item}}"
+              ng-class="favorCheck ? 'yes' : 'no'">
+              {{item.favorName}}
+            </ion-item>
+          </ion-checkbox>
+        </div>
       </ul>
     </ion-content>
 </ion-view>

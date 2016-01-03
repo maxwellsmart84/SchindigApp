@@ -18,8 +18,6 @@
 
       var vm = this;
 
-
-
       ///PATCH TO STRETCH STATUS//
       $scope.pledgeStretch = function(stretchValue){
         var userID = +localStorage.getItem('userID');
