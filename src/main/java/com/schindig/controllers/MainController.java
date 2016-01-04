@@ -875,12 +875,15 @@ public class MainController {
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
         response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
+        System.out.println("Route hit.");
         return;
 //        Methods.venmoAccess(url);
     }
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
+
+        System.out.println("Venmo returned");
         HashMap<String, String> map = new HashMap<>();
         String[] relocate = state.split("AND");
         User user = users.findOne(Integer.valueOf(relocate[1]));
@@ -891,6 +894,8 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
     public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
+
+        System.out.println("Payment Taken");
         Party party = parties.findOne(p.partyID);
         User guest = users.findOne(p.userID);
         Double amount = Double.valueOf(p.amount);
