@@ -874,7 +874,7 @@ public class MainController {
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
 //        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
-        response.addHeader("Origin", "http://localhost:8100");
+//        response.addHeader("Origin", "http://localhost:8100");
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, HEAD");
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
