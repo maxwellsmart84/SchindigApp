@@ -161,7 +161,7 @@
           .success(function(data){
             $scope.loadOneFavor();
             $scope.browseFavors = data;
-            console.log('data', data);
+            console.log('datadooddadadad', $scope.browseFavors);
         });
       };
       vm.favorArray = [];

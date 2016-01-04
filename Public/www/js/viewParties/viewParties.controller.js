@@ -21,12 +21,21 @@
       ///PATCH TO STRETCH STATUS//
       $scope.pledgeStretch = function(stretchValue){
         var userID = +localStorage.getItem('userID');
+        var partyID = +localStorage.getItem('partyID');
         ViewPartyService.userGet(userID).then(function(data){
-          console.log('WHO IS THIS USER');
+          console.log('DONDE ESTA LA DATA', data.data.venmoID);
+
+          var amount = stretchValue;
           if(data.data.venmoID != null){
-            console.log('DONDE ESTA LA DATA', data.data.venmoID);
+            // ViewPartyService.venmoPay(partyID, userID, amount).then(function(data){
+              console.log('what venmoPay');
+            // })
           } else {
-            console.log('there is no VEnDMO');
+            // $scope.venmoShow();
+            console.log('there is no venmo data', amount);
+            ViewPartyService.venmoGet(partyID, userID).then(function(data){
+              console.log('there is no VEnDMO', data);
+            })
             return
           }
         });
@@ -58,8 +67,8 @@
       $scope.showStretchInput = function(){
         $scope.stretchInput = true;
         $scope.chipIn = false;
+        console.log('WHERE ARE WE NOW');
       };
-
 
       $scope.showInviteVar = false;
       $scope.showFavorVar = true;
@@ -85,6 +94,26 @@
     //THIS IS DEFINITELY NOT USED, MAX..
     //MAX WON THIS ARGUMENT
 
+
+    $scope.venmoShow = function(){
+      var venmoPopup = $ionicPopup.show ({
+        title: 'We are temporarily redirecting you to Venmo!',
+        buttons: [
+          {
+            text: 'Ok',
+            onTap: function(){
+              console.log('this should redirect to venmo signup');
+            }
+          },
+          {
+            text: 'Leave me here!',
+            onTap: function(){
+              console.log('I am Staying On this page');
+            }
+          }
+        ]
+      });
+    };
     ///RSVP///
 
     $scope.rsvpShow = function(){
@@ -289,33 +318,5 @@
           }
           });
         };
-
-
-        ///PATCH TO STRETCH STATUS//
-      $scope.pledgeStretch = function(stretchValue){
-        $scope.invPartyOne.stretchStatus += stretchValue;
-        var stretchStatusValue = $scope.invPartyOne.stretchStatus;
-        var partyID = +localStorage.getItem('oneInvPartyID');
-        var patchData = {
-          party: {
-            partyID: partyID,
-            stretchStatus: stretchStatusValue
-          }
-        };
-        ViewPartyService.patchStretchStatus(patchData)
-          .success(function(data){
-            console.log('success stretch', data);
-            $scope.chipIn = true;
-            $scope.stretchInput = false;
-            $scope.loadOneInvParty();
-        });
-      };
-      $scope.chipIn = true;
-      $scope.stretchInput = false;
-      $scope.showStretchInput = function(){
-        $scope.stretchInput = true;
-        $scope.chipIn = false;
-      };
-
     });
 }());
