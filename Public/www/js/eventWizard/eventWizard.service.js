@@ -5,7 +5,7 @@
     .module('eventWizard')
     .factory('EventWizardService', function($http, $state){
 
-      var ip = 'http://10.0.10.50:8080';
+      var ip = 'http://localhost:8080';
       var wizCreateUrl = ip + "/party/create";
       var wizUpdateUrl = ip + "/party/update";
       var favorUpdateUrl = ip + "/party/favor";
