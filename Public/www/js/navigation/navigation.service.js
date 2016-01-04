@@ -4,7 +4,7 @@
   angular
     .module('navigation')
     .factory('NavigationService', function($http, $state){
-        var ip = "hhttp://104.236.244.159:8080/";
+        var ip = "hhttp://104.236.244.159:8100/";
         var logOutUrl = ip + "/user/logout";
 
         var logOutUser = function(data) {

@@ -5,7 +5,7 @@
     .module('profile')
     .factory('ProfileService', function($http, $state){
       var vm = this;
-      var ip = 'http://104.236.244.159:8080/;
+      var ip = 'http://104.236.244.159:8100/;
       var userProfilePartiesURL = ip +'/user';
       var userProfileUpdateURL = ip + '/user/update';
 

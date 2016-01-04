@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * Created by Agronis on 12/9/15.
  */
 
-@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = "http://localhost:8100/")
 @RestController
 public class MainController {
 
@@ -875,11 +875,11 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8100");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
         response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
     }
 
-    @RequestMapping(path = "/testq", method = RequestMethod.GET)
+    @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
         HashMap<String, String> map = new HashMap<>();
         String[] relocate = state.split("AND");
