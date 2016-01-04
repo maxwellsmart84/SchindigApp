@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
  * Created by Agronis on 12/9/15.
  */
 
-@CrossOrigin(origins = "*")
 @RestController
 public class MainController {
 

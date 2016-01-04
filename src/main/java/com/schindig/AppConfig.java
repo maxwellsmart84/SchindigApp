@@ -2,6 +2,9 @@ package com.schindig;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.*;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -63,6 +66,19 @@ public class AppConfig {
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.debug", "true");
         return mailSender;
+    }
+
+    @Configuration
+    @EnableWebMvc
+    public class WebConfig extends WebMvcConfigurerAdapter {
+
+        @Bean
+        CorsConfiguration cors() {
+            CorsConfiguration config = new CorsConfiguration();
+            config.addAllowedOrigin("http://localhost:8100");
+            config.addAllowedHeader("Test");
+            return config;
+        }
     }
 
 
