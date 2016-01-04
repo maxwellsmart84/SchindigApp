@@ -26,8 +26,8 @@
                    phone: el.phoneNumbers[0].value
                  }
                  parsed = JSON.parse(el.id);
-                //  console.log('this should be a name', el.name.formatted);
-                //  console.log('this should be a phonue number', el.phoneNumbers[0].value);
+                 console.log('this should be a name', el.name.formatted);
+                 console.log('this should be a phonue number', el.phoneNumbers[0].value);
                  vm.contactsArray.push(oneUser)
                });
                $scope.contactName = vm.contactsArray;
