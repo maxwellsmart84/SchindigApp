@@ -4,14 +4,19 @@ import com.schindig.services.*;
 import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
+import com.thetransactioncompany.cors.CORSFilter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.CorsFilter;
+
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.inject.Singleton;
 import javax.mail.MessagingException;
+import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -868,7 +873,6 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8100");
         response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+":"+userID));
     }
 
@@ -896,6 +900,36 @@ public class MainController {
         } else {
             response.sendError(400, "There was an error processing your payment.");
         }
+    }
+
+    @Singleton
+    public class CorsFilter implements Filter{
+
+        @Override
+        public void doFilter(ServletRequest request, ServletResponse response,
+                             FilterChain filterChain) throws IOException, ServletException {
+
+            if(response instanceof HttpServletResponse){
+                HttpServletResponse alteredResponse = ((HttpServletResponse)response);
+                addCorsHeader(alteredResponse);
+            }
+
+            filterChain.doFilter(request, response);
+        }
+
+        private void addCorsHeader(HttpServletResponse response){
+            //TODO: externalize the Allow-Origin
+            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+            response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+            response.addHeader("Access-Control-Max-Age", "1728000");
+        }
+
+        @Override
+        public void destroy() {}
+
+        @Override
+        public void init(FilterConfig filterConfig)throws ServletException {}
     }
 }
 

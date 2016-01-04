@@ -101,5 +101,7 @@
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" name="Gradle: org.json:json:20151123" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.0-rc2" level="project" />
+    <orderEntry type="library" name="Gradle: com.thetransactioncompany:cors-filter:2.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.thetransactioncompany:java-property-utils:1.9.1" level="project" />
   </component>
 </module>
