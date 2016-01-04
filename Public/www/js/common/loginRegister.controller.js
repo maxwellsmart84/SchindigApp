@@ -34,7 +34,7 @@
           },
           device : uuid
         };
-        LoginRegisterService.login(loginData)
+        LoginRegisterService.login(loginData);
       };
 
       $scope.signUp = function(){
@@ -46,6 +46,7 @@
       $scope.dog = function (){
         $state.go('hostedParty');
       };
+
 
       //DELETE TO TOP COMMENT
       $scope.createNewUserToast = function(){
@@ -61,7 +62,7 @@
           email: email,
           phone: phone
         };
-        LoginRegisterService.createUser(userData)
+        LoginRegisterService.createUser(userData);
       };
     });
 

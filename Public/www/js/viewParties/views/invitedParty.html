@@ -97,18 +97,15 @@
     <ion-list
       ng-model="showInviteVar"
       ng-show="showInviteVar">
-      <ion-item class= "item item-text-wrap">
-        <h4>Who's Coming To This Party</h4>
-      </ion-item>
+      <div class= "item item-text-wrap">
+        <h4>Guest List</h4>
+      </div>
       <ion-item
         ng-repeat="invite in inviteList"
-        ng-model="invite">
-        <div
-          class=" invitedPeeps item"
-          ng-click="">
-          <h3>{{invite.user.firstName}} {{invite.user.lastName}}</h3>
+        ng-model="invite"
+        class=" item invitedPeeps">
+          <h3>{{invite.name}}</h3>
           <h4>{{invite.rsvpStatus}}</h4>
-        </div>
       </ion-item>
     </ion-list>
   </ion-content>

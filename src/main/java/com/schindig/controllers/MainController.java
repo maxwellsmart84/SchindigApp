@@ -179,7 +179,8 @@ public class MainController {
                             User invUser = userBuild.get(u);
                             ArrayList<Invite> inviteList = invites.findByParty(P);
                             if (inviteList.size() < 10) {
-                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", invUser.firstName + invUser.lastName);
+                                String thisName = invUser.firstName.concat(" "+invUser.lastName.toUpperCase()+".");
+                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", thisName);
                                 invUser.invitedCount += 1;
                                 users.save(invUser);
                                 P.host.inviteCount += 1;
@@ -538,7 +539,7 @@ public class MainController {
         User host = party.host;
         host.inviteCount += 1;
         Invite invite = new Invite(
-                user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name);
+                user, party, parameters.invites.phone, parameters.invites.email, "RSVP", parameters.invites.name);
         response.sendError(200, invite.name + " is now invited to " + invite.party.partyName + "!");
         users.save(host);
         invites.save(invite);

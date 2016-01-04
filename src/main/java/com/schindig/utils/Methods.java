@@ -47,6 +47,10 @@ public class Methods extends MainController {
 
         invite.email = i.email;
         invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+1", "");
+        if (i.name.contains(" ")) {
+            String[] newName = i.name.split(" ");
+            i.name = newName[0].concat(" "+String.valueOf(newName[1].charAt(0)).toUpperCase()+".");
+        }
         invite.name = i.name;
         inv.save(invite);
     }

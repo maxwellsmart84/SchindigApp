@@ -12,6 +12,7 @@ $PinkFire: #F7007B;
 $White: #e0e0e0;
 $Cream: #dddcbe;
 $LightOrange: #DD7A14;
+$DullRed: #cb2d2d;
 
 .manageParty {
   display: flex;
@@ -62,8 +63,12 @@ $LightOrange: #DD7A14;
       background-color: $LightOrange;
       border-radius: 10px;
       font-style: "Righteous";
+      padding-bottom: 0;
 
     }
+
+
+
     .manageItem{
       background-color: $Brown;
       border:solid $Pink 4px;
@@ -80,38 +85,114 @@ $LightOrange: #DD7A14;
       font-family: "Righteous";
       margin-bottom: 8%;
         }
+        .guestList{
+          margin-top: 5%;
+          background-color: $Cream;
+          border:solid $Pink 4px;
+          box-shadow:   -4px -4px 4px 5px $Blue,
+                        4px 4px 4px 5px $Blue,
+                        -6px -6px 4px 8px $Green,
+                        6px 6px 4px 8px $Green,
+                        -8px 8px 4px 8px $LightOrange,
+                        8px -8px 4px 8px $LightOrange;
+
+          border-radius: 20px;
+          padding:20px 10px;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 14%;
+          height:auto;
+          .item {
+            padding:0;
+          }
+          div {
+            height: 3vh;
+            display: flex;
+            align-self: center;
+
+          }
+          #invName {
+            padding-top: 4%;
+            color: $Brown;
+            font-weight: bold;
+            font-size: 1.8rem;
+            font-family: "Righteous";
+            align-self: center;
+            border-bottom: solid 2px;
+            padding-bottom: 4%;
+            text-decoration: overline;;
+          }
+          #invRSVP {
+            margin:0;
+            padding:0;
+            color: $Brown;
+            text-shadow:   -2px 1px 1px $Green,
+                           -5px 3px 1px $LightOrange,
+                           -6px 8px 1px $DullRed;
+            font-size: 1.8rem;
+            font-family: "Righteous";
+            align-self: center;
+            padding-bottom: 2%;
+          }
+        }
         .ion-minus-circled {
           background-color: $DullPink;
         }
         .item-content {
           background-color: #dfd823;
           color:$Brown;
-          padding:5px;;
+          padding:5px;
+          border-radius: 10px;
+
+          span {
+            padding:5px;
+          }
         }
-    .button-icon{
+    .-icon{
       padding-bottom: 12%;
+    }
+    .button-bar {
+      padding:1px;
+      padding-bottom: 1px;
+      margin-bottom: 5%;
+      height:15vh;
+      display: flex;
+      align-items: center;
+      background-color:$LightOrange;
+      border-radius: 15px;
+
     }
     .manageButton{
       border-radius: 20px;
-      border:solid $Green 2px;
-      background-color: #78C0A8;
-      color: $Brown;
-      font-size: 1.3rem;
-
+      background-color: $Brown;
+      color: $DullYellow;
+      font-size: 1.4rem;
+      text-shadow: -2px 2px 0px $DullPink;
+      height:12vh;
+      display: flex;
+      justify-content: center;
     }
     .inviteButton{
       border-radius: 20px;
-      border:solid #78C0A8 3px;
-      background-color: $Green;
-      color: $Brown;
-      font-size: 1.3rem;
+      border:solid $LightOrange 3px;
+      background-color: $Brown;
+      color: $DullYellow;
+      font-size: 1.4rem;
+      text-shadow: -2px 2px 0px $DullPink;
+      height:12vh;
+      display: flex;
+      justify-content: center;
     }
-    .addFavorsButton {
+    .button-small {
       border-radius: 20px;
       border:solid $LightOrange 3px;
       background-color: $Brown;
       color: $DullYellow;
       font-size: 1.3rem;
+      text-shadow: -2px 2px 0px $DullPink;
+      height:12vh;
+      display: flex;
+      justify-content: center;
     }
   }
   ion-item{
@@ -122,7 +203,7 @@ $LightOrange: #DD7A14;
     flex-wrap: nowrap;
   }
   ion-item{
-    margin-top: 15px;
+    margin-bottom: 4%;
   }
   .card {
     border-radius: 10px;
@@ -139,20 +220,20 @@ $LightOrange: #DD7A14;
       color: $Cream;
       font-size: 1.2rem;
       justify-content: center;
-      font-family: "Righteous"
-
+      font-family: "Righteous";
     }
     .item-content{
       background-color: $Gold;
       padding-right: 20px;
+      border-radius: 20px;
     }
     h3 {
-      background-color: $Green;
+      background-color: $DullYellow;
       text-align: center;
       border-radius: 20px;
       font-size: 1.3rem;
       padding:5px;
-      color:$White;
+      color:$DullRed;
     }
     p {
       font-family: "Righteous";

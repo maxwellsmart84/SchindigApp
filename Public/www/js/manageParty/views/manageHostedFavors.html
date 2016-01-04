@@ -7,15 +7,26 @@
       <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Favors</span></h1>
     </div>
   </div>
+<<<<<<< HEAD
+   <ion-content class="managePartyContent" >
+     <div class="button-bar">
+         <button
+           ng-click="goToFavorBrowse();loadOneFavorBrowse();"
+           class="button manageButton manageFavor">
+           ADD MORE FAVORS
+         </button>
+      </div>
+=======
    <ion-content class="managePartyContent ng-hide" >
      <button
        ng-click="goToFavorBrowse();loadOneFavorBrowse();"
        class="button button-full addFavorsButton">
        <strong>ADD MORE FAVORS</strong>
      </button>
+>>>>>>> c6b9d32529f02dbc68cc331e217ce016453605f0
     <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
       <ion-item class="manageItem">
-        {{item.favor.favorName}}
+        <span>{{item.favor.favorName}}</span>
         <ion-delete-button
             class="ion-minus-circled"
             ng-click="onItemDelete(item)">
