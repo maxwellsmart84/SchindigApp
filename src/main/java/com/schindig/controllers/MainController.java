@@ -264,6 +264,7 @@ public class MainController {
 
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
         response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
@@ -334,6 +335,7 @@ public class MainController {
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
