@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * Created by Agronis on 12/9/15.
  */
 
-@CrossOrigin(origins = "http://localhost:8100/")
+@CrossOrigin(origins = "*")
 @RestController
 public class MainController {
 
@@ -69,6 +69,7 @@ public class MainController {
         Map<Object,Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
+
 
     @PostConstruct
     public void init() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, InvalidKeyException, InvalidKeySpecException {
@@ -264,10 +265,10 @@ public class MainController {
 
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
-        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-        response.addHeader("Access-Control-Max-Age", "1728000");
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//        response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+//        response.addHeader("Access-Control-Max-Age", "1728000");
         User u = users.findOneByUsername(user.username.toLowerCase());
         if (u != null) {
             response.sendError(400, "Username already exists.");
@@ -335,10 +336,10 @@ public class MainController {
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
-        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
-        response.addHeader("Access-Control-Max-Age", "1728000");
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+//        response.addHeader("Access-Control-Max-Age", "1728000");
         User user = users.findOneByUsername(p.user.username.toLowerCase());
         if (user == null) {
             response.sendError(401, "Username not found.");
