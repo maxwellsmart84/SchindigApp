@@ -870,7 +870,7 @@ public class MainController {
 
         return new ArrayList<>();
     }
-    @CrossOrigin(origins = "http://localhost:8100")
+//    @CrossOrigin(origins = "http://localhost:8100")
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
 //        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
