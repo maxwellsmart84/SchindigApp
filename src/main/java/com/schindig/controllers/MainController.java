@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * Created by Agronis on 12/9/15.
  */
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8100")
 @RestController
 public class MainController {
 
