@@ -9206,11 +9206,11 @@ a.button {
   text-shadow: 0px 0px 10px #c1f6f3; }
 
 .login {
-  display: flex;
   justify-content: center; }
   .login h1 {
     text-align: center; }
   .login .logo {
+    margin-top: 6%;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 90px;
     color: black;
@@ -9220,11 +9220,16 @@ a.button {
     .login .logo h1 {
       font-size: 4rem; }
     .login .logo .logoImg {
-      height: 25vh;
-      width: 80%; }
+      height: 20vh;
+      width: 35%; }
   .login .loginStuff {
     background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 20px; }
+    border-radius: 20px;
+    color: white; }
+    .login .loginStuff .input-label {
+      color: white;
+      padding-left: 4px;
+      font-family: "Righteous"; }
     .login .loginStuff input {
       background-color: white; }
 
