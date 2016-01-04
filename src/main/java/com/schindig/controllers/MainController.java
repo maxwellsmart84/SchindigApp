@@ -5,8 +5,12 @@ import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.client.methods.RequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -872,11 +876,16 @@ public class MainController {
     }
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}")
-    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.addHeader("Origin", "http://localhost:8100");
-        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
-        System.out.println("Route hit.");
-        return;
+    public ModelAndView goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
+//        response.addHeader("Origin", "http://localhost:8100");
+//        String postUrl="http://localhost:8000";
+//        String requestData="q=ABC&callback=callback125";
+//        RequestBuilder builder = new RequestBuilder(RequestBuilder., postUrl);
+//        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
+//        System.out.println("Route hit.");
+        ModelAndView model = new ModelAndView();
+        model.setViewName("redirect:"+ Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
+        return model;
     }
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
