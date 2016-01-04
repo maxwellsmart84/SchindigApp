@@ -877,7 +877,7 @@ public class MainController {
         return new ArrayList<>();
     }
 
-    @RequestMapping(path = "/venmo/{partyID}/{userID}")
+    @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException, ServletException {
 //        response.addHeader("Origin", "http://localhost:8100");
 //        String postUrl="http://localhost:8000";
