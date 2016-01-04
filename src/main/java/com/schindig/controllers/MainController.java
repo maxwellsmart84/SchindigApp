@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
  * Created by Agronis on 12/9/15.
  */
 
-@CrossOrigin
 @RestController
 public class MainController {
 
@@ -64,6 +63,7 @@ public class MainController {
         Map<Object,Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
+
 
     @PostConstruct
     public void init() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, InvalidKeyException, InvalidKeySpecException {
@@ -179,13 +179,13 @@ public class MainController {
                             User invUser = userBuild.get(u);
                             ArrayList<Invite> inviteList = invites.findByParty(P);
                             if (inviteList.size() < 10) {
-                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "Maybe", invUser.firstName + invUser.lastName);
+                                String thisName = invUser.firstName.concat(" "+invUser.lastName.toUpperCase()+".");
+                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", thisName);
                                 invUser.invitedCount += 1;
                                 users.save(invUser);
                                 P.host.inviteCount += 1;
                                 users.save(P.host);
                                 invites.save(inv);
-                                u += 3;
                             }
                         }
                     }
@@ -205,7 +205,7 @@ public class MainController {
         i.user = users.findOneByUsername("admin");
         i.email = i.user.email;
         i.phone = i.user.phone;
-        i.name = i.user.firstName.concat(" "+ i.user.lastName);
+        i.name = i.user.firstName.concat("  "+ i.user.lastName);
         i.party = P;
         user.hostCount += 1;
         users.save(user);
@@ -216,7 +216,6 @@ public class MainController {
 
     @RequestMapping(path = "/validate/{device}", method = RequestMethod.GET)
     public Integer appLoad(@PathVariable("device") String device, HttpServletResponse response) throws InvalidKeySpecException, NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException {
-
         Auth a = auth.findByDevice(device);
         if (a == null) {
             response.sendError(400, "You must log in to continue.");
@@ -261,7 +260,10 @@ public class MainController {
 
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
-
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//        response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+//        response.addHeader("Access-Control-Max-Age", "1728000");
         User u = users.findOneByUsername(user.username.toLowerCase());
         if (u != null) {
             response.sendError(400, "Username already exists.");
@@ -329,7 +331,10 @@ public class MainController {
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
-
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+//        response.addHeader("Access-Control-Max-Age", "1728000");
         User user = users.findOneByUsername(p.user.username.toLowerCase());
         if (user == null) {
             response.sendError(401, "Username not found.");
@@ -365,7 +370,7 @@ public class MainController {
                     Contact thisContact = new Contact();
                     thisContact.user = user;
                     if (p.contactDump.get(i).name != null) {
-                        thisContact.name = p.contactDump.get(i).name.trim();
+                        thisContact.name = p.contactDump.get(i).name;
                     }
                     if (p.contactDump.get(i).phone != null) {
                         thisContact.phone = p.contactDump.get(i).phone.trim().replace(" ", "").replace("(", "").replace(")", "").replace("-", "");
@@ -534,7 +539,7 @@ public class MainController {
         User host = party.host;
         host.inviteCount += 1;
         Invite invite = new Invite(
-                user, party, parameters.invites.phone, parameters.invites.email, "Undecided", parameters.invites.name);
+                user, party, parameters.invites.phone, parameters.invites.email, "RSVP", parameters.invites.name);
         response.sendError(200, invite.name + " is now invited to " + invite.party.partyName + "!");
         users.save(host);
         invites.save(invite);
@@ -575,9 +580,10 @@ public class MainController {
                 .filter(distinctByKey(Invite::getName))
                 .collect(Collectors.toCollection(ArrayList::new));
         if (party.host!=user) {
-            party.rsvpStatus = invites.findByPartyAndUser(party, user).rsvpStatus;
+            Invite rsvp  = invites.findByPartyAndEmail(party, user.email);
+            party.rsvpStatus = rsvp.rsvpStatus;
         } else {
-            party.rsvpStatus = "Undefined";
+            party.rsvpStatus = "You're the host!";
         }
         ArrayList<Object> payload = new ArrayList<>();
         HashMap<String,Object> inviteDump = new HashMap<>();
@@ -704,8 +710,10 @@ public class MainController {
         ArrayList<Party> partyList = new ArrayList();
         for (Invite invite : inviteList) {
             if (u.email.equals(invite.email)) {
+                if (invite.email!=null && invite.user!=invite.party.host)
                 partyList.add(invite.party);
             } else if (u.phone.equals(invite.phone)) {
+                if (invite.phone!=null && invite.user!=invite.party.host)
                 partyList.add(invite.party);
             }
         }
@@ -863,36 +871,82 @@ public class MainController {
         return new ArrayList<>();
     }
 
-    @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
-    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+":"+userID));
+    @RequestMapping(path = "/venmo/{partyID}/{userID}")
+    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
+        response.addHeader("Origin", "http://localhost:8100");
+        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
+        System.out.println("Route hit.");
+        return;
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
+
+        System.out.println("Venmo returned");
         HashMap<String, String> map = new HashMap<>();
-        String[] relocate = state.split(":");
+        String[] relocate = state.split("AND");
         User user = users.findOne(Integer.valueOf(relocate[1]));
         user.setVenmoCode(code);
         Methods.getVenmo(code, user, users);
         response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
     }
 
-    @RequestMapping(path = "/venmo/payment/{partyID}/{userID}", method = RequestMethod.GET)
-    public void venmoPayment(@PathVariable("partyID") Integer partyID, @PathVariable("userID") Integer userID, HttpServletResponse response) throws IOException {
-        Party party = parties.findOne(partyID);
-        User guest = users.findOne(userID);
-        Double amount = 0.10;
+    @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
+    public void venmoPayment(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
+
+        System.out.println("Payment Taken");
+        Party party = parties.findOne(p.partyID);
+        User guest = users.findOne(p.userID);
+        Double amount = Double.valueOf(p.amount);
         if (guest.getVenmoID()==null) {
             response.sendError(400, "No Venmo account found.");
         }
         if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
             party.stretchStatus += amount;
             response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
+            return;
         } else {
             response.sendError(400, "There was an error processing your payment.");
         }
     }
+
+//    public void addCorsHeader(HttpServletResponse response){
+//        //TODO: externalize the Allow-Origin
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+//        response.addHeader("Access-Control-Max-Age", "1728000");
+//    }
+//
+//    @Singleton
+//    public class CorsFilter implements Filter{
+//
+//        @Override
+//        public void doFilter(ServletRequest request, ServletResponse response,
+//                             FilterChain filterChain) throws IOException, ServletException {
+//
+//            if(response instanceof HttpServletResponse){
+//                HttpServletResponse alteredResponse = ((HttpServletResponse)response);
+//                addCorsHeader(alteredResponse);
+//            }
+//
+//            filterChain.doFilter(request, response);
+//        }
+//
+//        private void addCorsHeader(HttpServletResponse response){
+//            //TODO: externalize the Allow-Origin
+//            response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//            response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//            response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+//            response.addHeader("Access-Control-Max-Age", "1728000");
+//        }
+//
+//        @Override
+//        public void destroy() {}
+//
+//        @Override
+//        public void init(FilterConfig filterConfig)throws ServletException {}
+//    }
 }
 
 /*

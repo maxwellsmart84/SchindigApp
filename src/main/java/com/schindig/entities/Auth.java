@@ -1,6 +1,6 @@
 package com.schindig.entities;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+
 
 /**
  * Created by Agronis on 12/19/15.
