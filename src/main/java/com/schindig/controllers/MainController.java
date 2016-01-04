@@ -220,7 +220,6 @@ public class MainController {
 
     @RequestMapping(path = "/validate/{device}", method = RequestMethod.GET)
     public Integer appLoad(@PathVariable("device") String device, HttpServletResponse response) throws InvalidKeySpecException, NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IOException {
-
         Auth a = auth.findByDevice(device);
         if (a == null) {
             response.sendError(400, "You must log in to continue.");
@@ -265,7 +264,9 @@ public class MainController {
 
     @RequestMapping(path = "/user/create", method = RequestMethod.POST)
     public void createUser(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
-
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
         User u = users.findOneByUsername(user.username.toLowerCase());
         if (u != null) {
             response.sendError(400, "Username already exists.");
@@ -333,7 +334,9 @@ public class MainController {
 
     @RequestMapping(path = "/user/login", method = RequestMethod.POST)
     public Integer login(@RequestBody Parameters p, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws Exception {
-
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
         User user = users.findOneByUsername(p.user.username.toLowerCase());
         if (user == null) {
             response.sendError(401, "Username not found.");
@@ -872,10 +875,11 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8100");
         response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/testq", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
         HashMap<String, String> map = new HashMap<>();
         String[] relocate = state.split("AND");
@@ -901,35 +905,43 @@ public class MainController {
         }
     }
 
-    @Singleton
-    public class CorsFilter implements Filter{
-
-        @Override
-        public void doFilter(ServletRequest request, ServletResponse response,
-                             FilterChain filterChain) throws IOException, ServletException {
-
-            if(response instanceof HttpServletResponse){
-                HttpServletResponse alteredResponse = ((HttpServletResponse)response);
-                addCorsHeader(alteredResponse);
-            }
-
-            filterChain.doFilter(request, response);
-        }
-
-        private void addCorsHeader(HttpServletResponse response){
-            //TODO: externalize the Allow-Origin
-            response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
-            response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-            response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
-            response.addHeader("Access-Control-Max-Age", "1728000");
-        }
-
-        @Override
-        public void destroy() {}
-
-        @Override
-        public void init(FilterConfig filterConfig)throws ServletException {}
-    }
+//    public void addCorsHeader(HttpServletResponse response){
+//        //TODO: externalize the Allow-Origin
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+//        response.addHeader("Access-Control-Max-Age", "1728000");
+//    }
+//
+//    @Singleton
+//    public class CorsFilter implements Filter{
+//
+//        @Override
+//        public void doFilter(ServletRequest request, ServletResponse response,
+//                             FilterChain filterChain) throws IOException, ServletException {
+//
+//            if(response instanceof HttpServletResponse){
+//                HttpServletResponse alteredResponse = ((HttpServletResponse)response);
+//                addCorsHeader(alteredResponse);
+//            }
+//
+//            filterChain.doFilter(request, response);
+//        }
+//
+//        private void addCorsHeader(HttpServletResponse response){
+//            //TODO: externalize the Allow-Origin
+//            response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
+//            response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+//            response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+//            response.addHeader("Access-Control-Max-Age", "1728000");
+//        }
+//
+//        @Override
+//        public void destroy() {}
+//
+//        @Override
+//        public void init(FilterConfig filterConfig)throws ServletException {}
+//    }
 }
 
 /*

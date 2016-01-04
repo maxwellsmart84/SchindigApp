@@ -7,18 +7,37 @@
       <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Favors</span></h1>
     </div>
   </div>
-   <ion-content class="managePartyContent" >
-         <button
-           ng-click="goToFavorBrowse();loadOneFavorBrowse();"
-           class="button button-full addFavorsButton">
-           <strong>ADD MORE FAVORS</strong>
-         </button>
+   <ion-content class="managePartyContent ng-hide" >
+     <button
+       ng-click="goToFavorBrowse();loadOneFavorBrowse();"
+       class="button button-full addFavorsButton">
+       <strong>ADD MORE FAVORS</strong>
+     </button>
     <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
       <ion-item class="manageItem">
         {{item.favor.favorName}}
         <ion-delete-button
             class="ion-minus-circled"
             ng-click="onItemDelete(item)">
+        </ion-delete-button>
+        <div ng-show='{{item.claimed}}' class="item">
+          Claimed by: {{item.user.username}}
+        </div>
+      </ion-item>
+    </ion-list>
+   </ion-content>
+   <ion-content ng-init="loadOneFavorBrowse();" class="managePartyContent " >
+     <button
+       ng-click="goToFavorBrowse();"
+       class="button button-full addFavorsButton">
+       <strong>ADD MORE FAVORS</strong>
+     </button>
+    <ion-list ng-repeat="item in browseFavors" show-delete="data.showDelete">
+      <ion-item class="manageItem">
+        {{item.favorName}}
+        <ion-delete-button
+            ng-click="favorCheck = !favorCheck"
+            class="favorItem ion-checkmark-circled">
         </ion-delete-button>
         <div ng-show='{{item.claimed}}' class="item">
           Claimed by: {{item.user.username}}
