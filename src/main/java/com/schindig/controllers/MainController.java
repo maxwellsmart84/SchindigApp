@@ -190,7 +190,6 @@ public class MainController {
                                 P.host.inviteCount += 1;
                                 users.save(P.host);
                                 invites.save(inv);
-                                u += 3;
                             }
                         }
                     }
@@ -873,13 +872,13 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+":"+userID));
+        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
         HashMap<String, String> map = new HashMap<>();
-        String[] relocate = state.split(":");
+        String[] relocate = state.split("AND");
         User user = users.findOne(Integer.valueOf(relocate[1]));
         user.setVenmoCode(code);
         Methods.getVenmo(code, user, users);
@@ -919,7 +918,7 @@ public class MainController {
 
         private void addCorsHeader(HttpServletResponse response){
             //TODO: externalize the Allow-Origin
-            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100/");
             response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
             response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
             response.addHeader("Access-Control-Max-Age", "1728000");
