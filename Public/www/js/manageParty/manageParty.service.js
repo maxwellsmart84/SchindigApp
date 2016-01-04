@@ -6,7 +6,7 @@
     .factory('ManagePartyService', function($http, $state){
       var vm = this;
 
-      var ip = 'http://localhost:8080';
+      var ip = 'http://104.236.244.159:8080/';
       var viewHostedPartiesURL = ip + '/parties/host';
       var viewInvitedPartiesURL = ip +'/parties/user';
       var updatedHostedPartiesURL = ip + '/party/update';
