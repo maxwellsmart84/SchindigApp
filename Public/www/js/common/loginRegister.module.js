@@ -4,6 +4,7 @@
   angular
     .module('loginRegister',[
       'ionic',
-      'underscore'
-    ])
+      'underscore',
+      'ngCordova'
+    ]);
 }());
