@@ -16,6 +16,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -876,16 +878,17 @@ public class MainController {
     }
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}")
-    public ModelAndView goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
+    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException, ServletException {
 //        response.addHeader("Origin", "http://localhost:8100");
 //        String postUrl="http://localhost:8000";
 //        String requestData="q=ABC&callback=callback125";
 //        RequestBuilder builder = new RequestBuilder(RequestBuilder., postUrl);
 //        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
 //        System.out.println("Route hit.");
-        ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:"+ Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
-        return model;
+        String url = Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID);
+        RequestDispatcher view = request.getRequestDispatcher(url);
+        view.forward(request, response);
+
     }
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
