@@ -873,7 +873,7 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
         response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
         System.out.println("Route hit.");
         return;
