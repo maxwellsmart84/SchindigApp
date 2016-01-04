@@ -870,7 +870,7 @@ public class MainController {
 
         return new ArrayList<>();
     }
-
+    @CrossOrigin(origins = "*")
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
 //        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
@@ -904,6 +904,7 @@ public class MainController {
         }
         if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
             party.stretchStatus += amount;
+            response.addHeader("Origin", "http://localhost:8100");
             response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
             return;
         } else {

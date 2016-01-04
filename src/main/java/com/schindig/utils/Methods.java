@@ -303,6 +303,7 @@ public class Methods extends MainController {
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         con.setDoOutput(true);
         con.setDoInput(true);
+
 //        con.setRequestProperty("Content-Type", "application/json");
 //        con.setRequestProperty("Accept", "application/json; charset=UTF-8");
         con.setRequestMethod("GET");
