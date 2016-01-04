@@ -4,19 +4,14 @@ import com.schindig.services.*;
 import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
-import com.thetransactioncompany.cors.CORSFilter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.filter.CorsFilter;
-
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.inject.Singleton;
 import javax.mail.MessagingException;
-import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -210,7 +205,7 @@ public class MainController {
         i.user = users.findOneByUsername("admin");
         i.email = i.user.email;
         i.phone = i.user.phone;
-        i.name = i.user.firstName.concat(" "+ i.user.lastName);
+        i.name = i.user.firstName.concat("  "+ i.user.lastName);
         i.party = P;
         user.hostCount += 1;
         users.save(user);
@@ -375,7 +370,7 @@ public class MainController {
                     Contact thisContact = new Contact();
                     thisContact.user = user;
                     if (p.contactDump.get(i).name != null) {
-                        thisContact.name = p.contactDump.get(i).name.trim();
+                        thisContact.name = p.contactDump.get(i).name;
                     }
                     if (p.contactDump.get(i).phone != null) {
                         thisContact.phone = p.contactDump.get(i).phone.trim().replace(" ", "").replace("(", "").replace(")", "").replace("-", "");
@@ -878,7 +873,9 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
     public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
+//        response.addHeader("Access-Control-Allow-Origin", "http://localhost:8100");
+        String url = Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID);
+        Methods.venmoAccess(url);
     }
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
@@ -902,6 +899,7 @@ public class MainController {
         if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
             party.stretchStatus += amount;
             response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
+            return;
         } else {
             response.sendError(400, "There was an error processing your payment.");
         }

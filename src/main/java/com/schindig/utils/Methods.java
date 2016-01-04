@@ -1,7 +1,4 @@
 package com.schindig.utils;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
@@ -9,22 +6,8 @@ import com.schindig.services.AuthRepo;
 import com.schindig.services.InviteRepo;
 import com.schindig.services.PartyRepo;
 import com.schindig.services.UserRepo;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.core.annotation.AliasFor;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import javax.crypto.*;
@@ -34,9 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.*;
 import java.util.*;
 
@@ -311,6 +292,52 @@ public class Methods extends MainController {
         } else {
             guest.setContributions(guest.getContributions()+amount);
             repo.save(guest);
+            return "200";
+        }
+
+    }
+
+    public static String venmoAccess(String string) throws IOException {
+        String url = string;
+        URL object = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) object.openConnection();
+        con.setDoOutput(true);
+        con.setDoInput(true);
+//        con.setRequestProperty("Content-Type", "application/json");
+//        con.setRequestProperty("Accept", "application/json; charset=UTF-8");
+        con.setRequestMethod("GET");
+
+        JSONObject json = new JSONObject();
+
+
+        OutputStream os = con.getOutputStream();
+        os.write(json.toString().getBytes("UTF-8"));
+        os.close();
+        os.flush();
+        String split = null;
+        int HttpResult = con.getResponseCode();
+
+        if ( HttpResult == HttpURLConnection.HTTP_OK ) {
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
+            String line = null;
+
+            while ((line = br.readLine()) != null) {
+                split = line;
+            }
+
+            br.close();
+
+        } else {
+
+            System.out.println(con.getResponseMessage());
+
+        }
+        if (split==null) {
+            System.out.println(400);
+            return "400";
+        } else {
+            System.out.println(200);
             return "200";
         }
 

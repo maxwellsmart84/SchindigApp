@@ -1,10 +1,6 @@
 package com.schindig.entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Created by Agronis on 12/9/15.

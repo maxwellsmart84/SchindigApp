@@ -10,23 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by landonkail on 12/16/15.
+ * Created by Agronis on 12/9/15.
  */
 public interface InviteRepo extends CrudRepository<Invite, Integer> {
-//    List<InviteList> findAllByParty(Integer party);
-
-//    List<Invite> findAllByUserId(Integer id);
-
-//    Invite findByUser(Integer id);
-
     @Query("SELECT COUNT(i) FROM Invite i WHERE party =?1")
     Integer findPartyInviteCount(Party party);
 
     @Query("SELECT party FROM Invite i WHERE user = ?1")
     List<Party> findInvite(User user);
-
-//    @Query("SELECT COUNT(i) FROM Invite i WHERE user = ?")
-//    Integer findInviteCount(Party party);
 
     ArrayList<Invite> findByParty(Party party);
 
@@ -34,9 +25,4 @@ public interface InviteRepo extends CrudRepository<Invite, Integer> {
     Invite findByPartyAndUser(Party party, User user);
 
     Invite findByPartyAndEmail(Party party, String email);
-
-    ArrayList<Invite> findAllByUserAndParty(User user, Party party);
-    ArrayList<Invite> findAllByPhoneAndParty(String phone, Party party);
-    ArrayList<Invite> findAllByEmailAndParty(String email, Party party);
-
 }

@@ -10,7 +10,7 @@ public class Venmo {
     private static final String venmoAuthURL = "https://api.venmo.com/v1/oauth/authorize";
     private static final String venmoPaymentURL = "https://api.venmo.com/v1/payments";
     private static final String venmoSandbox = "https://sandbox-api.venmo.com/v1/payments";
-    private static final String frontEnd = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code&web_redirect_url=http://104.236.244.159:8100/";
+    private static final String frontEnd = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code";
 
     public static String getVenmoID() {
 
