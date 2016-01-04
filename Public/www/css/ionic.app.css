@@ -9366,6 +9366,8 @@ a.button {
       color: rgba(255, 255, 255, 0.9); }
     .viewParties .card h3 {
       text-align: center; }
+    .viewParties .card .item {
+      margin-left: 0; }
   .viewParties ion-google-place {
     background-color: white; }
   .viewParties .button {
@@ -9395,7 +9397,8 @@ a.button {
     font-family: "Righteous";
     color: white;
     margin-left: 1%;
-    border-radius: 10px; }
+    border-radius: 10px;
+    text-align: center; }
     .viewParties .item h2 {
       font-family: "Monoton";
       color: #ff94d7;
@@ -9420,8 +9423,6 @@ a.button {
       border: solid rgba(247, 190, 243, 0.6) 5px; }
     .viewParties .item .favorUnclaimed {
       border: solid rgba(247, 190, 243, 0.6) 5px;
-      text-align: center; }
-    .viewParties .item .invitedPeeps {
       text-align: center; }
   .viewParties .item-input {
     font-family: "Righteous";
@@ -9456,7 +9457,8 @@ a.button {
       font-size: 1.8rem;
       color: white;
       text-shadow: 0 0 1px white, 0 0 3px #ffffff, 0 0 6px #5effd4;
-      letter-spacing: 1px; }
+      letter-spacing: 1px;
+      margin-left: 5px; }
     .viewParties .item-text-wrap h2 {
       font-family: "Monoton";
       color: #ff94d7;
@@ -9514,7 +9516,8 @@ a.button {
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   width: 100%;
-  height: 34vh; }
+  height: 34vh;
+  padding-right: 5px; }
   .invitedPartiesHeader h1 {
     margin: 0;
     text-align: center;
@@ -9568,7 +9571,8 @@ a.button {
     .manageParty .managePartyContent .item {
       background-color: #DD7A14;
       border-radius: 10px;
-      font-style: "Righteous"; }
+      font-style: "Righteous";
+      padding-bottom: 0; }
     .manageParty .managePartyContent .manageItem {
       background-color: #594544;
       border: solid #FF66A6 4px;
@@ -9581,39 +9585,98 @@ a.button {
       justify-content: center;
       font-family: "Righteous";
       margin-bottom: 8%; }
+    .manageParty .managePartyContent .guestList {
+      margin-top: 5%;
+      background-color: #dddcbe;
+      border: solid #FF66A6 4px;
+      box-shadow: -4px -4px 4px 5px #00B3A0, 4px 4px 4px 5px #00B3A0, -6px -6px 4px 8px #C1C71F, 6px 6px 4px 8px #C1C71F, -8px 8px 4px 8px #DD7A14, 8px -8px 4px 8px #DD7A14;
+      border-radius: 20px;
+      padding: 20px 10px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14%;
+      height: auto; }
+      .manageParty .managePartyContent .guestList .item {
+        padding: 0; }
+      .manageParty .managePartyContent .guestList div {
+        height: 3vh;
+        display: flex;
+        align-self: center; }
+      .manageParty .managePartyContent .guestList #invName {
+        padding-top: 4%;
+        color: #594544;
+        font-weight: bold;
+        font-size: 1.8rem;
+        font-family: "Righteous";
+        align-self: center;
+        border-bottom: solid 2px;
+        padding-bottom: 4%;
+        text-decoration: overline; }
+      .manageParty .managePartyContent .guestList #invRSVP {
+        margin: 0;
+        padding: 0;
+        color: #594544;
+        text-shadow: -2px 1px 1px #C1C71F, -5px 3px 1px #DD7A14, -6px 8px 1px #cb2d2d;
+        font-size: 1.8rem;
+        font-family: "Righteous";
+        align-self: center;
+        padding-bottom: 2%; }
     .manageParty .managePartyContent .ion-minus-circled {
       background-color: #E26291; }
     .manageParty .managePartyContent .item-content {
       background-color: #dfd823;
       color: #594544;
-      padding: 5px; }
-    .manageParty .managePartyContent .button-icon {
+      padding: 5px;
+      border-radius: 10px; }
+      .manageParty .managePartyContent .item-content span {
+        padding: 5px; }
+    .manageParty .managePartyContent .-icon {
       padding-bottom: 12%; }
+    .manageParty .managePartyContent .button-bar {
+      padding: 1px;
+      padding-bottom: 1px;
+      margin-bottom: 5%;
+      height: 15vh;
+      display: flex;
+      align-items: center;
+      background-color: #DD7A14;
+      border-radius: 15px; }
     .manageParty .managePartyContent .manageButton {
       border-radius: 20px;
-      border: solid #C1C71F 2px;
-      background-color: #78C0A8;
-      color: #594544;
-      font-size: 1.3rem; }
+      background-color: #594544;
+      color: #dfd823;
+      font-size: 1.4rem;
+      text-shadow: -2px 2px 0px #E26291;
+      height: 12vh;
+      display: flex;
+      justify-content: center; }
     .manageParty .managePartyContent .inviteButton {
-      border-radius: 20px;
-      border: solid #78C0A8 3px;
-      background-color: #C1C71F;
-      color: #594544;
-      font-size: 1.3rem; }
-    .manageParty .managePartyContent .addFavorsButton {
       border-radius: 20px;
       border: solid #DD7A14 3px;
       background-color: #594544;
       color: #dfd823;
-      font-size: 1.3rem; }
+      font-size: 1.4rem;
+      text-shadow: -2px 2px 0px #E26291;
+      height: 12vh;
+      display: flex;
+      justify-content: center; }
+    .manageParty .managePartyContent .button-small {
+      border-radius: 20px;
+      border: solid #DD7A14 3px;
+      background-color: #594544;
+      color: #dfd823;
+      font-size: 1.3rem;
+      text-shadow: -2px 2px 0px #E26291;
+      height: 12vh;
+      display: flex;
+      justify-content: center; }
   .manageParty ion-item {
     margin: 0; }
   .manageParty h1 {
     display: flex;
     flex-wrap: nowrap; }
   .manageParty ion-item {
-    margin-top: 15px; }
+    margin-bottom: 4%; }
   .manageParty .card {
     border-radius: 10px; }
     .manageParty .card .item {
@@ -9629,14 +9692,15 @@ a.button {
       font-family: "Righteous"; }
     .manageParty .card .item-content {
       background-color: #FFB312;
-      padding-right: 20px; }
+      padding-right: 20px;
+      border-radius: 20px; }
     .manageParty .card h3 {
-      background-color: #C1C71F;
+      background-color: #dfd823;
       text-align: center;
       border-radius: 20px;
       font-size: 1.3rem;
       padding: 5px;
-      color: #e0e0e0; }
+      color: #cb2d2d; }
     .manageParty .card p {
       font-family: "Righteous";
       font-size: 1.1em;

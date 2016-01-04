@@ -5,8 +5,8 @@
   .factory('ViewPartyService', function($http, $state){
     var vm = this;
 
-
-    var ip = 'http://10.0.10.50:8080';
+    var ip = "http://localhost:8080";
+    // var ip = "http://104.236.244.159:8100";
 
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';

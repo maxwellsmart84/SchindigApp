@@ -8,14 +8,16 @@
     </div>
   </div>
    <ion-content class="managePartyContent" >
+     <div class="button-bar">
          <button
            ng-click="goToFavorBrowse();loadOneFavorBrowse();"
-           class="button button-full addFavorsButton">
-           <strong>ADD MORE FAVORS</strong>
+           class="button manageButton manageFavor">
+           ADD MORE FAVORS
          </button>
+      </div>
     <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
       <ion-item class="manageItem">
-        {{item.favor.favorName}}
+        <span>{{item.favor.favorName}}</span>
         <ion-delete-button
             class="ion-minus-circled"
             ng-click="onItemDelete(item)">
