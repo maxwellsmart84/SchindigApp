@@ -27,7 +27,7 @@
             $state.go('home');
           }).error(function(data){
               console.log('data', data.message);
-              // $cordovaToast.show(data.message, 'short', 'bottom')
+              $cordovaToast.show(data.message, 'short', 'bottom')
           });
       };
       var createUser = function(data) {
