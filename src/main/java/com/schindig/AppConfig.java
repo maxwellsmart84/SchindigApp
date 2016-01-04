@@ -68,19 +68,6 @@ public class AppConfig {
         return mailSender;
     }
 
-    @Configuration
-    @EnableWebMvc
-    public class WebConfig extends WebMvcConfigurerAdapter {
-
-        @Bean
-        CorsConfiguration cors() {
-            CorsConfiguration config = new CorsConfiguration();
-            config.addAllowedOrigin("http://localhost:8100");
-            config.addAllowedHeader("Test");
-            return config;
-        }
-    }
-
 
 
 
