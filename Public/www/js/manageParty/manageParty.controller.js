@@ -77,7 +77,7 @@
         var rawPartyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.getPartyFavor(rawPartyID)
           .then(function(data){
-            console.log('load favors',data);
+            console.log('load favors',data.data);
             $scope.onePartyFavor = data.data;
         });
       };
