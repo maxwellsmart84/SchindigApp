@@ -217,6 +217,43 @@ public class MainController {
         users.save(user);
         invites.save(i);
         System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
+
+        User josh = new User();
+        josh.lastName = "Roberson";
+        josh.firstName = "Joshua";
+        josh.username = "agronis";
+        josh.email = "agronis@icloud.com";
+        josh.phone = "8439019708";
+        josh.password = "agronis";
+
+        User eliz = new User();
+        eliz.firstName = "Elizabeth";
+        eliz.lastName = "Lewis";
+        eliz.username = "erlewis";
+        eliz.password = "elizabeth";
+        eliz.phone = "8034644711";
+        eliz.email = "erlewis288@gmail.com";
+        users.save(eliz);
+        users.save(josh);
+
+        Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
+                0.0, true, true, null, "Valet");
+        parties.save(p);
+        ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
+        for (int a = 0; a<10; a++) {
+            for (Favor fav : f) {
+                FavorList favl = new FavorList();
+                favl.party = p;
+                favl.favor = fav;
+                favlists.save(favl);
+            }
+        }
+        Invite thisI = new Invite();
+        thisI.email = josh.email;
+        thisI.phone = josh.phone;
+        thisI.name = "Joshua Roberson";
+        invites.save(thisI);
     }
 
 
@@ -900,8 +937,10 @@ public class MainController {
             User user = users.findOne(Integer.valueOf(relocate[1]));
             user.setVenmoCode(code);
             Methods.getVenmo(code, user, users);
+            response.addHeader("Party", relocate[0]);
+            response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
         }
-        response.sendRedirect("http://localhost:8100/#/invitedParty/3");
+        response.sendRedirect("http://localhost:8100/#/");
     }
 
     @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
@@ -916,7 +955,9 @@ public class MainController {
         }
         if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
             party.stretchStatus += amount;
+            parties.save(party);
             response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
+
             return;
         } else {
             response.sendError(400, "There was an error processing your payment.");

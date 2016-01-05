@@ -296,6 +296,7 @@ public class Methods extends MainController {
         } else {
             guest.setContributions(guest.getContributions()+amount);
             repo.save(guest);
+            System.out.printf("Successful Payment");
             return "200";
         }
 
