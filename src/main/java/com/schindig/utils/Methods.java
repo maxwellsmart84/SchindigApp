@@ -16,6 +16,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -24,7 +25,7 @@ import java.util.*;
  */
 public class Methods extends MainController {
 
-    public static void script(UserRepo users, FavorRepo favors) {
+    public static void script(UserRepo users, FavorRepo favors, PartyRepo parties, FavorListRepo favlists, InviteRepo invites) {
         if (users.count()==0) {
             User josh = new User();
             josh.lastName = "Roberson";
@@ -73,6 +74,26 @@ public class Methods extends MainController {
             d.partyType = "Graduation";
             d.useCount = 96;
             favors.save(d);
+
+            Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
+                    LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
+                    0.0, true, true, null, "Valet");
+            parties.save(p);
+            ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
+            for (int q = 0; q<10; q++) {
+                for (Favor fav : f) {
+                    FavorList favl = new FavorList();
+                    favl.party = p;
+                    favl.favor = fav;
+                    favlists.save(favl);
+                }
+            }
+            Invite thisI = new Invite();
+            thisI.email = josh.email;
+            thisI.phone = josh.phone;
+            thisI.party = p;
+            thisI.name = "Joshua Roberson";
+            invites.save(thisI);
         }
     }
 
@@ -95,12 +116,13 @@ public class Methods extends MainController {
         invite.party = p;
 
         invite.email = i.email;
-        invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+1", "");
+        invite.phone = i.phone.replace("(", "").replace(")", "").replaceAll("-", "").replaceAll(" ", "").replace("+1", "");
         if (i.name.contains(" ")) {
             String[] newName = i.name.split(" ");
             i.name = newName[0].concat(" "+String.valueOf(newName[1].charAt(0)).toUpperCase()+".");
         }
         invite.name = i.name;
+        invite.rsvpStatus = "RSVP";
         inv.save(invite);
     }
 
@@ -152,15 +174,15 @@ public class Methods extends MainController {
 //            tmo.setText("Hey! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
 //            mailSender.send(tmoMsg);
         }
-//        if (user.email!=null) {
-//            mailMsg.setFrom("schindig.app@gmail.com");
-//            mailMsg.setReplyTo(host.email);
-//            mailMsg.setTo(user.email);
-//            mailMsg.setSubject(host.firstName+" just invited you to their party!");
-//            mailMsg.setText("Hello World!");
-//            mailSender.send(mimeMessage);
-//        }
-//        System.out.println("---Done---");
+        if (user.email!=null) {
+            mailMsg.setFrom("schindig.app@gmail.com");
+            mailMsg.setReplyTo(host.email);
+            mailMsg.setTo(user.email);
+            mailMsg.setSubject(host.firstName+" just invited you to their party!");
+            mailMsg.setText("Hello World!");
+            mailSender.send(mimeMessage);
+        }
+        System.out.println("---Done---");
     }
 
     public static Boolean initApp(String device, AuthRepo arepo) {
