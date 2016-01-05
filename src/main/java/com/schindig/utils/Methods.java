@@ -112,7 +112,7 @@ public class Methods extends MainController {
         repo.findOne(party.partyID);
     }
 
-    public static void sendInvite(Invite user, User host, Party party) throws MessagingException {
+    public static void msgGateway(Invite user, User host, Party party) throws MessagingException {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(AppConfig.class);
@@ -348,55 +348,6 @@ public class Methods extends MainController {
         }
 
     }
-
-    public static String venmoAccess(String string) throws IOException {
-        String url = string;
-        URL object = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) object.openConnection();
-        con.setDoOutput(true);
-        con.setDoInput(true);
-
-//        con.setRequestProperty("Content-Type", "application/json");
-//        con.setRequestProperty("Accept", "application/json; charset=UTF-8");
-        con.setRequestMethod("GET");
-
-        JSONObject json = new JSONObject();
-
-
-        OutputStream os = con.getOutputStream();
-        os.write(json.toString().getBytes("UTF-8"));
-        os.close();
-        os.flush();
-        String split = null;
-        int HttpResult = con.getResponseCode();
-
-        if ( HttpResult == HttpURLConnection.HTTP_OK ) {
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
-            String line = null;
-
-            while ((line = br.readLine()) != null) {
-                split = line;
-            }
-
-            br.close();
-
-        } else {
-
-            System.out.println(con.getResponseMessage());
-
-        }
-        if (split==null) {
-            System.out.println(400);
-            return "400";
-        } else {
-            System.out.println(200);
-            return "200";
-        }
-
-    }
-
-
 
 }
     
