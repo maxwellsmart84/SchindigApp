@@ -25,53 +25,55 @@ import java.util.*;
 public class Methods extends MainController {
 
     public static void script(UserRepo users, FavorRepo favors) {
-        User josh = new User();
-        josh.lastName = "Roberson";
-        josh.firstName = "Joshua";
-        josh.username = "agronis";
-        josh.email = "agronis@icloud.com";
-        josh.phone = "8438643494";
-        josh.password = "agronis";
+        if (users.count()==0) {
+            User josh = new User();
+            josh.lastName = "Roberson";
+            josh.firstName = "Joshua";
+            josh.username = "agronis";
+            josh.email = "agronis@icloud.com";
+            josh.phone = "8438643494";
+            josh.password = "agronis";
 
-        User eliz = new User();
-        eliz.firstName = "Elizabeth";
-        eliz.lastName = "Lewis";
-        eliz.username = "erlewis";
-        eliz.password = "elizabeth";
-        eliz.phone = "8034644711";
-        eliz.email = "erlewis288@gmail.com";
+            User eliz = new User();
+            eliz.firstName = "Elizabeth";
+            eliz.lastName = "Lewis";
+            eliz.username = "erlewis";
+            eliz.password = "elizabeth";
+            eliz.phone = "8034644711";
+            eliz.email = "erlewis288@gmail.com";
 
-        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
-        users.save(blake);
-        users.save(max);
-        users.save(eliz);
-        users.save(josh);
+            User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+            User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+            users.save(blake);
+            users.save(max);
+            users.save(eliz);
+            users.save(josh);
 
-        Favor pong = new Favor();
-        pong.favorName = "Ping Pong Balls";
-        pong.partyType = "Graduation";
-        pong.useCount = 100;
-        favors.save(pong);
-        Favor a = new Favor();
-        a.partyType = "Graduation";
-        a.favorName = "Alcohol";
-        a.useCount = 99;
-        favors.save(a);
-        Favor b = new Favor();
-        b.favorName = "Cards Against Humanity";
-        b.partyType = "Graduation";
-        b.useCount = 98;
-        Favor c = new Favor();
-        c.favorName = "More Alcohol";
-        c.partyType = "Graduation";
-        c.useCount = 97;
-        favors.save(c);
-        Favor d = new Favor();
-        d.favorName = "Video Games";
-        d.partyType = "Graduation";
-        d.useCount = 96;
-        favors.save(d);
+            Favor pong = new Favor();
+            pong.favorName = "Ping Pong Balls";
+            pong.partyType = "Graduation";
+            pong.useCount = 100;
+            favors.save(pong);
+            Favor a = new Favor();
+            a.partyType = "Graduation";
+            a.favorName = "Alcohol";
+            a.useCount = 99;
+            favors.save(a);
+            Favor b = new Favor();
+            b.favorName = "Cards Against Humanity";
+            b.partyType = "Graduation";
+            b.useCount = 98;
+            Favor c = new Favor();
+            c.favorName = "More Alcohol";
+            c.partyType = "Graduation";
+            c.useCount = 97;
+            favors.save(c);
+            Favor d = new Favor();
+            d.favorName = "Video Games";
+            d.partyType = "Graduation";
+            d.useCount = 96;
+            favors.save(d);
+        }
     }
 
     public static String readFile(String fileName) {

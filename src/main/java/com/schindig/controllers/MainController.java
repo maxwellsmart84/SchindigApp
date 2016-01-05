@@ -393,13 +393,14 @@ public class MainController {
         } else if (!user.password.equals(p.user.password.toLowerCase())) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
-            Auth a = auth.findByDevice(p.device);
-            if (a==null) {
-                Methods.newDevice(user, p.device, auth);
-                return user.userID;
-            }
-            return user.userID;
+//            Auth a = auth.findByDevice(p.device);
+//            if (a == null) {
+//                Methods.newDevice(user, p.device, auth);
+//                return user.userID;
+//            }
         }
+        return user.userID;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendError(400, "There was an error logging in.");
