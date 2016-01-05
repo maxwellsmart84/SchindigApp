@@ -99,20 +99,20 @@ public class AppConfig {
         return bean;
     }
 
-    @Bean
-    public ViewResolver getViewResolver(ResourceLoader resourceLoader) {
-        MustacheViewResolver mustacheViewResolver = new MustacheViewResolver();
-        mustacheViewResolver.setPrefix("/");
-        mustacheViewResolver.setSuffix(".html");
-        mustacheViewResolver.setCache(false);
-        mustacheViewResolver.setContentType("text/html;charset=utf-8");
-
-        MustacheTemplateLoader mustacheTemplateLoader = new MustacheTemplateLoader();
-        mustacheTemplateLoader.setResourceLoader(resourceLoader);
-
-        mustacheViewResolver.setTemplateLoader(mustacheTemplateLoader);
-        return mustacheViewResolver;
-    }
+//    @Bean
+//    public ViewResolver getViewResolver(ResourceLoader resourceLoader) {
+//        MustacheViewResolver mustacheViewResolver = new MustacheViewResolver();
+//        mustacheViewResolver.setPrefix("/");
+//        mustacheViewResolver.setSuffix(".html");
+//        mustacheViewResolver.setCache(false);
+//        mustacheViewResolver.setContentType("text/html;charset=utf-8");
+//
+//        MustacheTemplateLoader mustacheTemplateLoader = new MustacheTemplateLoader();
+//        mustacheTemplateLoader.setResourceLoader(resourceLoader);
+//
+//        mustacheViewResolver.setTemplateLoader(mustacheTemplateLoader);
+//        return mustacheViewResolver;
+//    }
 
 
 
