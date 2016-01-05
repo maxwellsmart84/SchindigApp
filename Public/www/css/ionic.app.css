@@ -9216,7 +9216,7 @@ a.button {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 90px;
     color: black;
-    text-shadow: 0px 0px 7px black;
+    text-shadow: 0px 0px 3px black;
     font-family: "Righteous";
     text-align: center; }
     .login .logo h1 {
@@ -9252,7 +9252,7 @@ a.button {
     color: white; }
   .createUser .topCreateBar {
     text-align: center;
-    background-image: url("../img/miamiSkyline.jpg");
+    background-color: black;
     padding: 10px;
     color: white; }
 
@@ -9302,7 +9302,8 @@ a.button {
   .wizard .victorianIcon {
     font-family: 'HipsterIcons';
     font-size: 3.5rem;
-    padding-top: 40px; }
+    padding-top: 40px;
+    color: black; }
     .wizard .victorianIcon i {
       margin-left: 8%;
       margin-right: 7%;
