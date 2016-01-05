@@ -6,7 +6,7 @@
     var vm = this;
 
 
-    var ip = "http://localhost:8080";
+    var ip = "http://104.236.244.159:8100";
     // var ip = "http://104.236.244.159:8100";
 
 
@@ -39,6 +39,7 @@
     var venmoGet = function(partyID, userID){
       return $http.get(ip + '/venmo/' + partyID + '/' + userID)
     };
+
     var patchStretchStatus = function(stretchValue){
       return $http.patch(updatePartyUrl, stretchValue);
     };

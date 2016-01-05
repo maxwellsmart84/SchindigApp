@@ -3,7 +3,7 @@ package com.schindig.entities;
 import javax.persistence.*;
 
 /**
- * Created by landonkail on 12/16/15.
+ * Created by Agronis on 12/9/15.
  */
 @Entity
 public class FavorList {

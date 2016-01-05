@@ -1,28 +1,9 @@
 package com.schindig.utils;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
-import com.schindig.services.AuthRepo;
-import com.schindig.services.InviteRepo;
-import com.schindig.services.PartyRepo;
-import com.schindig.services.UserRepo;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
+import com.schindig.services.*;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -33,9 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.*;
 import java.util.*;
 
@@ -44,6 +23,56 @@ import java.util.*;
  * Created by Agronis on 12/9/15.
  */
 public class Methods extends MainController {
+
+    public static void script(UserRepo users, FavorRepo favors) {
+        User josh = new User();
+        josh.lastName = "Roberson";
+        josh.firstName = "Joshua";
+        josh.username = "agronis";
+        josh.email = "agronis@icloud.com";
+        josh.phone = "8438643494";
+        josh.password = "agronis";
+
+        User eliz = new User();
+        eliz.firstName = "Elizabeth";
+        eliz.lastName = "Lewis";
+        eliz.username = "erlewis";
+        eliz.password = "elizabeth";
+        eliz.phone = "8034644711";
+        eliz.email = "erlewis288@gmail.com";
+
+        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+        users.save(blake);
+        users.save(max);
+        users.save(eliz);
+        users.save(josh);
+
+        Favor pong = new Favor();
+        pong.favorName = "Ping Pong Balls";
+        pong.partyType = "Graduation";
+        pong.useCount = 100;
+        favors.save(pong);
+        Favor a = new Favor();
+        a.partyType = "Graduation";
+        a.favorName = "Alcohol";
+        a.useCount = 99;
+        favors.save(a);
+        Favor b = new Favor();
+        b.favorName = "Cards Against Humanity";
+        b.partyType = "Graduation";
+        b.useCount = 98;
+        Favor c = new Favor();
+        c.favorName = "More Alcohol";
+        c.partyType = "Graduation";
+        c.useCount = 97;
+        favors.save(c);
+        Favor d = new Favor();
+        d.favorName = "Video Games";
+        d.partyType = "Graduation";
+        d.useCount = 96;
+        favors.save(d);
+    }
 
     public static String readFile(String fileName) {
         File f = new File(fileName);
@@ -65,6 +94,10 @@ public class Methods extends MainController {
 
         invite.email = i.email;
         invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+1", "");
+        if (i.name.contains(" ")) {
+            String[] newName = i.name.split(" ");
+            i.name = newName[0].concat(" "+String.valueOf(newName[1].charAt(0)).toUpperCase()+".");
+        }
         invite.name = i.name;
         inv.save(invite);
     }
@@ -79,7 +112,7 @@ public class Methods extends MainController {
         repo.findOne(party.partyID);
     }
 
-    public static void sendInvite(Invite user, User host, Party party) throws MessagingException {
+    public static void msgGateway(Invite user, User host, Party party) throws MessagingException {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(AppConfig.class);
@@ -310,6 +343,7 @@ public class Methods extends MainController {
         } else {
             guest.setContributions(guest.getContributions()+amount);
             repo.save(guest);
+            System.out.printf("Successful Payment");
             return "200";
         }
 
