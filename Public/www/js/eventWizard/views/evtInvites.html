@@ -1,4 +1,4 @@
-<ion-view class="wizard">
+<ion-view class="wizard" ng-init="getContactList()">
   <ion-nav-bar class="bar-stable">
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
@@ -8,7 +8,7 @@
       <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">INVITE YOUR FRIENDS</span></h1>
     </div>
    </div>
-  <ion-content ng-init="getContactList()">
+  <ion-content >
     <button
       ng-click="pushToContactArray();showConfirm()"
       class="button button-full button-positive">

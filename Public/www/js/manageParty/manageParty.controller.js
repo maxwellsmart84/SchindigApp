@@ -26,6 +26,9 @@
         .error(function(data){
           console.log('error');
         })
+      $scope.goHome = function(){
+        $state.go('home');
+      };
       $scope.onPartyDelete = function(item){
         console.log($scope.hostedParties.indexOf(item));
 
@@ -71,6 +74,7 @@
               console.log('data?', data.data[1]);
               $scope.oneParty = data.data[1];
               $scope.showInviteVar = false;
+              $scope.inviteList = data.data[2];
         });
       };
       $scope.loadOneFavor = function(){
@@ -81,14 +85,14 @@
             $scope.onePartyFavor = data.data;
         });
       };
-      $scope.loadInvitedPeople = function(){
-        var rawPartyID = +localStorage.getItem('OnePartyID');
-        console.log('what is this id', rawPartyID);
-        ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
-          console.log('load invited people', data);
-          $scope.inviteList = data.data;
-        });
-      };
+      // $scope.loadInvitedPeople = function(){
+      //   var rawPartyID = +localStorage.getItem('OnePartyID');
+      //   console.log('what is this id', rawPartyID);
+      //   ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
+      //     console.log('load invited people', data);
+      //     $scope.inviteList = data.data;
+      //   });
+      // };
       $scope.goToManageFavor = function(){
         $state.go('manageFavor')
       };
@@ -150,11 +154,17 @@
         console.log('invite var', $scope.showInviteVar);
       };
 
-
+      $scope.favorBrowseVar = false;
+      $scope.favorViewVar = true;
       $scope.goToFavorBrowse = function(){
         $timeout($scope.loadOneFavorBrowse(), 3000)
-        $state.go('manageFavorBrowse');
+        $scope.favorBrowseVar = true;
+        $scope.favorViewVar = false;
       };
+      $scope.goToFavorView = function(){
+        $scope.favorViewVar = true;
+        $scope.favorBrowseVar = false;
+      }
       $scope.loadOneFavorBrowse = function(){
         var partyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.oneFavorBrowse(partyID)
@@ -167,15 +177,16 @@
       vm.favorArray = [];
       $scope.favorCheck = false;
       $scope.pushToFavorArray = function(data){
-       var myElements = document.getElementsByClassName('yes');
+       var myElements = document.getElementsByClassName('thisCheck');
+       console.log('how many are in this', myElements);
         _.each(myElements, function(el,idx,array){
+          console.log('what el is this', el);
           var parsed = JSON.parse(el.id);
           vm.favorArray.push(parsed);
         });
         var partyID = +localStorage.getItem('partyID');
         var rawUserID = +localStorage.getItem('userID');
         var data = {
-          userID: rawUserID,
           partyID: partyID,
           favorDump: vm.favorArray
         };

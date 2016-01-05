@@ -8,7 +8,6 @@
     ])
     .config(function($stateProvider){
       $stateProvider
-
         .state('allParties', {
           url:'/allParties',
           templateUrl: 'js/viewParties/views/allParties.html',
@@ -19,8 +18,5 @@
           templateUrl: 'js/viewParties/views/invitedParty.html',
           controller: 'ViewPartyController'
         });
-
-
-
     });
 }());

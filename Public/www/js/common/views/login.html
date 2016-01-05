@@ -1,29 +1,29 @@
 <ion-view>
-  <ion-content class="login">
+  <ion-content ng-init=disableKeyBoardScroll() class="login">
       <div class="logo">
         <h1>Schindig</h1>
         <h4><em>Let's Get This Party Started</em><h4>
         <img class="logoImg" src="img/SchindigLogo.png" alt="">
       </div>
-      <div class="loginStuff">
-        <label class="item item-input item-floating-label">
-          <span class="input-label"><strong>Username: </strong></span>
-          <input ng-model="username" type="text" placeholder="Enter Your Username">
+      <div class="list loginStuff">
+        <label class="item item-input">
+          <input class="userNameAndPassword" ng-model="username" type="text" placeholder="Username"></input>
         </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label"><strong>Password: </strong></span>
-          <input ng-model="password" type="password" placeholder="Enter Your Password">
+        <label class="item item-input">
+          <input class="userNameAndPassword" ng-model="password" type="password" placeholder="Password"></input>
         </label>
       </div>
-      <button
-        ng-click="login(username, password)"
-        class="button button-full">
-         Login
-      </button>
-      <button
-        ng-click="signUp()"
-        class="button button-full animate-fade-slide-in-right">
-        Create New User
-      </button>
+      <div class="buttonStuff">
+        <button
+          ng-click="login(username, password)"
+          class="button button-full">
+           Login
+        </button>
+        <button
+          ng-click="signUp()"
+          class="button button-full">
+          Create New User
+        </button>
+      </div>
   </ion-content>
 </ion-view>

@@ -12,6 +12,7 @@
       editableOptions.theme = 'bs3';
     })
     .config(function($stateProvider){
+      var partyID = +localStorage.getItem('partyID');
       $stateProvider
         .state('manageLanding', {
           url: '/manageLanding',
@@ -19,7 +20,7 @@
           controller: 'ManagePartyController'
         })
         .state('manageParty', {
-          url: '/manageParty/:partyID',
+          url: '/manageParty/' + partyID,
           templateUrl: 'js/manageParty/views/manageHostedParty.html',
           controller: 'ManagePartyController'
         })

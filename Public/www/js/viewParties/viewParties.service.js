@@ -6,7 +6,8 @@
     var vm = this;
 
 
-    var ip = 'http://104.236.244.159:8100';
+    var ip = "http://104.236.244.159:8100";
+
 
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
@@ -18,22 +19,15 @@
       console.log('what is this id', userID);
       return $http.get(ip + '/user/' + userID);
     };
-    // var venmoPay = function(partyID, userID, amount){
-    //   var venmoData = {
-    //     partyID: partyID,
-    //     userID: userID,
-    //     amount: amount
-    //   };
-    //   return $http.post(ip + '/venmo/payment', venmoData)
-    // };
+    var venmoPay = function(partyID, userID, amount){
+      var venmoData = {
+        partyID: partyID,
+        userID: userID,
+        amount: amount
+      };
+      return $http.post(ip + '/venmo/payment', venmoData)
+    };
 
-    // var venmoReq = {
-    //   method: 'GET',
-    //   url: "ip + '/venmo/' + partyID + '/' + userID",
-    //   headers: {
-    //
-    //   }
-    // }
     var venmoGet = function(partyID, userID){
       return $http.get(ip + '/venmo/' + partyID + '/' + userID)
     };
@@ -100,6 +94,7 @@
       postRsvp: postRsvp,
       venmoGet: venmoGet,
       userGet: userGet,
+      venmoPay: venmoPay,
       patchStretchStatus: patchStretchStatus
     };
   });

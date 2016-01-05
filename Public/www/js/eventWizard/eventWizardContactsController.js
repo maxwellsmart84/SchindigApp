@@ -26,16 +26,16 @@
                    phone: el.phoneNumbers[0].value
                  }
                  parsed = JSON.parse(el.id);
-                 console.log('this should be a name', el.name.formatted);
-                 console.log('this should be a phonue number', el.phoneNumbers[0].value);
+                //  console.log('this should be a name', el.name.formatted);
+                //  console.log('this should be a phonue number', el.phoneNumbers[0].value);
                  vm.contactsArray.push(oneUser)
                });
-               $scope.contactName = vm.contactsArray;
-               console.log('THIS IS A NAME', $scope.contactName[0].name);
 
             }, function(error){
               console.log('error', error);
             });
+            $scope.contactName = vm.contactsArray;
+            // console.log('THIS IS A NAME', vm.contactsArray[0].name);
        };
         $scope.isChecked = false;
 

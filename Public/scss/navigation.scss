@@ -156,17 +156,19 @@ $fontMarker: "Permanent Marker";
   text-shadow: 0px 0px 10px #c1f6f3;
 }
 .login {
-  display: flex;
   justify-content: center;
   // // .scroll{
   // //   margin-top: 5%;
   // //   width: 80%;
   // }
-
+  .item{
+    padding: 10px;
+  }
   h1{
     text-align: center;
   }
   .logo{
+    margin-top: 6%;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 90px;
     color:black;
@@ -177,15 +179,36 @@ $fontMarker: "Permanent Marker";
       font-size: 4rem;
     }
     .logoImg {
-      height: 25vh;
-      width:80%;
+      height: 20vh;
+      width:35%;
     }
+  }
+  .buttonStuff{
+    width: 90%;
+    margin: 0 auto;
   }
   .loginStuff{
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
+    color:white;
+    margin: 0 auto;
+    width: 70%;
+    .input-label{
+      color:white;
+      padding: 0;
+      font-family: "Righteous";
+      width: 80%;
+    }
+
     input {
       background-color: white;
+      text-align: center;
+      width: 50px;
+      padding: 0;
+    }
+    .userNameAndPassword{
+      width: 50px;
+
     }
   }
 }

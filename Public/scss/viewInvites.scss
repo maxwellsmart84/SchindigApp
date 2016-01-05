@@ -64,6 +64,9 @@
     h3 {
       text-align:center;
     }
+    .item {
+    margin-left: 0;
+   }
   }
     ion-google-place {
     background-color: white;
@@ -119,12 +122,14 @@
     font-family: "Righteous";
 
     }
+
   .item {
     background-color: rgba(#000000, 0.70);
     font-family: "Righteous";
     color: white;
     margin-left: 1%;
     border-radius: 10px;
+    text-align: center;
     // border: solid rgba(#f7bef3, 0.6) 5px;
     // margin-top: 5px;
     // margin-bottom: 5px;
@@ -162,9 +167,6 @@
     }
     .favorUnclaimed {
       border: solid rgba(#f7bef3, 0.6) 5px;
-      text-align: center;
-    }
-    .invitedPeeps {
       text-align: center;
     }
   }
@@ -222,6 +224,7 @@
       // 0 0 10px #5effd4;
       // 0 0 12px #ff5ea7;
       letter-spacing: 1px;
+      margin-left: 5px;// WORK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
     h2 {
@@ -298,6 +301,7 @@
   }
 }
 
+
 .invitedPartiesHeader {
   border:solid #f7bef3 2px;
   box-shadow:
@@ -307,6 +311,7 @@
   display: flex;
   width:100%;
   height:34vh;
+  padding-right:5px;
     h1 {
     margin: 0;
     text-align: center;

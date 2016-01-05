@@ -7,16 +7,19 @@
       </div>
     </div>
   <ion-content class="managePartyContent" ng-init="loadOne()">
+    <div class="manageButtonBar button-bar">
     <button
       ng-click="goToManageFavor()"
-      class="button button-full manageButton button-assertive">
-      Manage Favors
+      class="button manageButton">
+      EDIT Favors
     </button>
     <button
       ng-click="goToManageInvites()"
-      class="button inviteButton button-full button-royal">
-      Manage Invites
+      class="button inviteButton">
+      EDIT Invites
     </button>
+  </div>
+
     <ion-list>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right manageItem">
@@ -117,6 +120,13 @@
           </button>
         </div>
       </ion-item>
+      <div class="button-bar goHomeButtonBar">
+        <button
+          ng-click="goHome();"
+          class="button-small button-full addFavorsButton submitFavorsButton">
+            Back to Home
+        </button>
+      </div>
       <!-- <ion-toggle
         ng-click="themeCheck = !themeCheck"
         ng-checked="oneParty.themeCheck"
