@@ -5,11 +5,15 @@
   </ion-nav-bar>
   <div class="bar bar-header">
     <div class="wizardHeader">
-      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">STRETCH GOAL</span></h1>
-    </div>
+      <h1 class= "wizardTextViewHeader">
+      <span class="wizardTextViewHeader"><h1>STRETCH GOAL</h1></span>
   </div>
+</div>
   <ion-padding>
     <ion-content>
+      <div class="mainIconVic">
+        <span class="victorianIcon mainIcon">3<i>z</i>4</span>
+      </div>
       <label class= 'wizStretchExpl item-text-wrap'>
         <span>
           <br>A STRETCHGOAL TURNS THIS PARTY INTO ONE TO REMEMBER!
@@ -25,7 +29,7 @@
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">WHAT WOULD MAKE THIS PARTY AWESOME?</span>
-        <input placeholder="Ice Luge, Band, another keg..." ng-model= "stretchName" type="text">
+        <input placeholder="Ice Luge? Oprah? another keg..." ng-model= "stretchName" type="text">
       </label>
       <label class="item item-input item-floating-label">
         <span class= "input-label">COST?</span>
@@ -33,46 +37,8 @@
       </label>
       <button
         ng-click="stretchGoalData(stretchGoal, stretchName)"
-        class="button button-full button-assertive">
-       Submit
-      </button>
+        class="bar bar-footer button button-full button-assertive">
+        <span class="victorianIcon">y</span><span id="submitText">Submit</span><span class="victorianIcon">u</span>      </button>
     </ion-content>
   </ion-padding>
 </ion-view>
-
-<!--
-<ion-toggle
-  ng-click="themeCheck = !themeCheck"
-  toggle-class="toggle-calm">
-  <div
-  ng-model="themeCheck"
-  ng-class="themeCheck ? 'theme' : 'noTheme'">
-  <strong>
-    Themed Party?
-  </strong>
-  </div>
-</ion-toggle>
-<div ng-show="themeCheck" class="item">
-  <input ng-model="themeVal" type="text"  placeholder="Whats the theme?">
-</div>
-<ion-toggle
-  ng-click="byobCheck = !byobCheck"
-  toggle-class="toggle-calm">
-  <div
-    ng-model="byobCheck"
-    ng-class="byobCheck ? 'byob' : 'supplied'">
-    <strong>
-      BYOB
-    </strong>
-  </div>
-</ion-toggle>
-<ion-item class="item-input item-select">
- <div class="input-label">
-   <strong>Parking?</strong>
- </div>
- <select ng-model="parking" ng-change='getParking(parking)'>
-   <option value="Valet">Valet</option>
-   <option value="On Site">On Site</option>
-   <option value="Off Site">Off Site</option>
- </select>
-</ion-item> -->

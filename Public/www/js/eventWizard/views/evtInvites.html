@@ -1,18 +1,21 @@
-<ion-view class="wizard">
-  <ion-nav-bar class="bar-stable">
-    <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
-    </ion-nav-back-button>
+<ion-view class="wizard">>
+    <ion-nav-bar>
+    </ion-nav-bar>
   </ion-nav-bar>
   <div class="bar bar-header">
     <div class="wizardHeader">
-      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">INVITE YOUR FRIENDS</span></h1>
-    </div>
+      <h1 class= "wizardTextViewHeader">
+      <span class="wizardTextViewHeader"><h1>INVITE YOUR FRIENDS</h1></span>
    </div>
+ </div>
   <ion-content ng-init="getContactList()">
+    <div class="mainIconVic">
+      <span class="victorianIcon mainIcon">3<i>z</i>4</span>
+    </div>
     <button
       ng-click="pushToContactArray();showConfirm()"
-      class="button button-full button-positive">
-      SEND INVITES
+      class="button button-full button-assertive">
+      <span class="victorianIcon">y</span><span id="submitText">SEND</span><span class="victorianIcon">u</span>
     </button>
     <ul class="list">
       <ion-checkbox

@@ -3491,19 +3491,19 @@ ion-infinite-scroll {
 
 /* If you change these, change platform.scss as well */
 .has-header {
-  top: 200px; }
+  top: 140px; }
 
 .no-header {
   top: 0; }
 
 .has-subheader {
-  top: 275px; }
+  top: 215px; }
 
 .has-tabs-top {
-  top: 249px; }
+  top: 189px; }
 
 .has-header.has-subheader.has-tabs-top {
-  top: 324px; }
+  top: 264px; }
 
 .has-footer {
   bottom: 75px; }
@@ -3863,7 +3863,7 @@ a.subdued {
   box-sizing: border-box;
   padding: 5px;
   width: 100%;
-  height: 200px;
+  height: 140px;
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
@@ -3984,13 +3984,13 @@ a.subdued {
     overflow: hidden;
     margin: 0 10px;
     min-width: 30px;
-    height: 199px;
+    height: 139px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 17px;
     font-weight: 500;
-    line-height: 200px; }
+    line-height: 140px; }
     .bar .title.title-left {
       text-align: left; }
     .bar .title.title-right {
@@ -4070,7 +4070,7 @@ a.subdued {
 
 .platform-android .bar .title {
   font-size: 19px;
-  line-height: 200px; }
+  line-height: 140px; }
 
 .bar-light .button {
   border-color: #ddd;
@@ -4286,7 +4286,7 @@ a.subdued {
   padding: 0; }
 
 .bar-subheader {
-  top: 200px;
+  top: 140px;
   display: block;
   height: 75px; }
 
@@ -5030,7 +5030,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
 /* If you change this, change platform.scss as well */
 .tabs-top > .tabs,
 .tabs.tabs-top {
-  top: 200px;
+  top: 140px;
   padding-top: 0;
   background-position: bottom;
   border-top-width: 0;
@@ -5294,21 +5294,21 @@ ion-tabs.tabs-color-active-dark .tab-item {
   .modal.ng-leave-active {
     bottom: 0; }
   .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) {
-    height: 200px; }
+    height: 140px; }
     .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
       margin-top: 0; }
   .platform-ios.platform-cordova .modal-wrapper .modal .tabs-top > .tabs,
   .platform-ios.platform-cordova .modal-wrapper .modal .tabs.tabs-top {
-    top: 200px; }
+    top: 140px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header,
   .platform-ios.platform-cordova .modal-wrapper .modal .bar-subheader {
-    top: 200px; }
+    top: 140px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-subheader {
-    top: 275px; }
+    top: 215px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-tabs-top {
-    top: 249px; }
+    top: 189px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-subheader.has-tabs-top {
-    top: 324px; }
+    top: 264px; }
   .modal-backdrop-bg {
     -webkit-transition: opacity 300ms ease-in-out;
     transition: opacity 300ms ease-in-out;
@@ -8873,7 +8873,7 @@ a.button {
  * Platform specific tweaks
  */
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
-  height: 220px; }
+  height: 160px; }
   .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader).item-input-inset .item-input-wrapper {
     margin-top: 19px !important; }
   .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
@@ -8881,23 +8881,23 @@ a.button {
 
 .platform-ios.platform-cordova:not(.fullscreen) .tabs-top > .tabs,
 .platform-ios.platform-cordova:not(.fullscreen) .tabs.tabs-top {
-  top: 220px; }
+  top: 160px; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-header,
 .platform-ios.platform-cordova:not(.fullscreen) .bar-subheader {
-  top: 220px; }
+  top: 160px; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-subheader {
-  top: 295px; }
+  top: 235px; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-header.has-tabs-top {
-  top: 269px; }
+  top: 209px; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-header.has-subheader.has-tabs-top {
-  top: 344px; }
+  top: 284px; }
 
 .platform-ios.platform-cordova .popover .bar-header:not(.bar-subheader) {
-  height: 200px; }
+  height: 140px; }
   .platform-ios.platform-cordova .popover .bar-header:not(.bar-subheader).item-input-inset .item-input-wrapper {
     margin-top: -1px; }
   .platform-ios.platform-cordova .popover .bar-header:not(.bar-subheader) > * {
@@ -8905,10 +8905,10 @@ a.button {
 
 .platform-ios.platform-cordova .popover .has-header,
 .platform-ios.platform-cordova .popover .bar-subheader {
-  top: 200px; }
+  top: 140px; }
 
 .platform-ios.platform-cordova .popover .has-subheader {
-  top: 275px; }
+  top: 215px; }
 
 .platform-ios.platform-cordova.status-bar-hide {
   margin-bottom: 20px; }
@@ -9243,90 +9243,147 @@ a.button {
     padding: 10px;
     color: white; }
 
+@font-face {
+  font-family: 'HipsterIcons';
+  src: url("fonts/NeoclassicFleuronsFree.otf"), url("fonts/NeoclassicFleuronsFree 2.otf"), url("fonts/NeoclassicFleuronsFree 3.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'HipsterFrames';
+  src: url("fonts/Calligraphic_Frames_Soft_Two.ttf"), url("fonts/Calligraphic_Frames_Soft.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Nymph';
+  src: url("fonts/Nymphette.ttf");
+  font-weight: normal;
+  font-style: normal; }
+
 .bar {
   background-color: transparent; }
 
 .wizardDateTime {
   font-family: serif; }
 
-.schinDigHome {
-  position: fixed;
-  margin-left: 220px; }
-
 .wizard {
   font-family: "Showboat" serif;
   background-color: #F0EAD6;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  z-index: 10; }
   .wizard ion-google-place {
     background-color: white; }
+  .wizard .mainIconVic {
+    height: 6vh;
+    margin-top: 4%;
+    text-align: center;
+    margin-bottom: 4%;
+    border-bottom: 6px double black; }
+  .wizard .victorianIcon {
+    font-family: 'HipsterIcons';
+    font-size: 3.5rem;
+    padding-top: 40px; }
+    .wizard .victorianIcon i {
+      margin-left: 6%;
+      margin-right: 6%;
+      font-size: 3.5rem; }
   .wizard .button {
     font-family: "Showboat";
-    font-size: 2rem;
+    font-size: 3rem;
     background-color: #680E34;
     text-transform: uppercase;
     color: white; }
+    .wizard .button #submitText {
+      font-size: 3rem;
+      padding-left: 10px;
+      padding-right: 10px; }
+    .wizard .button span {
+      font-size: 4rem; }
   .wizard .button-small {
     font-size: 1.2rem; }
+  .wizard .button-full {
+    padding-top: 5px;
+    height: 11vh; }
   .wizard select {
     font-family: "Showboat";
     text-transform: uppercase;
-    background-color: #F0EAD6; }
+    background-color: #F0EAD6;
+    width: 20%; }
   .wizard input {
     background-color: #F0EAD6;
-    font-family: "Showboat";
-    text-transform: uppercase; }
+    font-family: "Rokkit";
+    font-size: 1.2rem; }
+  .wizard .input-label {
+    font-size: 1rem; }
   .wizard .item-input {
-    font-family: "Showboat";
+    font-family: "Rokkit";
     background-color: #F0EAD6;
-    text-transform: uppercase; }
+    border: solid 5px #F0EAD6; }
     .wizard .item-input input {
-      font-family: "Showboat";
-      text-transform: uppercase;
+      font-family: "Rokkit";
       background-color: #F0EAD6; }
     .wizard .item-input .wizardDateTime {
-      color: gray;
-      text-transform: uppercase; }
+      color: gray; }
   .wizard .item {
     font-family: "Showboat";
-    background-color: #F0EAD6; }
-  .wizard .wizStretchExpl {
-    text-align: center;
+    background-color: #F0EAD6;
+    height: auto;
+    border-top: solid 1px #3e2029;
+    border-bottom: solid 1px #3e2029;
+    border-radius: 5px; }
+
+.favorText {
+  text-align: center;
+  font-family: "Showboat";
+  font-size: 1.5rem;
+  color: black; }
+
+.wizStretchExpl {
+  text-align: center;
+  font-family: "Showboat";
+  font-size: 1rem;
+  color: black; }
+  .wizStretchExpl span {
     font-family: "Showboat";
     font-size: .85rem;
-    color: black; }
-    .wizard .wizStretchExpl span {
-      font-family: "Showboat";
-      font-size: .85rem;
-      color: black;
-      text-align: center; }
-  .wizard progress {
-    appearance: none;
-    -webkit-appearance: none;
-    border-radius: 30px;
-    width: 300px;
-    height: 20px; }
+    color: black;
+    text-align: center; }
+
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 30px;
+  width: 300px;
+  height: 20px; }
 
 .wizardHeader {
   border: none;
   background-image: url("../img/wineandcheese.jpg");
-  background-size: 125%;
+  background-size: 110%;
   background-repeat: none;
   background-position: center;
   background: linear-gradient(rgba(11, 11, 11, 0.49));
   display: flex;
   width: 100%; }
-  .wizardHeader h1 {
+  .wizardHeader .wizardTextViewHeader {
+    display: flex;
     margin: 0;
     text-align: center;
     border: none;
     align-self: center;
-    justify-content: center; }
-  .wizardHeader .wizardTextViewHeader {
+    color: white;
+    font-family: "ShowBoat";
     letter-spacing: 5px;
-    font-family: "Showboat";
-    font-size: 2rem;
     color: white;
     margin: 0; }
+    .wizardHeader .wizardTextViewHeader h1 {
+      color: white;
+      font-family: "ShowBoat";
+      width: 100%;
+      font-size: 2.7rem;
+      margin-left: 3.8%;
+      padding-top: 15px; }
 
 .bar {
   background-color: transparent; }
@@ -9438,7 +9495,6 @@ a.button {
     .viewParties .item-input .wizardDateTime {
       color: gray; }
   .viewParties .item-divider {
-    padding: 20px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     font-family: "Righteous"; }
@@ -9500,7 +9556,7 @@ a.button {
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   width: 100%;
-  height: 34vh; }
+  height: 25vh; }
   .viewPartiesHeader h1 {
     margin: 0;
     text-align: center;
@@ -9521,7 +9577,7 @@ a.button {
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   width: 100%;
-  height: 34vh;
+  height: 25vh;
   padding-right: 5px; }
   .invitedPartiesHeader h1 {
     margin: 0;
@@ -9529,13 +9585,13 @@ a.button {
     border: none;
     align-self: center;
     justify-content: center;
-    line-height: 5.5vh;
+    line-height: 5vh;
     padding-right: 5px; }
   .invitedPartiesHeader .invitedPartiesTextViewHeader {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     width: 100%;
     font-family: "Monoton";
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     color: #fffc00;
     text-shadow: 0 0 1px #fffc00, 0 0 3px #ff5ea7, 0 0 6px #fffc00, 0 0 8px #fafafa, 0 0 10px #ff5ea7, 0 0 12px #ff5ea7; }
 
@@ -9545,6 +9601,16 @@ a.button {
   background-size: 100%;
   background-position: top;
   font-style: "Righteous"; }
+  .manageParty .bar-height {
+    height: 130px; }
+  .manageParty .bar-header {
+    height: 130px; }
+  .manageParty .title {
+    height: 130px; }
+    .manageParty .title .title-center {
+      height: 130px; }
+      .manageParty .title .title-center .header-item {
+        height: 130px; }
   .manageParty .list .item {
     border: 5px, solid, white; }
   .manageParty .managePartyHeader {
@@ -9664,6 +9730,7 @@ a.button {
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
       display: flex;
+      text-align: center;
       justify-content: center; }
     .manageParty .managePartyContent .button-small {
       border-radius: 20px;
