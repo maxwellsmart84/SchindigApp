@@ -841,7 +841,7 @@ public class MainController {
         Party party = parties.findOne(id);
         ArrayList<Favor> all = (ArrayList<Favor>) favors.findAll();
         all = all.stream()
-                .filter(f -> f.partyType.equals("Generic") || f.partyType.equals(party.partyType))
+                .filter(f ->/** f.partyType.equals("Generic") || **/f.partyType.equals(party.partyType))
                 .sorted(Comparator.comparing(Favor::getUseCount).reversed())
                 .collect(Collectors.toCollection(ArrayList<Favor>::new));
         return all;
