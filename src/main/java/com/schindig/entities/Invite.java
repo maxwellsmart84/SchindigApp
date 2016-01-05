@@ -22,7 +22,7 @@ public class Invite {
 
     public String email;
 
-    public String rsvpStatus = "Undecided";
+    public String rsvpStatus = "RSVP";
 
     public String name;
 

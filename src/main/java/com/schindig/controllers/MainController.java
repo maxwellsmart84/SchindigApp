@@ -940,8 +940,9 @@ public class MainController {
             Methods.getVenmo(code, user, users);
             response.addHeader("Party", relocate[0]);
             response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
+        } else {
+            response.sendRedirect("http://localhost:8100/#/");
         }
-        response.sendRedirect("http://localhost:8100/#/");
     }
 
     @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
