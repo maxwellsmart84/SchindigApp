@@ -2,10 +2,7 @@ package com.schindig.utils;
 import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
-import com.schindig.services.AuthRepo;
-import com.schindig.services.InviteRepo;
-import com.schindig.services.PartyRepo;
-import com.schindig.services.UserRepo;
+import com.schindig.services.*;
 import org.json.JSONObject;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -26,6 +23,56 @@ import java.util.*;
  * Created by Agronis on 12/9/15.
  */
 public class Methods extends MainController {
+
+    public static void script(UserRepo users, FavorRepo favors) {
+        User josh = new User();
+        josh.lastName = "Roberson";
+        josh.firstName = "Joshua";
+        josh.username = "agronis";
+        josh.email = "agronis@icloud.com";
+        josh.phone = "8438643494";
+        josh.password = "agronis";
+
+        User eliz = new User();
+        eliz.firstName = "Elizabeth";
+        eliz.lastName = "Lewis";
+        eliz.username = "erlewis";
+        eliz.password = "elizabeth";
+        eliz.phone = "8034644711";
+        eliz.email = "erlewis288@gmail.com";
+
+        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+        users.save(blake);
+        users.save(max);
+        users.save(eliz);
+        users.save(josh);
+
+        Favor pong = new Favor();
+        pong.favorName = "Ping Pong Balls";
+        pong.partyType = "Graduation";
+        pong.useCount = 100;
+        favors.save(pong);
+        Favor a = new Favor();
+        a.partyType = "Graduation";
+        a.favorName = "Alcohol";
+        a.useCount = 99;
+        favors.save(a);
+        Favor b = new Favor();
+        b.favorName = "Cards Against Humanity";
+        b.partyType = "Graduation";
+        b.useCount = 98;
+        Favor c = new Favor();
+        c.favorName = "More Alcohol";
+        c.partyType = "Graduation";
+        c.useCount = 97;
+        favors.save(c);
+        Favor d = new Favor();
+        d.favorName = "Video Games";
+        d.partyType = "Graduation";
+        d.useCount = 96;
+        favors.save(d);
+    }
 
     public static String readFile(String fileName) {
         File f = new File(fileName);
@@ -65,7 +112,7 @@ public class Methods extends MainController {
         repo.findOne(party.partyID);
     }
 
-    public static void sendInvite(Invite user, User host, Party party) throws MessagingException {
+    public static void msgGateway(Invite user, User host, Party party) throws MessagingException {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(AppConfig.class);
@@ -301,55 +348,6 @@ public class Methods extends MainController {
         }
 
     }
-
-    public static String venmoAccess(String string) throws IOException {
-        String url = string;
-        URL object = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) object.openConnection();
-        con.setDoOutput(true);
-        con.setDoInput(true);
-
-//        con.setRequestProperty("Content-Type", "application/json");
-//        con.setRequestProperty("Accept", "application/json; charset=UTF-8");
-        con.setRequestMethod("GET");
-
-        JSONObject json = new JSONObject();
-
-
-        OutputStream os = con.getOutputStream();
-        os.write(json.toString().getBytes("UTF-8"));
-        os.close();
-        os.flush();
-        String split = null;
-        int HttpResult = con.getResponseCode();
-
-        if ( HttpResult == HttpURLConnection.HTTP_OK ) {
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
-            String line = null;
-
-            while ((line = br.readLine()) != null) {
-                split = line;
-            }
-
-            br.close();
-
-        } else {
-
-            System.out.println(con.getResponseMessage());
-
-        }
-        if (split==null) {
-            System.out.println(400);
-            return "400";
-        } else {
-            System.out.println(200);
-            return "200";
-        }
-
-    }
-
-
 
 }
     
