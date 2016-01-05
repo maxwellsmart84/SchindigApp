@@ -7,23 +7,23 @@
       </div>
       <div class="list loginStuff">
         <label class="item item-input">
-          <span class="input-label"><strong>Username: </strong></span>
-          <input ng-model="username" type="text" placeholder="Enter Your Username"></input>
+          <input class="userNameAndPassword" ng-model="username" type="text" placeholder="Username"></input>
         </label>
         <label class="item item-input">
-          <span class="input-label"><strong>Password: </strong></span>
-          <input ng-model="password" type="password" placeholder="Enter Your Password"></input>
+          <input class="userNameAndPassword" ng-model="password" type="password" placeholder="Password"></input>
         </label>
       </div>
-      <button
-        ng-click="login(username, password)"
-        class="button button-full">
-         Login
-      </button>
-      <button
-        ng-click="signUp()"
-        class="button button-full">
-        Create New User
-      </button>
+      <div class="buttonStuff">
+        <button
+          ng-click="login(username, password)"
+          class="button button-full">
+           Login
+        </button>
+        <button
+          ng-click="signUp()"
+          class="button button-full">
+          Create New User
+        </button>
+      </div>
   </ion-content>
 </ion-view>

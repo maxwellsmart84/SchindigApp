@@ -15,16 +15,7 @@
       <progress max= "{{invPartyOne.stretchGoal}}" value="{{invPartyOne.stretchStatus}}"></progress>
       <button
        class="button"
-       ng-show="chipIn"
-       ng-click="showStretchInput()">
-       Chip In !
-     </button>
-     <input type="number" placeholder="You Feelin' Generous?" ng-model="stretchValue" ng-show="stretchInput">
-     <button
-      id= "chipIn"
-       class="button button-energized"
-       ng-show="stretchInput"
-       ng-click="pledgeStretch(stretchValue)">
+       ng-click="venmoCheck()">
        Chip In !
      </button>
   </div>
@@ -64,12 +55,12 @@
         class="button button-small button-energized"
         ng-click="showFavor()">
         Favors
-      </button></a>
+      </button>
       <button
         ng-click="showInvite();loadInvitedPeople();"
         class="button button-small button-energized">
         Invites
-      </button></a>
+      </button>
     </div>
     <ion-list
       ng-model="showFavorVar"
@@ -90,7 +81,7 @@
           class="item-text-wrap favorClaimed"
           ng-show="favor.claimed == true"
           ng-click="showFavorUnclaim(favor)">
-          <h3>{{favor.user.username}} ({{favor.user.firstName}}) Is Bringing:</h3>
+          <h3>{{favor.user.firstName}} Is Bringing:</h3>
           <h3>{{favor.favor.favorName}}</h3>
         </div>
       </ion-item>
@@ -104,7 +95,7 @@
       <ion-item
         ng-repeat="invite in inviteList"
         ng-model="invite"
-        class=" item invitedPeeps">
+        class=" item invitedPeeps item-text-wrap">
           <h3>{{invite.name}}</h3>
           <h4>{{invite.rsvpStatus}}</h4>
       </ion-item>

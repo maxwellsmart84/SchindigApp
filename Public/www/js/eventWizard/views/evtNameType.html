@@ -1,15 +1,10 @@
 <ion-view class="wizard" >
-   <ion-nav-bar>
+   <ion-nav-bar class="bar-stable">
    </ion-nav-bar>
    <div class= "bar bar-header">
      <div class="wizardHeader">
-       <!-- <div class="schinDigCont">
-         <button class="button schinDigHome button-positive">
-           <i class="icon ion-ios-telephone"></i>
-         </button>
-       </div> -->
        <h1 class= "wizardTextViewHeader">
-         <span class="wizardTextViewHeader"><h1>Start This Party</h1></span>
+         <span class="wizardTextViewHeader"><h1>Create Party</h1></span>
        </h1>
      </div>
     </div>
@@ -24,11 +19,11 @@
         </span>
       </label>
        <ion-item class="item-input item-select">
-          <div class="item input-label">
+          <div class="item-text-wrap input-label">
           WHAT KIND OF PARTY?
-        </div>
+          </div>
         <select ng-required ng-model="partyType" ng-change='getValue(partyType)'>
-          <option ng-repeat="item in wizardItems.data track by $index" value='{{item}}'>{{item.partyType}}</option>
+          <option ng-repeat="item in wizardItems.data track by $index" value='{{item}}'><div class="item-text-wrap">{{item.partyType}}</div></option>
         </select>
       </ion-item>
       <label class="item item-input item-floating-label">
@@ -37,7 +32,7 @@
       </label>
       <label class="item item-input">
          <span class="item-text-wrap input-label">WHERE?</span>
-         <ion-google-place class="wizard" placeholder= "ADDRESS, ZIP" ng-model="location"></ion-google-place>
+         <ion-google-place  placeholder= "Address, Zip" ng-model="location"></ion-google-place>
       </label>
       <label class="item item-input">
          <span class="item-text-wrap input-label">DATE TIME:</span>

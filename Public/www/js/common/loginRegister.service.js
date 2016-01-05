@@ -7,6 +7,7 @@
     .factory('LoginRegisterService', function($http, $state, $q, $cordovaDevice, $cordovaToast){
 
       var ip = "http://104.236.244.159:8100";
+
       // var ip = "http://104.236.244.159:8100";
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
@@ -29,7 +30,7 @@
             $state.go('home');
           }).error(function(data){
               console.log('data', data.message);
-              // $cordovaToast.show(data.message, 'short', 'bottom')
+              $cordovaToast.show(data.message, 'short', 'bottom')
           });
       };
       var createUser = function(data) {

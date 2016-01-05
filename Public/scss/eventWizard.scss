@@ -29,6 +29,13 @@
 .wizardDateTime {
   font-family: serif;
 }
+.schinDigHome {
+  position: fixed;
+  margin-left: 220px;
+}
+.shrinkHead{
+  height: 0px;
+}
 
 .wizard {
   font-family: "Showboat" serif;
@@ -82,11 +89,10 @@
     font-family: "Showboat";
     text-transform: uppercase;
     background-color: #F0EAD6;
-    width: 20%;
   }
   input {
     background-color: #F0EAD6;
-    font-family: "Rokkit";
+    font-family: "Righteous";
     font-size: 1.2rem;
   }
 
@@ -95,11 +101,11 @@
   }
 
   .item-input {
-    font-family: "Rokkit";
+    font-family: "Righteous";
     background-color: #F0EAD6;
     border: solid 5px #F0EAD6;
     input {
-      font-family: "Rokkit";
+      font-family: "Righteous";
       background-color: #F0EAD6;
     }
     .wizardDateTime {
