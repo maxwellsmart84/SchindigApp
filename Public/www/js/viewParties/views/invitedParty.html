@@ -10,7 +10,8 @@
   <br>
   <div class="item-text-wrap">
     <ion-padding></ion-padding>
-      <h2>{{invPartyOne.stretchName}}<h2>
+      <h2>{{invPartyOne.stretchName}}</h2>
+      <h2>{{invPartyOne.stretchGoal | currency}}</h2>
       <progress max= "{{invPartyOne.stretchGoal}}" value="{{invPartyOne.stretchStatus}}"></progress>
       <button
        class="button"

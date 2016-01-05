@@ -27,6 +27,13 @@
             $scope.venmoPay();
           } else {
             $scope.venmoShow();
+            console.log('there is no venmo data', amount);
+            ViewPartyService.venmoGet(partyID, userID).then(function(data){
+              console.log('there is no VEnDMO', data);
+            },function error(data) {
+              console.log("OH FUCK",data);
+            })
+            return
           }
         });
       };

@@ -8,6 +8,8 @@
 
     var ip = "http://104.236.244.159:8100";
 
+    // var ip = "http://104.236.244.159:8100";
+
 
     var viewHostedPartiesURL = ip + '/parties/host';
     var viewInvitedPartiesURL = ip +'/parties/user';
@@ -31,6 +33,7 @@
     var venmoGet = function(partyID, userID){
       return $http.get(ip + '/venmo/' + partyID + '/' + userID)
     };
+
     var patchStretchStatus = function(stretchValue){
       return $http.patch(updatePartyUrl, stretchValue);
     };

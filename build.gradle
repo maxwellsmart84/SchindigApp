@@ -39,14 +39,17 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-websocket')
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile('org.springframework:spring-web:4.2.4.RELEASE')
     compile("org.apache.commons:commons-lang3:3.4")
     compile("javax.mail:javax.mail-api:1.5.5")
     compile('org.bouncycastle:bcprov-jdk15on:1.53')
     compile("javax.activation:activation:1.1.1")
     compile('org.apache.httpcomponents:httpclient:4.5.1')
+    compile('com.thetransactioncompany:cors-filter:2.5')
     compile('org.json:json:20151123')
     compile("org.springframework:spring-context-support:4.2.3.RELEASE")
     compile('com.fasterxml.jackson.core:jackson-core:2.7.0-rc2')
+    compile('com.github.sps.mustache:mustache-spring-view:1.1.1')
 
 }
 

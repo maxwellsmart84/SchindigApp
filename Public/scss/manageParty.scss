@@ -22,7 +22,21 @@ $DullRed: #cb2d2d;
   background-size: 100%;
   background-position: top;
   font-style: "Righteous";
-
+  .bar-height {
+    height:130px;
+  }
+  .bar-header{
+    height: 130px;
+  }
+  .title{
+    height:130px;
+    .title-center{
+      height:130px;
+      .header-item {
+        height:130px;
+      }
+    }
+  }
   .list {
     .item {
       border: 5px, solid, white;
@@ -175,6 +189,7 @@ $DullRed: #cb2d2d;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+
     }
     .goHomeButtonBar{
       margin: 0 auto;
@@ -198,6 +213,7 @@ $DullRed: #cb2d2d;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
       display: flex;
+      text-align: center;
       justify-content: center;
     }
     .button-small {

@@ -1,8 +1,6 @@
 package com.schindig.utils;
 
 import com.schindig.entities.*;
-import org.hibernate.mapping.Array;
-import org.springframework.data.annotation.Transient;
 
 import java.util.ArrayList;
 
@@ -41,6 +39,6 @@ public class Parameters {
 
     public Integer listID;
 
-    public Double amount;
+    public Integer amount;
 
 }

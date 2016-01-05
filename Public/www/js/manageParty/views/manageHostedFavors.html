@@ -17,6 +17,7 @@
          ng-click="goToFavorBrowse();"
          class="button-small manageButton button">
          <strong>ADD MORE <br>FAVORS</strong>
+
        </button>
    </div>
     <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
@@ -52,6 +53,7 @@
           Submit Selected Favors
       </button>
     </div>
+
     <ion-list ng-repeat="item in browseFavors" show-delete="data.showDelete">
       <ion-item class="manageItem " id='{{item}}' ng-class="favorCheck ? 'thisCheck' : 'noCheck'">
         {{item.favorName}}
