@@ -887,7 +887,7 @@ public class MainController {
 //        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
 //        System.out.println("Route hit.");
         ModelAndView mvr = new ModelAndView();
-        mvr.setViewName("home");
+        mvr.setViewName("venmo");
         mvr.addObject("url", Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
         return mvr;
     }
