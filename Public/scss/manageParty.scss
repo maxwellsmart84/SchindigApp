@@ -15,14 +15,27 @@ $LightOrange: #DD7A14;
 $DullRed: #cb2d2d;
 
 
-
 .manageParty {
   display: flex;
   background-color: $Cream;
   background-size: 100%;
   background-position: top;
   font-style: "Righteous";
-
+  .bar-height {
+    height:130px;
+  }
+  .bar-header{
+    height: 130px;
+  }
+  .title{
+    height:130px;
+    .title-center{
+      height:130px;
+      .header-item {
+        height:130px;
+      }
+    }
+  }
   .list {
     .item {
       border: 5px, solid, white;
