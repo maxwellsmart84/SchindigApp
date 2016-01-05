@@ -12,15 +12,15 @@
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
 
-      // var device = $cordovaDevice.getDevice();
-      // $scope.uuid = device.uuid;
+      var device = $cordovaDevice.getDevice();
+      $scope.uuid = device.uuid;
 
-      // var uuidAuth = function(uuid) {
-      //   console.log("testy", uuid);
-      //   return $http.get(ip + ":8080/validate/" +uuid).success(function(data){
-      //     console.log(data);
-      //   });
-      // };
+      var uuidAuth = function(uuid) {
+        console.log("testy", uuid);
+        return $http.get(ip + ":8080/validate/" +uuid).success(function(data){
+          console.log(data);
+        });
+      };
 
       var login = function(loginData) {
         return $http.post(loginUrl, loginData)

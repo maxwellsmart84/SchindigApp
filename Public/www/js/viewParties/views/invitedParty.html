@@ -6,7 +6,7 @@
       <h1><span class="invitedPartiesTextViewHeader">@</span></h1>
       <h1><span class="invitedPartiesTextViewHeader">{{invPartyOne.partyDate | date: 'short'}}</span></h1>
     </div>
-  <ion-content ng-init="loadOneInvParty();loadOneFavor();loadRSVPStatus()">
+  <ion-content ng-init="loadOneInvParty();loadOneFavor();loadRSVPStatus();">
   <br>
   <div class="item-text-wrap">
     <ion-padding></ion-padding>
@@ -15,7 +15,7 @@
       <progress max= "{{invPartyOne.stretchGoal}}" value="{{invPartyOne.stretchStatus}}"></progress>
       <button
        class="button"
-       ng-click="venmoCheck()">
+       ng-click="venmoCheck();">
        Chip In !
      </button>
   </div>
@@ -23,7 +23,7 @@
     <ion-padding></ion-padding>
     <h2>Are you going to this party?</h2>
     <h2><button
-      ng-click="loadRSVPStatus(); rsvpShow()"
+      ng-click="loadRSVPStatus(); rsvpShow();"
       class="button button-energized">{{rsvpShowData}}</button></h2>
   </div>
   <ion-padding></ion-padding>
