@@ -48,16 +48,28 @@ public class Methods extends MainController {
         users.save(eliz);
         users.save(josh);
 
-        Favor pong = favors.findByFavorName("Ping Pong Balls");
+        Favor pong = new Favor();
+        pong.favorName = "Ping Pong Balls";
+        pong.partyType = "Graduation";
         pong.useCount = 100;
         favors.save(pong);
-        Favor a = favors.findByFavorName("Alcohol");
+        Favor a = new Favor();
+        a.partyType = "Graduation";
+        a.favorName = "Alcohol";
         a.useCount = 99;
         favors.save(a);
-        Favor c = favors.findByFavorName("Cards Against Humanity");
+        Favor b = new Favor();
+        b.favorName = "Cards Against Humanity";
+        b.partyType = "Graduation";
+        b.useCount = 98;
+        Favor c = new Favor();
+        c.favorName = "More Alcohol";
+        c.partyType = "Graduation";
         c.useCount = 97;
         favors.save(c);
-        Favor d = favors.findByFavorName("Video Games");
+        Favor d = new Favor();
+        d.favorName = "Video Games";
+        d.partyType = "Graduation";
         d.useCount = 96;
         favors.save(d);
     }
