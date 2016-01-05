@@ -893,14 +893,15 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
-
-        System.out.println("Venmo returned");
-        HashMap<String, String> map = new HashMap<>();
-        String[] relocate = state.split(":");
-        User user = users.findOne(Integer.valueOf(relocate[1]));
-        user.setVenmoCode(code);
-        Methods.getVenmo(code, user, users);
-        response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
+        if (code!=null && state!=null) {
+            System.out.println("Venmo returned");
+            HashMap<String, String> map = new HashMap<>();
+            String[] relocate = state.split(":");
+            User user = users.findOne(Integer.valueOf(relocate[1]));
+            user.setVenmoCode(code);
+            Methods.getVenmo(code, user, users);
+        }
+        response.sendRedirect("http://localhost:8100/#/invitedParty/3");
     }
 
     @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
