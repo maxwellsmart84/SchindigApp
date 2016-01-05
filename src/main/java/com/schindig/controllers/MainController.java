@@ -262,9 +262,6 @@ public class MainController {
         Favor a = favors.findByFavorName("Alcohol");
         a.useCount = 99;
         favors.save(a);
-        Favor b = favors.findOne(38);
-        a.useCount = 98;
-        favors.save(b);
         Favor c = favors.findByFavorName("Cards Against Humanity");
         c.useCount = 97;
         favors.save(c);
