@@ -6,6 +6,7 @@
     .factory('EventWizardService', function($http, $state){
 
       var ip = "http://104.236.244.159:8100";
+
       // var ip = "http://104.236.244.159:8100";
 
       var wizCreateUrl = ip + "/party/create";

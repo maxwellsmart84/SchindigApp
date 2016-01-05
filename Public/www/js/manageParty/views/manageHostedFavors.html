@@ -1,5 +1,4 @@
-
-<ion-view ng-init="loadOneFavor()" class="manageParty">
+<ion-view class="manageParty">
   <ion-nav-bar>
   </ion-nav-bar>
   <div class="bar bar-header">
@@ -7,17 +6,18 @@
       <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Favors</span></h1>
     </div>
   </div>
-   <ion-content class="managePartyContent" >
-     <div class="button-bar">
+   <ion-content class="managePartyContent" ng-show="favorViewVar">
+    <div class="manageButtonBar button-bar">
        <button
-         ng-click="goToFavorBrowse();loadOneFavorBrowse();"
-         class=" button-small button-full addFavorsButton">
-          <strong>REMOVE FAVORS</strong>
+         ng-click="goToFavorView();"
+         class=" button-small manageButton button">
+          <strong>REMOVE <br> FAVORS</strong>
        </button>
        <button
          ng-click="goToFavorBrowse();"
-         class="button-small button-full addFavorsButton">
-         <strong>ADD MORE FAVORS</strong>
+         class="button-small manageButton button">
+         <strong>ADD MORE <br>FAVORS</strong>
+
        </button>
    </div>
     <ion-list ng-repeat="item in onePartyFavor" show-delete="data.showDelete">
@@ -33,21 +33,37 @@
       </ion-item>
     </ion-list>
    </ion-content>
-   <ion-content ng-init="loadOneFavorBrowse();" class="managePartyContent ng-hide" >
-     <button
-       ng-click="goToFavorBrowse();"
-       class="button button-full addFavorsButton">
-       <strong>ADD MORE FAVORS</strong>
-     </button>
+   <ion-content ng-show="favorBrowseVar" class="managePartyContent" >
+     <div class="manageButtonBar button-bar">
+        <button
+          ng-click="goToFavorView();"
+          class=" button-small manageButton button">
+           <strong>REMOVE <br> FAVORS</strong>
+        </button>
+        <button
+          ng-click="loadOneFavorBrowse();goToFavorBrowse();"
+          class="button-small manageButton button">
+          <strong>ADD MORE <br> FAVORS</strong>
+        </button>
+    </div>
+    <div class="button-bar submitFavorButtonBar">
+      <button
+        ng-click="pushToFavorArray();loadOneFavor();goToFavorView();"
+        class="button-small button-full addFavorsButton submitFavorsButton">
+          Submit Selected Favors
+      </button>
+    </div>
+
     <ion-list ng-repeat="item in browseFavors" show-delete="data.showDelete">
-      <ion-item class="manageItem">
+      <ion-item class="manageItem " id='{{item}}' ng-class="favorCheck ? 'thisCheck' : 'noCheck'">
         {{item.favorName}}
         <ion-delete-button
+            ng-show="!favorCheck"
             ng-click="favorCheck = !favorCheck"
-            class="favorItem ion-checkmark-circled">
+            class="favorItem ion-ios-checkmark-outline">
         </ion-delete-button>
-        <div ng-show='{{item.claimed}}' class="item">
-          Claimed by: {{item.user.username}}
+        <div ng-click="favorCheck = !favorCheck" ng-show='favorCheck' class="icon ion-ios-checkmark">
+          Ready for Submit!
         </div>
       </ion-item>
     </ion-list>

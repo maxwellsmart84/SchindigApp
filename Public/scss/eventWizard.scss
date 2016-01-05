@@ -29,6 +29,13 @@
 .wizardDateTime {
   font-family: serif;
 }
+.schinDigHome {
+  position: fixed;
+  margin-left: 220px;
+}
+.shrinkHead{
+  height: 0px;
+}
 
 .wizard {
   font-family: "Showboat" serif;
@@ -100,9 +107,7 @@
       font-family: "Righteous";
       background-color: #F0EAD6;
     }
-    ::-webkit-input-placeholder {
 
-       }
     .wizardDateTime {
       color: gray;
     }

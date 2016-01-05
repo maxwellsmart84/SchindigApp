@@ -17,13 +17,13 @@
         ANSWER SOME COMMON QUESTIONS:
       </span>
     </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">PARTY DESCRIPTION: </span>
-        <input ng-model="description" type="text" placeholder="What is this party about?">
+      <label class="item item-input ">
+        <span class="item-text-wrap input-label">PARTY DESCRIPTION: </span>
+        <input ng-model="description" type="text" placeholder="Description">
       </label>
       <ion-toggle
         ng-click="themeCheck = !themeCheck"
-        toggle-class="toggle-calm">
+        toggle-class="toggle-royal">
         <div
         ng-model="themeCheck"
         ng-class="themeCheck ? 'theme' : 'noTheme'">
@@ -35,7 +35,7 @@
       </div>
       <ion-toggle
         ng-click="byobCheck = !byobCheck"
-        toggle-class="toggle-calm">
+        toggle-class="toggle-royal">
         <div
           ng-model="byobCheck"
           ng-class="byobCheck ? 'byob' : 'supplied'">
