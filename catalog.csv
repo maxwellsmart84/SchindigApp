@@ -1,8 +1,7 @@
 Garbage Bags,Generic
-Cooler,Generic
-Cooler,Cookout
+Cooler,Graduation
 Ice,Generic
-Ice,Cookout
+Ice,Graduation
 Toilet Paper,Generic
 Charcoal,Cookout
 Bug Spray,Cookout
@@ -19,7 +18,7 @@ Cocktail Shaker,Generic
 Cocktail Napkin,Generic
 Jigger,Generic
 Ice Bucket,Generic
-Punch Bowl,Generic
+Punch Bowl,Graduation
 Beverage Tub,Generic
 Vodka,Generic
 Gin,Generic
@@ -35,25 +34,23 @@ Beer,Generic
 Cognac,Generic
 Sake,Generic
 Bitters,Generic
-Ping Pong Balls,Generic
+Alcohol,Graduation
+More Alcohol,Graduation
+Ping Pong Balls,Graduation
 Beach Towels,Generic
-Bottled Water,Generic
+Bottled Water,Graduation
 Uber ride funds,Generic
 Slow Cooker,Generic
 Cookie Sheets,Generic
 Toaster Oven,Generic
 Cutting Boards,Generic
-Disposable Cups,Generic
-Disposable Cups,Cookout
-Disposable Plates,Generic
-Disposable Plates,Generic
-Disposable Utensils,Generic
+Solo Cups,Graduation
 Folding Table,Generic
 Folding Chairs,Generic
 Blender,Generic
 Bluetooth Speakers,Generic
 Candles,Generic
-Instant Camera,Generic
+Polaroid Camera,Graduation
 Christmas Wreath,Christmas
 Christmas Tree Stand,Christmas
 Christmas Lights,Christmas
@@ -63,8 +60,7 @@ Chips,Cookout
 Salsa,Generic
 Salsa,Cookout
 Cheese Dip,Generic
-Soft Drinks,Cookout
-Soft Drinks,Generic
+Soft Drinks,Graduation
 Pizza,Potluck Dinner
 Quesadillas,Generic
 Lasagna,Generic
@@ -76,6 +72,7 @@ Tacos,Potluck Dinner
 Chalupas,Potluck Dinner
 Sushi,Potluck Dinner
 Steak,Potluck Dinner
+Chips & Dip,Graduation
 Macaroni and Cheese,Potluck Dinner
 Bean Dip,Cookout
 Pita Chips,Generic
@@ -99,12 +96,10 @@ DJ,Generic
 Keg,Generic
 Bouncer,Generic
 Birthday Cake,Birthday Party
-Cupcakes,Generic
+Cupcakes,Graduation
 Birthday Hats,Birthday Party
-Balloons,Generic
-Strobe Lights,Generic
-Board Games,Birthday Party
-Playing cards,Birthday Party
-Cards Against Humanity,Generic
-Video Games,Generic
-Slip and Slide,Birthday Party
+Balloons,Graduation
+Strobe Lights,Graduation
+Board Games,Graduation
+Cards Against Humanity,Graduation
+Video Games,Graduation
