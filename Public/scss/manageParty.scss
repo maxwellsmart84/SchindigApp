@@ -14,6 +14,8 @@ $Cream: #dddcbe;
 $LightOrange: #DD7A14;
 $DullRed: #cb2d2d;
 
+
+
 .manageParty {
   display: flex;
   background-color: $Cream;
@@ -171,6 +173,7 @@ $DullRed: #cb2d2d;
       height:12vh;
       display: flex;
       justify-content: center;
+
     }
     .inviteButton{
       border-radius: 20px;
@@ -181,6 +184,7 @@ $DullRed: #cb2d2d;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
       display: flex;
+      text-align: center;
       justify-content: center;
     }
     .button-small {

@@ -43,7 +43,7 @@
         <div ng-init="getContactList()">
           <button
             ng-click="pushToContactArray();showConfirm()"
-            class="button button-full button-positive">
+            class="button inviteButton button-full">
             SEND INVITES
           </button>
           <ul class="list">
@@ -53,6 +53,7 @@
               <ion-item
                 ng-model="isChecked"
                 id="{{item}}"
+                class="guestList"
                 ng-class="isChecked ? 'true' : 'false'">
                 {{item.name}}
               </ion-item>

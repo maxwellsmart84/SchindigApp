@@ -1,12 +1,33 @@
+@font-face {
+    font-family:'HipsterIcons';
+    src:
+        url('fonts/NeoclassicFleuronsFree.otf'),
+        url('fonts/NeoclassicFleuronsFree 2.otf'),
+        url('fonts/NeoclassicFleuronsFree 3.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family:'HipsterFrames';
+    src:
+        url('fonts/Calligraphic_Frames_Soft_Two.ttf'),
+        url('fonts/Calligraphic_Frames_Soft.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family:'Nymph';
+    src:
+        url('fonts/Nymphette.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
 .bar {
   background-color: transparent;
 }
 .wizardDateTime {
   font-family: serif;
-}
-.schinDigHome {
-  position: fixed;
-  margin-left: 220px;
 }
 
 .wizard {
@@ -16,50 +37,95 @@
   ion-google-place {
     background-color: white;
   }
+  .mainIconVic{
+    margin-top: 8%;
+    text-align: center;
+    margin-bottom: 4%;
+    border-bottom: 6px double black;
+  }
+  .victorianIcon {
+    font-family: 'HipsterIcons';
+    font-size: 5rem;
+    padding-top: 40px;
+    i {
+    margin-left: -5%;
+    margin-right: -5%;
+    font-size: 7rem;
+    }
+  }
   .button {
     font-family: "Showboat";
-    font-size: 2rem;
+    font-size: 3rem;
     background-color: #680E34;
     text-transform: uppercase;
     color:white;
+    #submitText {
+      font-size: 3rem;
+      padding-left: 10px;
+      padding-right:10px;
+    }
+    span {
+      font-size: 4rem;
+    }
   }
   .button-small {
     font-size:1.2rem;
   }
+  .button-full{
+    padding-top:5px;
+    height: 11vh;
+  }
+
 //THIS IS FOR DROPDOWNS
   select {
     font-family: "Showboat";
     text-transform: uppercase;
     background-color: #F0EAD6;
+    width: 20%;
   }
   input {
     background-color: #F0EAD6;
-    font-family: "Showboat";
-    text-transform: uppercase;
+    font-family: "Rokkit";
+    font-size: 1.2rem;
+  }
+
+  .input-label{
+    font-size: 1rem;
   }
 
   .item-input {
-    font-family: "Showboat";
+    font-family: "Rokkit";
     background-color: #F0EAD6;
-    text-transform: uppercase;
+    border: solid 5px #F0EAD6;
     input {
-      font-family: "Showboat";
-      text-transform: uppercase;
+      font-family: "Rokkit";
       background-color: #F0EAD6;
     }
     .wizardDateTime {
       color: gray;
-      text-transform: uppercase;
     }
   }
   .item {
     font-family: "Showboat";
     background-color: #F0EAD6;
+    height:auto;
+    border-top: solid 1px #3e2029;
+    border-bottom:solid 1px #3e2029;
+    border-radius: 5px;
+    }
+    z-index: 10;
+    }
+
+  .favorText {
+    text-align: center;
+    font-family: "Showboat";
+    font-size: 1.5rem;
+    color:black;
   }
   .wizStretchExpl {
     text-align: center;
     font-family: "Showboat";
-    font-size: .85rem;
+    font-size: 1rem;
     color:black;
 
     span {
@@ -76,10 +142,7 @@
     width:300px;
     height:20px;
   }
-  progress[value]{
 
-  }
-}
 
 .wizardHeader {
   border:none;
@@ -90,18 +153,38 @@
   background: linear-gradient(rgba(#0b0b0b, 0.49));
   display: flex;
   width:100%;
-  h1 {
+  .wizardTextViewHeader {
+    display: flex;
     margin: 0;
     text-align: center;
     border:none;
     align-self: center;
-    justify-content: center;
-  }
-  .wizardTextViewHeader {
+    color:white;
+    font-family: "ShowBoat";
     letter-spacing: 5px;
-    font-family: "Showboat";
-    font-size: 2rem;
+    font-size: 2.1rem;
     color:white;
     margin: 0;
+    h1 {
+      color:white;
+      font-family: "ShowBoat";
+      width: 100%;
+      margin-left: 3.8%;
+      padding-top: 15px;
+
+    }
+    #J {
+      font-family: "HipsterFrames";
+      font-size:20.8rem;
+      color:white;
+      position:absolute;
+      top:-48%;
+      height:200px;
+      left:-7%;
+      z-index: 0;
+
+
+    }
   }
+
 }

@@ -9243,68 +9243,118 @@ a.button {
     padding: 10px;
     color: white; }
 
+@font-face {
+  font-family: 'HipsterIcons';
+  src: url("fonts/NeoclassicFleuronsFree.otf"), url("fonts/NeoclassicFleuronsFree 2.otf"), url("fonts/NeoclassicFleuronsFree 3.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'HipsterFrames';
+  src: url("fonts/Calligraphic_Frames_Soft_Two.ttf"), url("fonts/Calligraphic_Frames_Soft.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Nymph';
+  src: url("fonts/Nymphette.ttf");
+  font-weight: normal;
+  font-style: normal; }
+
 .bar {
   background-color: transparent; }
 
 .wizardDateTime {
   font-family: serif; }
 
-.schinDigHome {
-  position: fixed;
-  margin-left: 220px; }
-
 .wizard {
   font-family: "Showboat" serif;
   background-color: #F0EAD6;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  z-index: 10; }
   .wizard ion-google-place {
     background-color: white; }
+  .wizard .mainIconVic {
+    margin-top: 8%;
+    text-align: center;
+    margin-bottom: 4%;
+    border-bottom: 6px double black; }
+  .wizard .victorianIcon {
+    font-family: 'HipsterIcons';
+    font-size: 5rem;
+    padding-top: 40px; }
+    .wizard .victorianIcon i {
+      margin-left: -5%;
+      margin-right: -5%;
+      font-size: 7rem; }
   .wizard .button {
     font-family: "Showboat";
-    font-size: 2rem;
+    font-size: 3rem;
     background-color: #680E34;
     text-transform: uppercase;
     color: white; }
+    .wizard .button #submitText {
+      font-size: 3rem;
+      padding-left: 10px;
+      padding-right: 10px; }
+    .wizard .button span {
+      font-size: 4rem; }
   .wizard .button-small {
     font-size: 1.2rem; }
+  .wizard .button-full {
+    padding-top: 5px;
+    height: 11vh; }
   .wizard select {
     font-family: "Showboat";
     text-transform: uppercase;
-    background-color: #F0EAD6; }
+    background-color: #F0EAD6;
+    width: 20%; }
   .wizard input {
     background-color: #F0EAD6;
-    font-family: "Showboat";
-    text-transform: uppercase; }
+    font-family: "Rokkit";
+    font-size: 1.2rem; }
+  .wizard .input-label {
+    font-size: 1rem; }
   .wizard .item-input {
-    font-family: "Showboat";
+    font-family: "Rokkit";
     background-color: #F0EAD6;
-    text-transform: uppercase; }
+    border: solid 5px #F0EAD6; }
     .wizard .item-input input {
-      font-family: "Showboat";
-      text-transform: uppercase;
+      font-family: "Rokkit";
       background-color: #F0EAD6; }
     .wizard .item-input .wizardDateTime {
-      color: gray;
-      text-transform: uppercase; }
+      color: gray; }
   .wizard .item {
     font-family: "Showboat";
-    background-color: #F0EAD6; }
-  .wizard .wizStretchExpl {
-    text-align: center;
+    background-color: #F0EAD6;
+    height: auto;
+    border-top: solid 1px #3e2029;
+    border-bottom: solid 1px #3e2029;
+    border-radius: 5px; }
+
+.favorText {
+  text-align: center;
+  font-family: "Showboat";
+  font-size: 1.5rem;
+  color: black; }
+
+.wizStretchExpl {
+  text-align: center;
+  font-family: "Showboat";
+  font-size: 1rem;
+  color: black; }
+  .wizStretchExpl span {
     font-family: "Showboat";
     font-size: .85rem;
-    color: black; }
-    .wizard .wizStretchExpl span {
-      font-family: "Showboat";
-      font-size: .85rem;
-      color: black;
-      text-align: center; }
-  .wizard progress {
-    appearance: none;
-    -webkit-appearance: none;
-    border-radius: 30px;
-    width: 300px;
-    height: 20px; }
+    color: black;
+    text-align: center; }
+
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 30px;
+  width: 300px;
+  height: 20px; }
 
 .wizardHeader {
   border: none;
@@ -9315,18 +9365,33 @@ a.button {
   background: linear-gradient(rgba(11, 11, 11, 0.49));
   display: flex;
   width: 100%; }
-  .wizardHeader h1 {
+  .wizardHeader .wizardTextViewHeader {
+    display: flex;
     margin: 0;
     text-align: center;
     border: none;
     align-self: center;
-    justify-content: center; }
-  .wizardHeader .wizardTextViewHeader {
+    color: white;
+    font-family: "ShowBoat";
     letter-spacing: 5px;
-    font-family: "Showboat";
-    font-size: 2rem;
+    font-size: 2.1rem;
     color: white;
     margin: 0; }
+    .wizardHeader .wizardTextViewHeader h1 {
+      color: white;
+      font-family: "ShowBoat";
+      width: 100%;
+      margin-left: 3.8%;
+      padding-top: 15px; }
+    .wizardHeader .wizardTextViewHeader #J {
+      font-family: "HipsterFrames";
+      font-size: 20.8rem;
+      color: white;
+      position: absolute;
+      top: -48%;
+      height: 200px;
+      left: -7%;
+      z-index: 0; }
 
 .bar {
   background-color: transparent; }
@@ -9664,6 +9729,7 @@ a.button {
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
       display: flex;
+      text-align: center;
       justify-content: center; }
     .manageParty .managePartyContent .button-small {
       border-radius: 20px;

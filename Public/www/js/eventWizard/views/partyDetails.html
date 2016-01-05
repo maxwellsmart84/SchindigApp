@@ -3,14 +3,23 @@
   </ion-nav-bar>
   <div class="bar bar-header">
     <div class="wizardHeader">
-      <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">SOME EXTRAS</span></h1>
+      <h1 class= "wizardTextViewHeader"><span id="J">e</span>
+        <span class="wizardTextViewHeader"><h1>SOME EXTRAS</h1></span>
     </div>
   </div>
   <ion-padding>
     <ion-content>
+      <div class="mainIconVic">
+        <span class="victorianIcon mainIcon">3<i>z</i>4</span>
+      </div>
+      <label class= 'favorText item-text-wrap'>
+        <span>
+        ANSWER SOME COMMON QUESTIONS:
+      </span>
+    </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">PARTY DESCRIPTION: </span>
-        <input ng-model="description" type="text" placeholder="Tell Us About Your Party">
+        <input ng-model="description" type="text" placeholder="What is this party about?">
       </label>
       <ion-toggle
         ng-click="themeCheck = !themeCheck"
@@ -46,7 +55,7 @@
       <button
         ng-click="partyDeetsPatch(description, themeVal, parking)"
         class="bar bar-footer button button-full button-assertive">
-       Submit
+        <span class="victorianIcon">y</span><span id="submitText">Submit</span><span class="victorianIcon">u</span>
       </button>
     </ion-content>
   </ion-padding>
