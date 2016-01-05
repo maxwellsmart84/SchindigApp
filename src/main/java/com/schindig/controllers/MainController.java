@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.mustache.MustacheViewResolver;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
@@ -879,17 +878,17 @@ public class MainController {
     }
 
     @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
-    public ModelAndView goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException, ServletException {
+    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException, ServletException {
 //        response.addHeader("Origin", "http://localhost:8100");
 //        String postUrl="http://localhost:8000";
 //        String requestData="q=ABC&callback=callback125";
 //        RequestBuilder builder = new RequestBuilder(RequestBuilder., postUrl);
 //        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
 //        System.out.println("Route hit.");
-        ModelAndView mvr = new ModelAndView();
-        mvr.setViewName("venmo");
-        mvr.addObject("url", Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
-        return mvr;
+        String url = Venmo.getFrontEnd().concat("&state="+partyID+":"+userID);
+        RequestDispatcher view = request.getRequestDispatcher(url);
+        view.forward(request, response);
+
     }
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
@@ -897,7 +896,7 @@ public class MainController {
 
         System.out.println("Venmo returned");
         HashMap<String, String> map = new HashMap<>();
-        String[] relocate = state.split("AND");
+        String[] relocate = state.split(":");
         User user = users.findOne(Integer.valueOf(relocate[1]));
         user.setVenmoCode(code);
         Methods.getVenmo(code, user, users);
