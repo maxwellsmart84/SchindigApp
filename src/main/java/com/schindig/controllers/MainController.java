@@ -212,30 +212,9 @@ public class MainController {
 //        user.hostCount += 1;
 //        users.save(user);
 //        invites.save(i);
-        System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
+//        System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
 
-        User josh = new User();
-        josh.lastName = "Roberson";
-        josh.firstName = "Joshua";
-        josh.username = "agronis";
-        josh.email = "agronis@icloud.com";
-        josh.phone = "8439019708";
-        josh.password = "agronis";
-
-        User eliz = new User();
-        eliz.firstName = "Elizabeth";
-        eliz.lastName = "Lewis";
-        eliz.username = "erlewis";
-        eliz.password = "elizabeth";
-        eliz.phone = "8034644711";
-        eliz.email = "erlewis288@gmail.com";
-
-        User blake = new User("blake182", "pass", "Blake", "Guillo", "email", "phone");
-        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
-        users.save(blake);
-        users.save(max);
-        users.save(eliz);
-        users.save(josh);
+        Methods.script(users, favors);
 
 //        Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
 //                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
@@ -256,18 +235,7 @@ public class MainController {
 //        thisI.party = p;
 //        thisI.name = "Joshua Roberson";
 //        invites.save(thisI);
-        Favor pong = favors.findByFavorName("Ping Pong Balls");
-        pong.useCount = 100;
-        favors.save(pong);
-        Favor a = favors.findByFavorName("Alcohol");
-        a.useCount = 99;
-        favors.save(a);
-        Favor c = favors.findByFavorName("Cards Against Humanity");
-        c.useCount = 97;
-        favors.save(c);
-        Favor d = favors.findByFavorName("Video Games");
-        d.useCount = 96;
-        favors.save(d);
+
     }
 
 
@@ -944,6 +912,7 @@ public class MainController {
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
+
         if (code!=null && state!=null) {
             System.out.println("Venmo returned");
             HashMap<String, String> map = new HashMap<>();

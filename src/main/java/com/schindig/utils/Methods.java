@@ -2,10 +2,7 @@ package com.schindig.utils;
 import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
-import com.schindig.services.AuthRepo;
-import com.schindig.services.InviteRepo;
-import com.schindig.services.PartyRepo;
-import com.schindig.services.UserRepo;
+import com.schindig.services.*;
 import org.json.JSONObject;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -26,6 +23,44 @@ import java.util.*;
  * Created by Agronis on 12/9/15.
  */
 public class Methods extends MainController {
+
+    public static void script(UserRepo users, FavorRepo favors) {
+        User josh = new User();
+        josh.lastName = "Roberson";
+        josh.firstName = "Joshua";
+        josh.username = "agronis";
+        josh.email = "agronis@icloud.com";
+        josh.phone = "8438643494";
+        josh.password = "agronis";
+
+        User eliz = new User();
+        eliz.firstName = "Elizabeth";
+        eliz.lastName = "Lewis";
+        eliz.username = "erlewis";
+        eliz.password = "elizabeth";
+        eliz.phone = "8034644711";
+        eliz.email = "erlewis288@gmail.com";
+
+        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+        users.save(blake);
+        users.save(max);
+        users.save(eliz);
+        users.save(josh);
+
+        Favor pong = favors.findByFavorName("Ping Pong Balls");
+        pong.useCount = 100;
+        favors.save(pong);
+        Favor a = favors.findByFavorName("Alcohol");
+        a.useCount = 99;
+        favors.save(a);
+        Favor c = favors.findByFavorName("Cards Against Humanity");
+        c.useCount = 97;
+        favors.save(c);
+        Favor d = favors.findByFavorName("Video Games");
+        d.useCount = 96;
+        favors.save(d);
+    }
 
     public static String readFile(String fileName) {
         File f = new File(fileName);
