@@ -252,6 +252,7 @@ public class MainController {
         Invite thisI = new Invite();
         thisI.email = josh.email;
         thisI.phone = josh.phone;
+        thisI.party = p;
         thisI.name = "Joshua Roberson";
         invites.save(thisI);
     }
