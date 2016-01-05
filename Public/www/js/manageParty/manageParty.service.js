@@ -40,19 +40,14 @@
       };
       var getHostedParties = function(userID){
         console.log('dog');
-        return $http.post(viewHostedPartiesURL, userID)
-          .success(function(data){
-            console.log('succes view', data);
-        });
+        return $http.post(viewHostedPartiesURL, userID);
       };
       var getOneHostedParty = function(partyID, userID){
         console.log(partyID);
         console.log('getting one party');
         partyID = partyID;
         userID = userID;
-        return $http.get(ip+'/party/'+partyID+'/'+userID).success(function(data){
-          console.log('one party', data);
-        });
+        return $http.get(ip+'/party/'+partyID+'/'+userID);
       };
       var getPartyFavor = function(partyID){
         partyID = partyID;

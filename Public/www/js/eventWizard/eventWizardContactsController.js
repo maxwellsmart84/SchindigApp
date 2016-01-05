@@ -97,7 +97,7 @@
                 EventWizardService
                   .updateWizData(data).success(function(data){
                     console.log('data', data);
-                     $state.go('manageParty');
+                     $state.go('home');
                 });
               }
               else {

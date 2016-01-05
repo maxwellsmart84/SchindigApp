@@ -1,4 +1,4 @@
-<ion-view ng-init="loadOneFavor()" class="manageParty">
+<ion-view class="manageParty">
   <ion-nav-bar>
   </ion-nav-bar>
   <div class="bar bar-header">
@@ -9,7 +9,7 @@
    <ion-content class="managePartyContent" ng-show="favorViewVar">
     <div class="manageButtonBar button-bar">
        <button
-         ng-click="goToFavorView();loadOneFavorBrowse();"
+         ng-click="goToFavorView();"
          class=" button-small manageButton button">
           <strong>REMOVE <br> FAVORS</strong>
        </button>
@@ -32,15 +32,15 @@
       </ion-item>
     </ion-list>
    </ion-content>
-   <ion-content ng-init="loadOneFavorBrowse();" ng-show="favorBrowseVar" class="managePartyContent " >
+   <ion-content ng-show="favorBrowseVar" class="managePartyContent" >
      <div class="manageButtonBar button-bar">
         <button
-          ng-click="goToFavorView();loadOneFavorBrowse();"
+          ng-click="goToFavorView();"
           class=" button-small manageButton button">
            <strong>REMOVE <br> FAVORS</strong>
         </button>
         <button
-          ng-click="goToFavorBrowse();"
+          ng-click="loadOneFavorBrowse();goToFavorBrowse();"
           class="button-small manageButton button">
           <strong>ADD MORE <br> FAVORS</strong>
         </button>
