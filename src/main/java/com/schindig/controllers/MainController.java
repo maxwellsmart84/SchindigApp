@@ -5,13 +5,19 @@ import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.client.methods.RequestBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -211,6 +217,43 @@ public class MainController {
         users.save(user);
         invites.save(i);
         System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
+
+        User josh = new User();
+        josh.lastName = "Roberson";
+        josh.firstName = "Joshua";
+        josh.username = "agronis";
+        josh.email = "agronis@icloud.com";
+        josh.phone = "8439019708";
+        josh.password = "agronis";
+
+        User eliz = new User();
+        eliz.firstName = "Elizabeth";
+        eliz.lastName = "Lewis";
+        eliz.username = "erlewis";
+        eliz.password = "elizabeth";
+        eliz.phone = "8034644711";
+        eliz.email = "erlewis288@gmail.com";
+        users.save(eliz);
+        users.save(josh);
+
+        Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
+                0.0, true, true, null, "Valet");
+        parties.save(p);
+        ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
+        for (int a = 0; a<10; a++) {
+            for (Favor fav : f) {
+                FavorList favl = new FavorList();
+                favl.party = p;
+                favl.favor = fav;
+                favlists.save(favl);
+            }
+        }
+        Invite thisI = new Invite();
+        thisI.email = josh.email;
+        thisI.phone = josh.phone;
+        thisI.name = "Joshua Roberson";
+        invites.save(thisI);
     }
 
 
@@ -871,24 +914,33 @@ public class MainController {
         return new ArrayList<>();
     }
 
-    @RequestMapping(path = "/venmo/{partyID}/{userID}")
-    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException {
-        response.addHeader("Origin", "http://localhost:8100");
-        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
-        System.out.println("Route hit.");
-        return;
+    @RequestMapping(path = "/venmo/{partyID}/{userID}", method = RequestMethod.GET)
+    public void goVenmo(HttpServletResponse response, @PathVariable("userID") Integer userID, HttpServletRequest request, @PathVariable("partyID") Integer partyID) throws IOException, ServletException {
+//        response.addHeader("Origin", "http://localhost:8100");
+//        String postUrl="http://localhost:8000";
+//        String requestData="q=ABC&callback=callback125";
+//        RequestBuilder builder = new RequestBuilder(RequestBuilder., postUrl);
+//        response.sendRedirect(Venmo.getFrontEnd().concat("&state="+partyID+"AND"+userID));
+//        System.out.println("Route hit.");
+        String url = Venmo.getFrontEnd().concat("&state="+partyID+":"+userID);
+        RequestDispatcher view = request.getRequestDispatcher(url);
+        view.forward(request, response);
+
     }
 
     @RequestMapping(path = "/venmo/", method = RequestMethod.GET)
     public void saveVenmo(String code, String state, HttpServletResponse response) throws IOException {
-
-        System.out.println("Venmo returned");
-        HashMap<String, String> map = new HashMap<>();
-        String[] relocate = state.split("AND");
-        User user = users.findOne(Integer.valueOf(relocate[1]));
-        user.setVenmoCode(code);
-        Methods.getVenmo(code, user, users);
-        response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
+        if (code!=null && state!=null) {
+            System.out.println("Venmo returned");
+            HashMap<String, String> map = new HashMap<>();
+            String[] relocate = state.split(":");
+            User user = users.findOne(Integer.valueOf(relocate[1]));
+            user.setVenmoCode(code);
+            Methods.getVenmo(code, user, users);
+            response.addHeader("Party", relocate[0]);
+            response.sendRedirect("http://localhost:8100/#/invitedParty/"+relocate[0]);
+        }
+        response.sendRedirect("http://localhost:8100/#/");
     }
 
     @RequestMapping(path = "/venmo/payment", method = RequestMethod.POST)
@@ -903,7 +955,9 @@ public class MainController {
         }
         if (!Objects.equals(Methods.sendPayment(guest, party, users, amount), "400")) {
             party.stretchStatus += amount;
+            parties.save(party);
             response.sendRedirect("http://localhost:8100/#/invitedParty/"+party.partyID);
+
             return;
         } else {
             response.sendError(400, "There was an error processing your payment.");

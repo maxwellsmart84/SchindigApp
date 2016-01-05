@@ -2,12 +2,16 @@ package com.schindig;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.mustache.MustacheTemplateLoader;
+import org.springframework.web.servlet.view.mustache.MustacheViewResolver;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -95,6 +99,20 @@ public class AppConfig {
         return bean;
     }
 
+//    @Bean
+//    public ViewResolver getViewResolver(ResourceLoader resourceLoader) {
+//        MustacheViewResolver mustacheViewResolver = new MustacheViewResolver();
+//        mustacheViewResolver.setPrefix("/");
+//        mustacheViewResolver.setSuffix(".html");
+//        mustacheViewResolver.setCache(false);
+//        mustacheViewResolver.setContentType("text/html;charset=utf-8");
+//
+//        MustacheTemplateLoader mustacheTemplateLoader = new MustacheTemplateLoader();
+//        mustacheTemplateLoader.setResourceLoader(resourceLoader);
+//
+//        mustacheViewResolver.setTemplateLoader(mustacheTemplateLoader);
+//        return mustacheViewResolver;
+//    }
 
 
 

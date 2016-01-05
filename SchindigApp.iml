@@ -104,5 +104,7 @@
     <orderEntry type="library" name="Gradle: com.thetransactioncompany:cors-filter:2.5" level="project" />
     <orderEntry type="library" name="Gradle: com.thetransactioncompany:java-property-utils:1.9.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-web:4.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.sps.mustache:mustache-spring-view:1.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.samskivert:jmustache:1.11" level="project" />
   </component>
 </module>
