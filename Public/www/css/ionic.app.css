@@ -9385,12 +9385,12 @@ progress {
       padding-top: 15px; }
     .wizardHeader .wizardTextViewHeader #J {
       font-family: "HipsterFrames";
-      font-size: 20.8rem;
+      font-size: 20rem;
       color: white;
       position: absolute;
       top: -48%;
       height: 200px;
-      left: -7%;
+      left: -4%;
       z-index: 0; }
 
 .bar {
