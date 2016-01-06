@@ -15,7 +15,6 @@
     'underscore',
     'ion-google-place',
     'ion-alpha-scroll'
-
   ])
     .run(function($ionicPlatform, $cordovaDevice, $http, $state) {
       var uuid;
@@ -26,13 +25,15 @@
         uuid = device.uuid;
         console.log("device uuid", device.uuid);
         $http.get(ip + "/validate/" +uuid).success(function(data){
+            console.log('response from validate route', data.userID);
             console.log('response from validate route', data);
+
             if (data === 0) {
               console.log('failure uuid');
               $state.go('login');
             }
             else {
-              console.log('success uuid');
+              console.log('success uuid', data);
               localStorage.setItem('userID', data);
               $state.go('home');
             }
@@ -47,7 +48,6 @@
       });
     })
     .config(function($stateProvider, $urlRouterProvider) {
-
       $urlRouterProvider.otherwise('/login');
       $stateProvider
       .state('redirect', {
@@ -65,10 +65,9 @@
         controller: 'LoginRegisterController'
       });
     });
-
-      angular
-        .module('underscore', [])
-        .factory('_', function ($window) {
-          return $window._;
-        });
+    angular
+      .module('underscore', [])
+      .factory('_', function ($window) {
+        return $window._;
+      });
 }());
