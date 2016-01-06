@@ -177,7 +177,7 @@ public class Methods extends MainController {
         eliz.email = "erlewis288@gmail.com";
 
         User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        User max = new User("Agronis", "pass", "Max", "Krause", "agronis@icloud.com", "8439019708");
+        User max = new User("agro", "pass", "Max", "Krause", "agronis@icloud.com", "8439019708");
         users.save(blake);
         users.save(max);
         users.save(eliz);
