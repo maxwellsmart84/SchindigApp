@@ -169,6 +169,15 @@ public class Methods extends MainController {
             addFav.claimed = false;
             favlists.save(addFav);
         });
+        Invite x = new Invite();
+        x.party = grad;
+        x.user = blake;
+        x.name = blake.firstName.concat(" ").concat(blake.lastName);
+        x.phone = blake.phone;
+        x.email = blake.email;
+        x.rsvpStatus = "You're the host!";
+        invites.save(x);
+
         userBuild.stream().forEach(user -> {
             Invite i = new Invite();
             i.party = grad;
