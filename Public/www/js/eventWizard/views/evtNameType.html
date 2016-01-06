@@ -1,5 +1,5 @@
 <ion-view class="wizard" >
-   <ion-nav-bar class="bar-stable">
+   <ion-nav-bar class= "bar-stable">
    </ion-nav-bar>
    <div class= "bar bar-header">
      <div class="wizardHeader">
@@ -11,7 +11,7 @@
     <ion-padding></ion-padding>
     <ion-content>
       <div class="mainIconVic">
-        <span class="victorianIcon mainIcon">3<i>z</i>4</span>
+        <span class="victorianIcon mainIcon">3<i>Z</i>4</span>
       </div>
       <label class= 'favorText item-text-wrap'>
         <span>
@@ -26,9 +26,9 @@
           <option ng-repeat="item in wizardItems.data track by $index" value='{{item}}'><div class="item-text-wrap">{{item.partyType}}</div></option>
         </select>
       </ion-item>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">PARTY NAME:</span>
-        <input ng-model="partyName" type="text" placeholder="Give Your Party a Name">
+      <label class="item item-input">
+        <span class="item-text-wrap input-label">PARTY NAME:</span>
+        <input ng-model="partyName" type="text" placeholder="Name the Party">
       </label>
       <label class="item item-input">
          <span class="item-text-wrap input-label">WHERE?</span>

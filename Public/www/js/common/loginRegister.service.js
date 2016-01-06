@@ -4,7 +4,7 @@
   angular
 
     .module('schindig')
-    .factory('LoginRegisterService', function($http, $state, $q, $cordovaDevice, $cordovaToast){
+    .factory('LoginRegisterService', function($http, $state, $cordovaDevice, $cordovaToast){
 
       var ip = "http://10.0.10.72:8080";
 
@@ -32,8 +32,8 @@
                 }
               });
           }).error(function(data){
-              console.log('error', data.message);
-              $cordovaToast.show(data.message, 'short', 'bottom')
+              console.log('data', data.message);
+              $cordovaToast.show(data.message, 'short', 'bottom');
           });
       };
       var createUser = function(data) {

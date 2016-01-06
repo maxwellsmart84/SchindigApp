@@ -14,16 +14,6 @@
       $cordovaToast
     )
       {
-        // console.log('cordova getting device', $cordovaDevice.getUUID());
-
-      //cordova
-      //   var uuid;
-      //   $ionicPlatform.ready(function() {
-      //     var device = $cordovaDevice.getDevice();
-      //     console.log('what is this', device.uuid);
-      //     uuid = device.uuid;
-      //     console.log("device uuid", uuid);
-      // });
 
 
 
@@ -48,11 +38,6 @@
         $state.go('createNewUser');
       };
 
-      //FOR TO GET TO OUR VIEWS - DELETE FOR PRODUCTION
-
-      $scope.dog = function (){
-        $state.go('hostedParty');
-      };
 
       //DELETE TO TOP COMMENT
       $scope.createNewUserToast = function(){
