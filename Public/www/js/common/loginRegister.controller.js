@@ -16,13 +16,13 @@
       {
         // CORDOVA DEVICE//
         var uuid;
-      //   $ionicPlatform.ready(function() {
-      //     var device = $cordovaDevice.getDevice();
-      //     uuid = device.uuid;
-      //     console.log("device uuid", device.uuid);
-      // });
+        $ionicPlatform.ready(function() {
+          var device = $cordovaDevice.getDevice();
+          uuid = device.uuid;
+          console.log("device uuid", device.uuid);
+      });
 
-      // console.log("variable uuid", uuid);
+      console.log("variable uuid", uuid);
 
 
         //LOGIN USER AND ROUTE
@@ -41,11 +41,6 @@
         $state.go('createNewUser');
       };
 
-      //FOR TO GET TO OUR VIEWS - DELETE FOR PRODUCTION
-
-      $scope.dog = function (){
-        $state.go('hostedParty');
-      };
 
 
       //DELETE TO TOP COMMENT
