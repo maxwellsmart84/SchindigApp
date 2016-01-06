@@ -120,7 +120,7 @@ public class Methods extends MainController {
             blake.email = "erlewis288@gmail.com";
             blake.phone = "8034644711";
 
-            User joshua = new User("joshua", "pass", "Josh", "Roberson", "agronis@icloud.com", "8439019708");
+            User joshua = new User();
             joshua.username = "agro";
             joshua.password = "pass";
             joshua.firstName = "Joshua";
