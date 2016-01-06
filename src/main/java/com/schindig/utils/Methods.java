@@ -114,7 +114,7 @@ public class Methods extends MainController {
         String local = "17 Princess St, Charleston SC 29464";
         String stretchName = "Earth, Wind & Fire";
 
-        User blake = new User("blake", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User blake = new User("Blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
         User joshua = new User("joshua", "pass", "Josh", "Roberson", "agronis@icloud.com", "8439019708");
         users.save(blake);
         users.save(joshua);
