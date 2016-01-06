@@ -186,10 +186,7 @@ $DullRed: #cb2d2d;
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-
+      text-align: center;
     }
     .goHomeButtonBar{
       margin: 0 auto;
@@ -212,9 +209,7 @@ $DullRed: #cb2d2d;
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
-      display: flex;
       text-align: center;
-      justify-content: center;
     }
     .button-full{
       text-align: center;
@@ -228,7 +223,6 @@ $DullRed: #cb2d2d;
       font-size: 1.3rem;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
-      display: flex;
       text-align: center;
     }
   }

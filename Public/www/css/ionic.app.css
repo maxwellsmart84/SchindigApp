@@ -9745,9 +9745,7 @@ progress {
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center; }
+      text-align: center; }
     .manageParty .managePartyContent .goHomeButtonBar {
       margin: 0 auto; }
     .manageParty .managePartyContent .submitFavorButtonBar {
@@ -9766,9 +9764,7 @@ progress {
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
-      display: flex;
-      text-align: center;
-      justify-content: center; }
+      text-align: center; }
     .manageParty .managePartyContent .button-full {
       text-align: center; }
     .manageParty .managePartyContent .button-small {
@@ -9780,7 +9776,6 @@ progress {
       font-size: 1.3rem;
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
-      display: flex;
       text-align: center; }
   .manageParty ion-item {
     margin: 0; }
