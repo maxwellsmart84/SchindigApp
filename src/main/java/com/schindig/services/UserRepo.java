@@ -12,6 +12,7 @@ public interface UserRepo extends CrudRepository<User, Integer> {
     User findOneByLastName(String lastName);
     User findByEmail(String email);
     User findByPhone(String phone);
+    User findByUsername(String username);
 
 
 }

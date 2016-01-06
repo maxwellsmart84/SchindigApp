@@ -114,8 +114,21 @@ public class Methods extends MainController {
         String local = "17 Princess St, Charleston SC 29464";
         String stretchName = "Earth, Wind & Fire";
 
-        User blake = new User("Blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User blake = new User();
+        blake.username = "blake182";
+        blake.password = "pass";
+        blake.firstName = "Blake";
+        blake.lastName = "Guillo";
+        blake.email = "erlewis288@gmail.com";
+        blake.phone = "8034644711";
+
         User joshua = new User("joshua", "pass", "Josh", "Roberson", "agronis@icloud.com", "8439019708");
+        joshua.username = "agro";
+        joshua.password = "pass";
+        joshua.firstName = "Joshua";
+        joshua.lastName = "Roberson";
+        joshua.email = "agronis@icloud.com";
+        joshua.phone = "8439019708";
         users.save(blake);
         users.save(joshua);
 
@@ -156,7 +169,7 @@ public class Methods extends MainController {
             addFav.claimed = false;
             favlists.save(addFav);
         });
-        for (User user : userBuild) {
+        userBuild.stream().forEach(user -> {
             Invite i = new Invite();
             i.party = grad;
             i.user = user;
@@ -165,7 +178,7 @@ public class Methods extends MainController {
             i.email = user.email;
             i.name = user.firstName.concat(" ").concat(String.valueOf(user.lastName.charAt(0)).toUpperCase()).concat(".");
             invites.save(i);
-        }
+        });
 
     }
 
