@@ -156,7 +156,7 @@ public class Methods extends MainController {
             }
         }
         String description = "Three long months, sleepless nights and lots of ping pong have led us to this point.";
-        String theme = "Celebrate your freedom!";
+        String theme = "Recognize our hard work!";
         String local = "17 Princess St, Charleston SC 29464";
         String stretchName = "Ice Luge";
 
@@ -177,7 +177,7 @@ public class Methods extends MainController {
         eliz.email = "erlewis288@gmail.com";
 
         User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        User max = new User("max", "pass", "Max", "Krause", "agronis@icloud.com", "8439019708");
+        User max = new User("Agronis", "pass", "Max", "Krause", "agronis@icloud.com", "8439019708");
         users.save(blake);
         users.save(max);
         users.save(eliz);
@@ -208,7 +208,7 @@ public class Methods extends MainController {
         d.useCount = 96;
         favors.save(d);
 
-        Party test = new Party(blake, "The Iron Party", "Graduation", description, null,
+        Party test = new Party(blake, "Please don't be mad at us!", "Graduation", description, null,
                 LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 300,
                 0.0, true, true, theme, "Valet");
         parties.save(test);
