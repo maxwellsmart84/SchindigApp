@@ -9290,6 +9290,7 @@ a.button {
 .wizard {
   font-family: "Showboat" serif;
   background-color: #F0EAD6;
+  text-transform: uppercase;
   z-index: 10; }
   .wizard ion-google-place {
     background-color: white; }
@@ -9626,6 +9627,8 @@ progress {
     height: 130px; }
   .manageParty .bar-header {
     height: 130px; }
+  .manageParty .inviteMore {
+    text-align: center; }
   .manageParty .title {
     height: 130px; }
     .manageParty .title .title-center {
@@ -9742,9 +9745,7 @@ progress {
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center; }
+      text-align: center; }
     .manageParty .managePartyContent .goHomeButtonBar {
       margin: 0 auto; }
     .manageParty .managePartyContent .submitFavorButtonBar {
@@ -9763,9 +9764,9 @@ progress {
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
-      display: flex;
-      text-align: center;
-      justify-content: center; }
+      text-align: center; }
+    .manageParty .managePartyContent .button-full {
+      text-align: center; }
     .manageParty .managePartyContent .button-small {
       text-align: center;
       border-radius: 20px;
@@ -9775,8 +9776,7 @@ progress {
       font-size: 1.3rem;
       text-shadow: -2px 2px 0px #E26291;
       height: 12vh;
-      display: flex;
-      justify-content: center; }
+      text-align: center; }
   .manageParty ion-item {
     margin: 0; }
   .manageParty h1 {

@@ -28,15 +28,15 @@
       </ion-item>
       <label class="item item-input">
         <span class="item-text-wrap input-label">PARTY NAME:</span>
-        <input ng-model="partyName" type="text" placeholder="Name the Party">
+        <input ng-model="partyName" type="text">
       </label>
       <label class="item item-input">
          <span class="item-text-wrap input-label">WHERE?</span>
-         <ion-google-place  placeholder= "Address, Zip" ng-model="location"></ion-google-place>
+         <ion-google-place ng-model="location"></ion-google-place>
       </label>
       <label class="item item-input">
          <span class="item-text-wrap input-label">DATE TIME:</span>
-         <input class="wizardDateTime" placeholder= "Pick a Date and Time" ng-model="partyDate" type="datetime-local">
+         <input class="wizardDateTime" ng-model="partyDate" type="datetime-local">
        </label>
        <div class="buttonWrap">
           <button

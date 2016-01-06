@@ -11,12 +11,12 @@
       <button
         ng-click="goToManageFavor()"
         class="button manageButton">
-        EDIT Favors
+        Favors
       </button>
       <button
         ng-click="goToManageInvites()"
         class="button inviteButton">
-        EDIT Invites
+        Invites
       </button>
     </div>
     <ion-list>
@@ -65,7 +65,7 @@
       </ion-item>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right manageItem">
-            <strong>Edit Location: <br></strong><div class="item-text-wrap">{{oneParty.local}}</div>
+            <strong>Location: <br></strong><div class="item-text-wrap">{{oneParty.local}}</div>
             <button
               ng-hide="edit"
               ng-click="edit = true"
