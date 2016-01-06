@@ -28,12 +28,12 @@
           <progress max="200" value="80"></progress>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">WHAT WOULD MAKE THIS PARTY AWESOME?</span>
+        <span class="input-label">STRETCH GOAL: </span>
         <input placeholder="Ice Luge? Oprah? another keg..." ng-model= "stretchName" type="text">
       </label>
       <label class="item item-input item-floating-label">
         <span class= "input-label">COST?</span>
-        <input placeholder="How Much MONEY?" ng-model="stretchGoal" type="number">{{stretchGoal | currency}}
+        <input ng-model="stretchGoal" type="number">{{stretchGoal | currency}}
       </label>
       <button
         ng-click="stretchGoalData(stretchGoal, stretchName)"

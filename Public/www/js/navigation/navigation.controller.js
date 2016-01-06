@@ -12,9 +12,7 @@
       $cordovaDevice,
       NavigationService,
       LoginRegisterService
-
     ){
-
         //TOP LEVEL NAVIGATION//
       $scope.wizardGo = function(){
         $state.go('wizard');

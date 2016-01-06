@@ -51,7 +51,6 @@
       var postInviteData = function(inviteData){
         return $http.patch(invitePostUrl, inviteData);
       };
-
       return {
         getWizard: getWizard,
         newWizPartyPost: newWizPartyPost,
