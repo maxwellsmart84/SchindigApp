@@ -17,6 +17,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +35,7 @@ public class Methods extends MainController {
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
-    public static void script(UserRepo users, FavorRepo favors, PartyRepo parties, FavorListRepo favlists, InviteRepo invites, WizardRepo wizard, AuthRepo auth) {
+    public static void script(UserRepo users, FavorRepo favors, PartyRepo parties, FavorListRepo favlists, InviteRepo invites, WizardRepo wizard, AuthRepo auth) throws InvalidKeySpecException, NoSuchAlgorithmException {
         long wizCheck = wizard.count();
         ArrayList<String> partyTypes = new ArrayList<>();
         ArrayList<String> subTypes = new ArrayList<>();
@@ -188,20 +189,20 @@ public class Methods extends MainController {
         josh.username = "agronis";
         josh.email = "agronis@icloud.com";
         josh.phone = "8438643494";
-        josh.password = "agronis";
+        josh.password = PasswordHash.createHash("agronis");
 
         User eliz = new User();
         eliz.userID = (int)(Math.random() * 100000 * 100000);
         eliz.firstName = "Elizabeth";
         eliz.lastName = "Lewis";
         eliz.username = "erlewis";
-        eliz.password = "elizabeth";
+        eliz.password = PasswordHash.createHash("elizabeth");
         eliz.phone = "8034644711";
         eliz.email = "erlewis288@gmail.com";
 
-        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User blake = new User("blake182", PasswordHash.createHash("pass"), "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
         blake.userID = (int)(Math.random() * 100000 * 100000);
-        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+        User max = new User("max", PasswordHash.createHash("pass"), "Max", "Krause", "email", "phone");
         max.userID = (int)(Math.random() * 100000 * 100000);
         users.save(blake);
         users.save(max);
