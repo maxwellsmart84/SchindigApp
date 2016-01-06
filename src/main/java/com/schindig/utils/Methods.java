@@ -94,10 +94,7 @@ public class Methods extends MainController {
         if (userBuild.size() < 10) {
 
             User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
-            User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
-            venmoTest.setVenmoID("145434160922624933");
             users.save(admin);
-            users.save(venmoTest);
 
             String fileContent = Methods.readFile("users.csv");
 
@@ -158,25 +155,10 @@ public class Methods extends MainController {
                 }
             }
         }
-        String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
-        String theme = "This is just a placeholder for what could be an insane theme.";
-        String local = "220 E Bryan St, Savannah, GA 31401";
-        String stretchName = "One insane crazy impossible goal.";
-        User user = users.findOneByUsername("venmo");
-        Party P = new Party(user, "Insert Party Name Here", "Christmas", description, null,
-                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-                0.0, true, true, theme, "Valet");
-        parties.save(P);
-        Invite i = new Invite();
-        i.user = users.findOneByUsername("admin");
-        i.email = i.user.email;
-        i.phone = i.user.phone;
-        i.name = i.user.firstName.concat("  "+ i.user.lastName);
-        i.party = P;
-        user.hostCount += 1;
-        users.save(user);
-        invites.save(i);
-        System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
+        String description = "Three long months, sleepless nights and lots of ping pong have led us to this point.";
+        String theme = "Celebrate your freedom!";
+        String local = "17 Princess St, Charleston SC 29464";
+        String stretchName = "Ice Luge";
 
         User josh = new User();
         josh.lastName = "Roberson";
@@ -195,7 +177,7 @@ public class Methods extends MainController {
         eliz.email = "erlewis288@gmail.com";
 
         User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+        User max = new User("max", "pass", "Max", "Krause", "agronis@icloud.com", "8439019708");
         users.save(blake);
         users.save(max);
         users.save(eliz);
@@ -225,6 +207,27 @@ public class Methods extends MainController {
         d.partyType = "Graduation";
         d.useCount = 96;
         favors.save(d);
+
+        Party test = new Party(blake, "The Iron Party", "Graduation", description, null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 300,
+                0.0, true, true, theme, "Valet");
+        parties.save(test);
+        ArrayList<Favor> findAll = (ArrayList<Favor>) favors.findAll();
+        findAll.stream().filter(fav -> fav.partyType.equals(test.partyType)).forEach(fav -> {
+            FavorList addFav = new FavorList();
+            addFav.favor = fav;
+            addFav.party = test;
+            addFav.claimed = false;
+            favlists.save(addFav);
+        });
+        Invite m = new Invite();
+        m.party = test;
+        m.phone = "8439019708";
+        m.email = "agronis@icloud.com";
+        m.name = "Max Krause";
+        m.rsvpStatus = "RSVP";
+        m.sent = false;
+        invites.save(m);
 
     }
 

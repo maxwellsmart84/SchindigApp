@@ -68,6 +68,7 @@ public class MainController {
     @PostConstruct
     public void init() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, InvalidKeyException, InvalidKeySpecException {
             Methods.script(users, favors, parties, favlists, invites, wizard, auth);
+
     }
 
 
