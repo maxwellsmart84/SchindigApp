@@ -6,7 +6,7 @@
     .factory('ProfileService', function($http, $state){
       var vm = this;
 
-      var ip = "http://104.236.244.159:8100";
+      var ip = "http://localhost:8080";
       // var ip = "http://104.236.244.159:8100";
 
       var userProfilePartiesURL = ip +'/user';

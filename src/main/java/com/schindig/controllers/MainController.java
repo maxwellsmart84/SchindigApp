@@ -1,8 +1,10 @@
 package com.schindig.controllers;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.schindig.entities.*;
 import com.schindig.services.*;
 import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
+import com.schindig.utils.PasswordHash;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -61,183 +64,10 @@ public class MainController {
     @Autowired
     ContactRepo contacts;
 
-    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
-        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
-    }
-
 
     @PostConstruct
     public void init() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, InvalidKeyException, InvalidKeySpecException {
-        try {
-            long wizCheck = wizard.count();
-            ArrayList<String> partyTypes = new ArrayList<>();
-            ArrayList<String> subTypes = new ArrayList<>();
-            if (wizCheck == 0) {
-                Methods.script(users, favors);
-                String fileContent = Methods.readFile("wizard.csv");
-
-                String[] lines = fileContent.split("\n");
-
-                for (String line : lines) {
-                    Wizard wiz = new Wizard();
-                    String[] columns = line.split(",");
-                    String partyType = columns[0];
-                    String partyMod = columns[1];
-                    partyTypes.add(columns[0]);
-                    if (columns[1] != null) {
-                        subTypes.add(columns[1]);
-                    }
-                    if (columns[1] == null) {
-                        partyMod = "empty";
-                    }
-                    Wizard check = wizard.findOneByPartyType(partyType);
-                    if (check == null) {
-                        Wizard test = new Wizard();
-                        test.partyType = partyType;
-                        ArrayList<String> subType = new ArrayList<>();
-                        subType.add(partyMod);
-                        test.subType = subType;
-                        wizard.save(test);
-                    } else if (check.partyType.equals(partyType)) {
-                        check.subType.add(partyMod);
-                        wizard.save(check);
-                    } else {
-                        wiz.partyType = partyType;
-                        wiz.subType.add(partyMod);
-                        wizard.save(wiz);
-                    }
-                }
-            }
-
-            long catCheck = favors.count();
-            if (catCheck == 0) {
-                String fileContent = Methods.readFile("catalog.csv");
-
-                String[] lines = fileContent.split("\n");
-
-
-                for (String line : lines) {
-                    Favor fav = new Favor();
-                    String[] columns = line.split(",");
-                    fav.favorName = columns[0];
-                    fav.partyType = columns[1];
-                    favors.save(fav);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-        }
-
-
-//        ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
-//        if (userBuild.size() < 10) {
-//
-//            User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
-//            User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
-//            venmoTest.setVenmoID("145434160922624933");
-//            users.save(admin);
-//            users.save(venmoTest);
-//
-//            String fileContent = Methods.readFile("users.csv");
-//
-//            String[] lines = fileContent.split("\n");
-//            for (String line : lines) {
-//                String randomNumber = RandomStringUtils.randomNumeric(10);
-//                String[] columns = line.split(",");
-//                User u = new User(columns[0], columns[1], columns[2], columns[3], columns[2].concat(columns[4]), randomNumber);
-//                userBuild.add(u);
-//                users.save(u);
-//            }
-//
-//            String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
-//            String theme = "This is just a placeholder for what could be an insane theme.";
-//            String local = "220 E Bryan St, Savannah, GA 31401";
-//            String stretchName = "One insane crazy impossible goal.";
-//
-//
-//            for (User user : userBuild) {
-//                for (int i = 0; i < 5; i++) {
-//                    String partyType = partyTypes.get(i);
-//
-//                    String subType;
-//                    subTypes.get(i);
-//                    if (subTypes != null) {
-//                        subType = subTypes.get(i);
-//                    } else {
-//                        subType = "No subType";
-//                    }
-//                    if (parties.count() < 10) {
-//                        Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
-//                                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-//                                0.0, true, true, theme, "Valet");
-//                        user.hostCount += 1;
-//                        users.save(user);
-//                        parties.save(P);
-//                        for (int fa = 1; fa < 10; fa++) {
-//                            Favor f = favors.findOne(fa);
-//                            f.useCount += 1;
-//                            FavorList newList = new FavorList(f, P, false);
-//                            favors.save(f);
-//                            favlists.save(newList);
-//                        }
-//                        for (int u = 0; u < userBuild.size(); u++) {
-//                            User invUser = userBuild.get(u);
-//                            ArrayList<Invite> inviteList = invites.findByParty(P);
-//                            if (inviteList.size() < 10) {
-//                                String thisName = invUser.firstName.concat(" "+invUser.lastName.toUpperCase()+".");
-//                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", thisName);
-//                                invUser.invitedCount += 1;
-//                                users.save(invUser);
-//                                P.host.inviteCount += 1;
-//                                users.save(P.host);
-//                                invites.save(inv);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
-//        String theme = "This is just a placeholder for what could be an insane theme.";
-//        String local = "220 E Bryan St, Savannah, GA 31401";
-//        String stretchName = "One insane crazy impossible goal.";
-//        User user = users.findOneByUsername("venmo");
-//        Party P = new Party(user, "Insert Party Name Here", "Christmas", description, null,
-//                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-//                0.0, true, true, theme, "Valet");
-//        parties.save(P);
-//        Invite i = new Invite();
-//        i.user = users.findOneByUsername("admin");
-//        i.email = i.user.email;
-//        i.phone = i.user.phone;
-//        i.name = i.user.firstName.concat("  "+ i.user.lastName);
-//        i.party = P;
-//        user.hostCount += 1;
-//        users.save(user);
-//        invites.save(i);
-//        System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
-
-//        Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
-//                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
-//                0.0, true, true, null, "Valet");
-//        parties.save(p);
-//        ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
-//        for (int a = 0; a<10; a++) {
-//            for (Favor fav : f) {
-//                FavorList favl = new FavorList();
-//                favl.party = p;
-//                favl.favor = fav;
-//                favlists.save(favl);
-//            }
-//        }
-//        Invite thisI = new Invite();
-//        thisI.email = josh.email;
-//        thisI.phone = josh.phone;
-//        thisI.party = p;
-//        thisI.name = "Joshua Roberson";
-//        invites.save(thisI);
+            Methods.script(users, favors, parties, favlists, invites, wizard, auth);
 
     }
 
@@ -250,9 +80,10 @@ public class MainController {
             response.sendError(400, "You must log in to continue.");
             return 0;
         } else {
-            User u = auth.findByDevice(device).user;
-            response.sendError(200, "Welcome back " + u.username + "!");
-            return u.userID;
+            Auth a2 = auth.findByDevice(device);
+            User user = a2.user;
+//            response.sendError(200, "Welcome back ".concat(user.username).concat("!"));
+            return user.userID;
         }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -390,19 +221,19 @@ public class MainController {
         User user = users.findOneByUsername(p.user.username.toLowerCase());
         if (user == null) {
             response.sendError(401, "Username not found.");
-        } else if (!user.password.equals(p.user.password.toLowerCase())) {
+        } else if (!p.user.password.toLowerCase().equals(user.password)) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
             Auth a = auth.findByDevice(p.device);
-            if (a==null) {
+            if (a == null) {
                 Methods.newDevice(user, p.device, auth);
                 return user.userID;
             }
-            return user.userID;
         }
+        return user.userID;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            response.sendError(400, "There was an error logging in.");
         }
         return null;
     }
@@ -410,9 +241,9 @@ public class MainController {
     @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
     public void logout(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         try {
-        Auth a = auth.findByDevice(p.device);
-        auth.delete(a);
-        response.sendError(200, "You've successfully been logged out.");
+            Auth a = auth.findByDevice(p.device);
+            auth.delete(a);
+            response.sendError(200, "You've successfully been logged out.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendError(400, "You can't logout!");
@@ -461,14 +292,23 @@ public class MainController {
 
     @RequestMapping(path = "/party/create", method = RequestMethod.POST)
     public Party createParty(@RequestBody Parameters params, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+
         try {
             User user = users.findOne(params.userID);
-            Party p = params.party;
-            p.host = user;
+            Party party = params.party;
+            party.host = user;
             user.hostCount += 1;
             users.save(user);
-            parties.save(p);
-            return p;
+            parties.save(party);
+            Invite i = new Invite();
+            i.party = party;
+            i.rsvpStatus = "Yes";
+            i.name = user.firstName.concat(" ").concat(user.lastName);
+            i.email = user.email;
+            i.phone = user.phone;
+            i.user = user;
+            invites.save(i);
+            return party;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -585,14 +425,18 @@ public class MainController {
             User user = users.findOne(userID);
             ArrayList<Invite> inviteList = invites.findByParty(party);
             inviteList = inviteList.stream()
-                    .filter(distinctByKey(Invite::getName))
+                    .filter(Methods.distinctByKey(Invite::getName))
                     .collect(Collectors.toCollection(ArrayList::new));
             if (party.host != user) {
-                Invite rsvp = invites.findByPartyAndEmail(party, user.email);
+                Invite rsvp = invites.findByPartyAndPhone(party, user.phone);
+                if (rsvp.rsvpStatus==null) {
+                    party.rsvpStatus.equals("RSVP");
+                }
                 party.rsvpStatus = rsvp.rsvpStatus;
             } else {
-                party.rsvpStatus = "You're the host!";
+                party.rsvpStatus = "Host";
             }
+            parties.save(party);
             ArrayList<Object> payload = new ArrayList<>();
             HashMap<String, Object> inviteDump = new HashMap<>();
             HashMap<String, Object> userList = new HashMap<>();
@@ -675,8 +519,9 @@ public class MainController {
               }
               if (parameters.inviteDump != null) {
                   for (Invite invite : parameters.inviteDump) {
+                      response.sendError(200, "Invites sent!");
                       Methods.newInvite(invite, invites, check);
-//                      Methods.msgGateway(invite, p.host, p);
+                      Methods.msgGateway(invite, check.host, check);
                       invite.sent = true;
                       check.host.inviteCount += 1;
                   }
@@ -727,11 +572,9 @@ public class MainController {
             ArrayList<Party> partyList = new ArrayList();
             for (Invite invite : inviteList) {
                 if (u.email.equals(invite.email)) {
-                    if (invite.email != null && invite.user != invite.party.host)
-                        partyList.add(invite.party);
+                    partyList.add(invite.party);
                 } else if (u.phone.equals(invite.phone)) {
-                    if (invite.phone != null && invite.user != invite.party.host)
-                        partyList.add(invite.party);
+                    partyList.add(invite.party);
                 }
             }
             return partyList;
