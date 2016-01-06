@@ -9,13 +9,13 @@
    <ion-content class="managePartyContent manageHostedInvites" ng-init="loadInvitedPeople();loadOne();">
      <div class="button-bar">
        <button
-         class="button button-small"
+         class="button button-small inviteMore"
          ng-click="showGuestList();loadInvitedPeople();getOneHostedParty();">
         GUEST LIST
        </button>
        <button
          ng-click="showInvite()"
-         class="button button-small">
+         class="button button-small inviteMore">
          Invite More
        </button>
      </div>
@@ -39,7 +39,7 @@
           <div class="button-bar">
             <button
               ng-click="pushToContactArray();showConfirm();showGuestList();"
-              class="button-small button-full">
+              class="button-small button-full inviteMore">
               SEND INVITES
             </button>
           </div>

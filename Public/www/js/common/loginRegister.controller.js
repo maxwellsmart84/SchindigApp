@@ -14,6 +14,7 @@
       $cordovaToast
     )
       {
+
         //LOGIN USER AND ROUTE
       $scope.login = function(username, password){
         var vm = this;
@@ -36,6 +37,7 @@
       $scope.signUp = function(){
         $state.go('createNewUser');
       };
+
 
       //DELETE TO TOP COMMENT
       $scope.createNewUserToast = function(){

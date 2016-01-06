@@ -28,6 +28,9 @@ $DullRed: #cb2d2d;
   .bar-header{
     height: 130px;
   }
+  .inviteMore{
+    text-align: center;
+  }
   .title{
     height:130px;
     .title-center{
@@ -213,6 +216,9 @@ $DullRed: #cb2d2d;
       text-align: center;
       justify-content: center;
     }
+    .button-full{
+      text-align: center;
+    }
     .button-small {
       text-align: center;
       border-radius: 20px;
@@ -223,7 +229,7 @@ $DullRed: #cb2d2d;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
       display: flex;
-      justify-content: center;
+      text-align: center;
     }
   }
   ion-item{
