@@ -107,82 +107,17 @@ public class Methods extends MainController {
                 userBuild.add(u);
                 users.save(u);
             }
-
-            String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
-            String theme = "This is just a placeholder for what could be an insane theme.";
-            String local = "220 E Bryan St, Savannah, GA 31401";
-            String stretchName = "One insane crazy impossible goal.";
-
-
-            for (User user : userBuild) {
-                for (int i = 0; i < 5; i++) {
-                    String partyType = partyTypes.get(i);
-
-                    String subType;
-                    subTypes.get(i);
-                    if (subTypes != null) {
-                        subType = subTypes.get(i);
-                    } else {
-                        subType = "No subType";
-                    }
-                    if (parties.count() < 10) {
-                        Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
-                                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-                                0.0, true, true, theme, "Valet");
-                        user.hostCount += 1;
-                        users.save(user);
-                        parties.save(P);
-                        for (int fa = 1; fa < 10; fa++) {
-                            Favor f = favors.findOne(fa);
-                            f.useCount += 1;
-                            FavorList newList = new FavorList(f, P, false);
-                            favors.save(f);
-                            favlists.save(newList);
-                        }
-                        for (int u = 0; u < userBuild.size(); u++) {
-                            User invUser = userBuild.get(u);
-                            ArrayList<Invite> inviteList = invites.findByParty(P);
-                            if (inviteList.size() < 10) {
-                                String thisName = invUser.firstName.concat(" "+invUser.lastName.toUpperCase()+".");
-                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", thisName);
-                                invUser.invitedCount += 1;
-                                users.save(invUser);
-                                P.host.inviteCount += 1;
-                                users.save(P.host);
-                                invites.save(inv);
-                            }
-                        }
-                    }
-                }
-            }
         }
+
         String description = "Three long months, sleepless nights and lots of ping pong have led us to this point.";
         String theme = "Recognize our hard work!";
         String local = "17 Princess St, Charleston SC 29464";
-        String stretchName = "Ice Luge";
+        String stretchName = "Earth, Wind & Fire";
 
-        User josh = new User();
-        josh.lastName = "Roberson";
-        josh.firstName = "Joshua";
-        josh.username = "agronis";
-        josh.email = "agronis@icloud.com";
-        josh.phone = "8438643494";
-        josh.password = "agronis";
-
-        User eliz = new User();
-        eliz.firstName = "Elizabeth";
-        eliz.lastName = "Lewis";
-        eliz.username = "erlewis";
-        eliz.password = "elizabeth";
-        eliz.phone = "8034644711";
-        eliz.email = "erlewis288@gmail.com";
-
-        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        User max = new User("agro", "pass", "Josh", "Roberson", "agronis@icloud.com", "8439019708");
+        User blake = new User("blake", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        User joshua = new User("joshua", "pass", "Josh", "Roberson", "agronis@icloud.com", "8439019708");
         users.save(blake);
-        users.save(max);
-        users.save(eliz);
-        users.save(josh);
+        users.save(joshua);
 
         Favor pong = new Favor();
         pong.favorName = "Ping Pong Balls";
@@ -209,26 +144,28 @@ public class Methods extends MainController {
         d.useCount = 96;
         favors.save(d);
 
-        Party test = new Party(blake, "Please don't be mad at us!", "Graduation", description, null,
-                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 300,
+        Party grad = new Party(blake, "The Iron Party", "Graduation", description, null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 3000,
                 0.0, true, true, theme, "Valet");
-        parties.save(test);
+        parties.save(grad);
         ArrayList<Favor> findAll = (ArrayList<Favor>) favors.findAll();
-        findAll.stream().filter(fav -> fav.partyType.equals(test.partyType)).forEach(fav -> {
+        findAll.stream().filter(fav -> fav.partyType.equals(grad.partyType)).forEach(fav -> {
             FavorList addFav = new FavorList();
             addFav.favor = fav;
-            addFav.party = test;
+            addFav.party = grad;
             addFav.claimed = false;
             favlists.save(addFav);
         });
-        Invite m = new Invite();
-        m.party = test;
-        m.phone = "8439019708";
-        m.email = "agronis@icloud.com";
-        m.name = "Max Krause";
-        m.rsvpStatus = "RSVP";
-        m.sent = false;
-        invites.save(m);
+        for (User user : userBuild) {
+            Invite i = new Invite();
+            i.party = grad;
+            i.user = user;
+            i.rsvpStatus = "Maybe";
+            i.phone = user.phone;
+            i.email = user.email;
+            i.name = user.firstName.concat(" ").concat(String.valueOf(user.lastName.charAt(0)).toUpperCase()).concat(".");
+            invites.save(i);
+        }
 
     }
 
