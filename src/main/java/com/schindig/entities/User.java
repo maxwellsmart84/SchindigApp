@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    @GeneratedValue
     @Id
     public Integer userID;
 

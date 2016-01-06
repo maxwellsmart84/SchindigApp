@@ -1,8 +1,10 @@
 package com.schindig.controllers;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.schindig.entities.*;
 import com.schindig.services.*;
 import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
+import com.schindig.utils.PasswordHash;
 import com.schindig.utils.Venmo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,163 +63,10 @@ public class MainController {
     @Autowired
     ContactRepo contacts;
 
-    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
-        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
-    }
-
 
     @PostConstruct
     public void init() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, NoSuchProviderException, InvalidKeyException, InvalidKeySpecException {
-        try {
-            long wizCheck = wizard.count();
-            ArrayList<String> partyTypes = new ArrayList<>();
-            ArrayList<String> subTypes = new ArrayList<>();
-            if (wizCheck == 0) {
-                Methods.script(users, favors, parties, favlists, invites);
-                String fileContent = Methods.readFile("wizard.csv");
-
-                String[] lines = fileContent.split("\n");
-
-                for (String line : lines) {
-                    Wizard wiz = new Wizard();
-                    String[] columns = line.split(",");
-                    String partyType = columns[0];
-                    String partyMod = columns[1];
-                    partyTypes.add(columns[0]);
-                    if (columns[1] != null) {
-                        subTypes.add(columns[1]);
-                    }
-                    if (columns[1] == null) {
-                        partyMod = "empty";
-                    }
-                    Wizard check = wizard.findOneByPartyType(partyType);
-                    if (check == null) {
-                        Wizard test = new Wizard();
-                        test.partyType = partyType;
-                        ArrayList<String> subType = new ArrayList<>();
-                        subType.add(partyMod);
-                        test.subType = subType;
-                        wizard.save(test);
-                    } else if (check.partyType.equals(partyType)) {
-                        check.subType.add(partyMod);
-                        wizard.save(check);
-                    } else {
-                        wiz.partyType = partyType;
-                        wiz.subType.add(partyMod);
-                        wizard.save(wiz);
-                    }
-                }
-            }
-
-            long catCheck = favors.count();
-            if (catCheck == 0) {
-                String fileContent = Methods.readFile("catalog.csv");
-
-                String[] lines = fileContent.split("\n");
-
-
-                for (String line : lines) {
-                    Favor fav = new Favor();
-                    String[] columns = line.split(",");
-                    fav.favorName = columns[0];
-                    fav.partyType = columns[1];
-                    favors.save(fav);
-                }
-            }
-
-            ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
-            if (userBuild.size() < 10) {
-
-                User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
-                User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
-                venmoTest.setVenmoID("145434160922624933");
-                users.save(admin);
-                users.save(venmoTest);
-
-                String fileContent = Methods.readFile("users.csv");
-
-                String[] lines = fileContent.split("\n");
-                for (String line : lines) {
-                    String randomNumber = RandomStringUtils.randomNumeric(10);
-                    String[] columns = line.split(",");
-                    User u = new User(columns[0], columns[1], columns[2], columns[3], columns[2].concat(columns[4]), randomNumber);
-                    userBuild.add(u);
-                    users.save(u);
-                }
-
-                String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
-                String theme = "This is just a placeholder for what could be an insane theme.";
-                String local = "220 E Bryan St, Savannah, GA 31401";
-                String stretchName = "One insane crazy impossible goal.";
-
-
-                for (User user : userBuild) {
-                    for (int i = 0; i < 5; i++) {
-                        String partyType = partyTypes.get(i);
-
-                        String subType;
-                        subTypes.get(i);
-                        if (subTypes != null) {
-                            subType = subTypes.get(i);
-                        } else {
-                            subType = "No subType";
-                        }
-                        if (parties.count() < 10) {
-                            Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
-                                    LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-                                    0.0, true, true, theme, "Valet");
-                            user.hostCount += 1;
-                            users.save(user);
-                            parties.save(P);
-                            for (int fa = 1; fa < 10; fa++) {
-                                Favor f = favors.findOne(fa);
-                                f.useCount += 1;
-                                FavorList newList = new FavorList(f, P, false);
-                                favors.save(f);
-                                favlists.save(newList);
-                            }
-                            for (int u = 0; u < userBuild.size(); u++) {
-                                User invUser = userBuild.get(u);
-                                ArrayList<Invite> inviteList = invites.findByParty(P);
-                                if (inviteList.size() < 10) {
-                                    String thisName = invUser.firstName.concat(" "+invUser.lastName.toUpperCase()+".");
-                                    Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", thisName);
-                                    invUser.invitedCount += 1;
-                                    users.save(invUser);
-                                    P.host.inviteCount += 1;
-                                    users.save(P.host);
-                                    invites.save(inv);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
-            String theme = "This is just a placeholder for what could be an insane theme.";
-            String local = "220 E Bryan St, Savannah, GA 31401";
-            String stretchName = "One insane crazy impossible goal.";
-            User user = users.findOneByUsername("venmo");
-            Party P = new Party(user, "Insert Party Name Here", "Christmas", description, null,
-                    LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
-                    0.0, true, true, theme, "Valet");
-            parties.save(P);
-            Invite i = new Invite();
-            i.user = users.findOneByUsername("admin");
-            i.email = i.user.email;
-            i.phone = i.user.phone;
-            i.name = i.user.firstName.concat("  "+ i.user.lastName);
-            i.party = P;
-            user.hostCount += 1;
-            users.save(user);
-            invites.save(i);
-            System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+            Methods.script(users, favors, parties, favlists, invites, wizard, auth);
     }
 
 
@@ -304,9 +153,10 @@ public class MainController {
 
         response.sendError(200, "Account successfully created.");
         User newUser = new User();
+        newUser.userID = (int)(Math.random() * 100000 * 100000);
         newUser.username = user.username.toLowerCase();
         newUser.phone = user.phone;
-        newUser.password = user.password.toLowerCase();
+        newUser.password = PasswordHash.createHash(user.password.toLowerCase());
         newUser.email = user.email.toLowerCase();
         newUser.firstName = user.firstName;
         newUser.lastName = user.lastName;
@@ -369,7 +219,7 @@ public class MainController {
         User user = users.findOneByUsername(p.user.username.toLowerCase());
         if (user == null) {
             response.sendError(401, "Username not found.");
-        } else if (!user.password.equals(p.user.password.toLowerCase())) {
+        } else if (PasswordHash.validatePassword(p.user.password.toLowerCase(), user.password)) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
             Auth a = auth.findByDevice(p.device);
@@ -382,7 +232,6 @@ public class MainController {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            response.sendError(400, "There was an error logging in.");
         }
         return null;
     }
@@ -390,9 +239,9 @@ public class MainController {
     @RequestMapping(path = "/user/logout", method = RequestMethod.POST)
     public void logout(@RequestBody Parameters p, HttpServletResponse response) throws IOException {
         try {
-        Auth a = auth.findByDevice(p.device);
-        auth.delete(a);
-        response.sendError(200, "You've successfully been logged out.");
+            Auth a = auth.findByDevice(p.device);
+            auth.delete(a);
+            response.sendError(200, "You've successfully been logged out.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendError(400, "You can't logout!");
@@ -565,7 +414,7 @@ public class MainController {
             User user = users.findOne(userID);
             ArrayList<Invite> inviteList = invites.findByParty(party);
             inviteList = inviteList.stream()
-                    .filter(distinctByKey(Invite::getName))
+                    .filter(Methods.distinctByKey(Invite::getName))
                     .collect(Collectors.toCollection(ArrayList::new));
             if (party.host != user) {
                 Invite rsvp = invites.findByPartyAndPhone(party, user.phone);

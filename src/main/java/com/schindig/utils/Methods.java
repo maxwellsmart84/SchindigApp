@@ -3,6 +3,7 @@ import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
 import com.schindig.services.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -18,6 +19,9 @@ import java.net.URL;
 import java.security.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 /**
@@ -25,76 +29,230 @@ import java.util.*;
  */
 public class Methods extends MainController {
 
-    public static void script(UserRepo users, FavorRepo favors, PartyRepo parties, FavorListRepo favlists, InviteRepo invites) {
-        if (users.count()==0) {
-            User josh = new User();
-            josh.lastName = "Roberson";
-            josh.firstName = "Joshua";
-            josh.username = "agronis";
-            josh.email = "agronis@icloud.com";
-            josh.phone = "8438643494";
-            josh.password = "agronis";
+    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
+        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
 
-            User eliz = new User();
-            eliz.firstName = "Elizabeth";
-            eliz.lastName = "Lewis";
-            eliz.username = "erlewis";
-            eliz.password = "elizabeth";
-            eliz.phone = "8034644711";
-            eliz.email = "erlewis288@gmail.com";
+    public static void script(UserRepo users, FavorRepo favors, PartyRepo parties, FavorListRepo favlists, InviteRepo invites, WizardRepo wizard, AuthRepo auth) {
+        long wizCheck = wizard.count();
+        ArrayList<String> partyTypes = new ArrayList<>();
+        ArrayList<String> subTypes = new ArrayList<>();
+        if (wizCheck == 0) {
+            String fileContent = Methods.readFile("wizard.csv");
 
-            User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-            User max = new User("max", "pass", "Max", "Krause", "email", "phone");
-            users.save(blake);
-            users.save(max);
-            users.save(eliz);
-            users.save(josh);
+            String[] lines = fileContent.split("\n");
 
-            Favor pong = new Favor();
-            pong.favorName = "Ping Pong Balls";
-            pong.partyType = "Graduation";
-            pong.useCount = 100;
-            favors.save(pong);
-            Favor a = new Favor();
-            a.partyType = "Graduation";
-            a.favorName = "Alcohol";
-            a.useCount = 99;
-            favors.save(a);
-            Favor b = new Favor();
-            b.favorName = "Cards Against Humanity";
-            b.partyType = "Graduation";
-            b.useCount = 98;
-            Favor c = new Favor();
-            c.favorName = "More Alcohol";
-            c.partyType = "Graduation";
-            c.useCount = 97;
-            favors.save(c);
-            Favor d = new Favor();
-            d.favorName = "Video Games";
-            d.partyType = "Graduation";
-            d.useCount = 96;
-            favors.save(d);
-
-            Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
-                    LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
-                    0.0, true, true, null, "Valet");
-            parties.save(p);
-            ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
-            for (int q = 0; q<10; q++) {
-                for (Favor fav : f) {
-                    FavorList favl = new FavorList();
-                    favl.party = p;
-                    favl.favor = fav;
-                    favlists.save(favl);
+            for (String line : lines) {
+                Wizard wiz = new Wizard();
+                String[] columns = line.split(",");
+                String partyType = columns[0];
+                String partyMod = columns[1];
+                partyTypes.add(columns[0]);
+                if (columns[1] != null) {
+                    subTypes.add(columns[1]);
+                }
+                if (columns[1] == null) {
+                    partyMod = "empty";
+                }
+                Wizard check = wizard.findOneByPartyType(partyType);
+                if (check == null) {
+                    Wizard test = new Wizard();
+                    test.partyType = partyType;
+                    ArrayList<String> subType = new ArrayList<>();
+                    subType.add(partyMod);
+                    test.subType = subType;
+                    wizard.save(test);
+                } else if (check.partyType.equals(partyType)) {
+                    check.subType.add(partyMod);
+                    wizard.save(check);
+                } else {
+                    wiz.partyType = partyType;
+                    wiz.subType.add(partyMod);
+                    wizard.save(wiz);
                 }
             }
-            Invite thisI = new Invite();
-            thisI.email = josh.email;
-            thisI.phone = josh.phone;
-            thisI.party = p;
-            thisI.name = "Joshua Roberson";
-            invites.save(thisI);
         }
+
+        long catCheck = favors.count();
+        if (catCheck == 0) {
+            String fileContent = Methods.readFile("catalog.csv");
+
+            String[] lines = fileContent.split("\n");
+
+
+            for (String line : lines) {
+                Favor fav = new Favor();
+                String[] columns = line.split(",");
+                fav.favorName = columns[0];
+                fav.partyType = columns[1];
+                favors.save(fav);
+            }
+        }
+
+        ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
+        if (userBuild.size() < 10) {
+
+            User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
+            admin.userID = 1;
+            User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
+            venmoTest.userID = 2;
+            venmoTest.setVenmoID("145434160922624933");
+            users.save(admin);
+            users.save(venmoTest);
+
+            String fileContent = Methods.readFile("users.csv");
+
+            String[] lines = fileContent.split("\n");
+            for (String line : lines) {
+                String randomNumber = RandomStringUtils.randomNumeric(10);
+                String[] columns = line.split(",");
+                User u = new User(columns[0], columns[1], columns[2], columns[3], columns[2].concat(columns[4]), randomNumber);
+                u.userID = (int)(Math.random() * 100000 * 100000);
+                userBuild.add(u);
+                users.save(u);
+            }
+
+            String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
+            String theme = "This is just a placeholder for what could be an insane theme.";
+            String local = "220 E Bryan St, Savannah, GA 31401";
+            String stretchName = "One insane crazy impossible goal.";
+
+
+            for (User user : userBuild) {
+                for (int i = 0; i < 5; i++) {
+                    String partyType = partyTypes.get(i);
+
+                    String subType;
+                    subTypes.get(i);
+                    if (subTypes != null) {
+                        subType = subTypes.get(i);
+                    } else {
+                        subType = "No subType";
+                    }
+                    if (parties.count() < 10) {
+                        Party P = new Party(user, "Insert Party Name Here", partyType, description, subType,
+                                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
+                                0.0, true, true, theme, "Valet");
+                        user.hostCount += 1;
+                        users.save(user);
+                        parties.save(P);
+                        for (int fa = 1; fa < 10; fa++) {
+                            Favor f = favors.findOne(fa);
+                            f.useCount += 1;
+                            FavorList newList = new FavorList(f, P, false);
+                            favors.save(f);
+                            favlists.save(newList);
+                        }
+                        for (int u = 0; u < userBuild.size(); u++) {
+                            User invUser = userBuild.get(u);
+                            ArrayList<Invite> inviteList = invites.findByParty(P);
+                            if (inviteList.size() < 10) {
+                                String thisName = invUser.firstName.concat(" "+invUser.lastName.toUpperCase()+".");
+                                Invite inv = new Invite(invUser, P, invUser.phone, invUser.email, "RSVP", thisName);
+                                invUser.invitedCount += 1;
+                                users.save(invUser);
+                                P.host.inviteCount += 1;
+                                users.save(P.host);
+                                invites.save(inv);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        String description = "Lorem ipsum dolor sit amet, eu ligula faucibus at egestas, est nibh at non in, nec nec massa fusce vitae, lacus at risus, arcu proin pede. ";
+        String theme = "This is just a placeholder for what could be an insane theme.";
+        String local = "220 E Bryan St, Savannah, GA 31401";
+        String stretchName = "One insane crazy impossible goal.";
+        User user = users.findOneByUsername("venmo");
+        Party P = new Party(user, "Insert Party Name Here", "Christmas", description, null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), local, stretchName, 5000,
+                0.0, true, true, theme, "Valet");
+        parties.save(P);
+        Invite i = new Invite();
+        i.user = users.findOneByUsername("admin");
+        i.email = i.user.email;
+        i.phone = i.user.phone;
+        i.name = i.user.firstName.concat("  "+ i.user.lastName);
+        i.party = P;
+        user.hostCount += 1;
+        users.save(user);
+        invites.save(i);
+        System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
+
+        User josh = new User();
+        josh.userID = (int)(Math.random() * 100000 * 100000);
+        josh.lastName = "Roberson";
+        josh.firstName = "Joshua";
+        josh.username = "agronis";
+        josh.email = "agronis@icloud.com";
+        josh.phone = "8438643494";
+        josh.password = "agronis";
+
+        User eliz = new User();
+        eliz.userID = (int)(Math.random() * 100000 * 100000);
+        eliz.firstName = "Elizabeth";
+        eliz.lastName = "Lewis";
+        eliz.username = "erlewis";
+        eliz.password = "elizabeth";
+        eliz.phone = "8034644711";
+        eliz.email = "erlewis288@gmail.com";
+
+        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
+        blake.userID = (int)(Math.random() * 100000 * 100000);
+        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
+        max.userID = (int)(Math.random() * 100000 * 100000);
+        users.save(blake);
+        users.save(max);
+        users.save(eliz);
+        users.save(josh);
+
+        Favor pong = new Favor();
+        pong.favorName = "Ping Pong Balls";
+        pong.partyType = "Graduation";
+        pong.useCount = 100;
+        favors.save(pong);
+        Favor a = new Favor();
+        a.partyType = "Graduation";
+        a.favorName = "Alcohol";
+        a.useCount = 99;
+        favors.save(a);
+        Favor b = new Favor();
+        b.favorName = "Cards Against Humanity";
+        b.partyType = "Graduation";
+        b.useCount = 98;
+        Favor c = new Favor();
+        c.favorName = "More Alcohol";
+        c.partyType = "Graduation";
+        c.useCount = 97;
+        favors.save(c);
+        Favor d = new Favor();
+        d.favorName = "Video Games";
+        d.partyType = "Graduation";
+        d.useCount = 96;
+        favors.save(d);
+
+        Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
+                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
+                0.0, true, true, null, "Valet");
+        parties.save(p);
+        ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
+        for (int q = 0; q<10; q++) {
+            for (Favor fav : f) {
+                FavorList favl = new FavorList();
+                favl.party = p;
+                favl.favor = fav;
+                favlists.save(favl);
+            }
+        }
+        Invite thisI = new Invite();
+        thisI.email = josh.email;
+        thisI.phone = josh.phone;
+        thisI.party = p;
+        thisI.name = "Joshua Roberson";
+        invites.save(thisI);
+
     }
 
     public static String readFile(String fileName) {
