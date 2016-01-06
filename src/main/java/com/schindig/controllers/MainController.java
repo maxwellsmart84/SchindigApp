@@ -300,6 +300,14 @@ public class MainController {
             user.hostCount += 1;
             users.save(user);
             parties.save(party);
+            Invite i = new Invite();
+            i.party = party;
+            i.rsvpStatus = "Yes";
+            i.name = user.firstName.concat(" ").concat(user.lastName);
+            i.email = user.email;
+            i.phone = user.phone;
+            i.user = user;
+            invites.save(i);
             return party;
         } catch (Exception e) {
             System.out.println(e.getMessage());
