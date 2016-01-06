@@ -94,9 +94,7 @@ public class Methods extends MainController {
         if (userBuild.size() < 10) {
 
             User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
-            admin.userID = 1;
             User venmoTest = new User("venmo", "pass", "Venmo", "", "venmo@venmo.com", "15555555555");
-            venmoTest.userID = 2;
             venmoTest.setVenmoID("145434160922624933");
             users.save(admin);
             users.save(venmoTest);
@@ -108,7 +106,6 @@ public class Methods extends MainController {
                 String randomNumber = RandomStringUtils.randomNumeric(10);
                 String[] columns = line.split(",");
                 User u = new User(columns[0], columns[1], columns[2], columns[3], columns[2].concat(columns[4]), randomNumber);
-                u.userID = (int)(Math.random() * 100000 * 100000);
                 userBuild.add(u);
                 users.save(u);
             }
@@ -182,7 +179,6 @@ public class Methods extends MainController {
         System.out.println("There have been " + (users.count() + favors.count() + wizard.count() + favlists.count() + auth.count() + parties.count()) + " rows created.");
 
         User josh = new User();
-        josh.userID = (int)(Math.random() * 100000 * 100000);
         josh.lastName = "Roberson";
         josh.firstName = "Joshua";
         josh.username = "agronis";
@@ -191,7 +187,6 @@ public class Methods extends MainController {
         josh.password = "agronis";
 
         User eliz = new User();
-        eliz.userID = (int)(Math.random() * 100000 * 100000);
         eliz.firstName = "Elizabeth";
         eliz.lastName = "Lewis";
         eliz.username = "erlewis";
@@ -200,9 +195,7 @@ public class Methods extends MainController {
         eliz.email = "erlewis288@gmail.com";
 
         User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        blake.userID = (int)(Math.random() * 100000 * 100000);
         User max = new User("max", "pass", "Max", "Krause", "email", "phone");
-        max.userID = (int)(Math.random() * 100000 * 100000);
         users.save(blake);
         users.save(max);
         users.save(eliz);
@@ -232,26 +225,6 @@ public class Methods extends MainController {
         d.partyType = "Graduation";
         d.useCount = 96;
         favors.save(d);
-
-        Party p = new Party(eliz, "Insert Party Name Here", "Christmas", "Schindig app testing", null,
-                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(7)), "1869 Montclair Dr, Unit B", "Buy me a new car!", 1,
-                0.0, true, true, null, "Valet");
-        parties.save(p);
-        ArrayList<Favor> f = (ArrayList<Favor>) favors.findAll();
-        for (int q = 0; q<10; q++) {
-            for (Favor fav : f) {
-                FavorList favl = new FavorList();
-                favl.party = p;
-                favl.favor = fav;
-                favlists.save(favl);
-            }
-        }
-        Invite thisI = new Invite();
-        thisI.email = josh.email;
-        thisI.phone = josh.phone;
-        thisI.party = p;
-        thisI.name = "Joshua Roberson";
-        invites.save(thisI);
 
     }
 
@@ -303,24 +276,23 @@ public class Methods extends MainController {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
         if (user.phone!=null) {
+            user.phone = user.phone.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("-", "").replace(" ", "").trim();
+            user.phone = user.phone.replace(" ", "");
             MimeMessage attMsg = mailSender.createMimeMessage();
             MimeMessageHelper att = new MimeMessageHelper(attMsg);
             att.setFrom("schindig.app@gmail.com");
             att.setTo(user.phone+"@txt.att.net");
-            att.setReplyTo(host.email);
             att.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
             mailSender.send(attMsg);
             MimeMessage vzwMsg = mailSender.createMimeMessage();
             MimeMessageHelper vzw = new MimeMessageHelper(vzwMsg);
             vzw.setFrom("schindig.app@gmail.com");
-            vzw.setReplyTo(host.email);
             vzw.setTo(user.phone+"@vtext.com");
             vzw.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
             mailSender.send(vzwMsg);
             MimeMessage sprintMsg = mailSender.createMimeMessage();
             MimeMessageHelper sprint = new MimeMessageHelper(sprintMsg);
             sprint.setFrom("schindig.app@gmail.com");
-            sprint.setReplyTo(host.email);
             sprint.setTo(user.phone+"@messaging.sprintpcs.com");
             sprint.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
             mailSender.send(sprintMsg);
@@ -332,15 +304,15 @@ public class Methods extends MainController {
 //            tmo.setText("Hey! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
 //            mailSender.send(tmoMsg);
         }
-        if (user.email!=null) {
-            mailMsg.setFrom("schindig.app@gmail.com");
-            mailMsg.setReplyTo(host.email);
-            mailMsg.setTo(user.email);
-            mailMsg.setSubject(host.firstName+" just invited you to their party!");
-            mailMsg.setText("Hello World!");
-            mailSender.send(mimeMessage);
-        }
-        System.out.println("---Done---");
+//        if (user.email!=null) {
+//            mailMsg.setFrom("schindig.app@gmail.com");
+//            mailMsg.setReplyTo(host.email);
+//            mailMsg.setTo(user.email);
+//            mailMsg.setSubject(host.firstName+" just invited you to their party!");
+//            mailMsg.setText("Hello World!");
+//            mailSender.send(mimeMessage);
+//        }
+//        System.out.println("---Done---");
     }
 
     public static Boolean initApp(String device, AuthRepo arepo) {

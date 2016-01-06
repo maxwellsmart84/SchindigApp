@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -78,9 +79,10 @@ public class MainController {
             response.sendError(400, "You must log in to continue.");
             return 0;
         } else {
-            User u = auth.findByDevice(device).user;
-            response.sendError(200, "Welcome back " + u.username + "!");
-            return u.userID;
+            Auth a2 = auth.findByDevice(device);
+            User user = a2.user;
+//            response.sendError(200, "Welcome back ".concat(user.username).concat("!"));
+            return user.userID;
         }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -153,7 +155,6 @@ public class MainController {
 
         response.sendError(200, "Account successfully created.");
         User newUser = new User();
-        newUser.userID = (int)(Math.random() * 100000 * 100000);
         newUser.username = user.username.toLowerCase();
         newUser.phone = user.phone;
         newUser.password = user.password.toLowerCase();
@@ -290,14 +291,15 @@ public class MainController {
 
     @RequestMapping(path = "/party/create", method = RequestMethod.POST)
     public Party createParty(@RequestBody Parameters params, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+
         try {
             User user = users.findOne(params.userID);
-            Party p = params.party;
-            p.host = user;
+            Party party = params.party;
+            party.host = user;
             user.hostCount += 1;
             users.save(user);
-            parties.save(p);
-            return p;
+            parties.save(party);
+            return party;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
