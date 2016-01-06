@@ -27,7 +27,6 @@
             $scope.venmoPay();
           } else {
             $scope.venmoShow();
-            console.log('there is no venmo data', amount);
             ViewPartyService.venmoGet(partyID, userID).then(function(data){
               console.log('there is no VEnDMO', data);
             },function error(data) {
@@ -72,7 +71,7 @@
             {
               text: 'Ok',
               onTap: function(){
-                window.location = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code&state="+ partyID + ":" + userID + "&redirect_uri=http://104.236.244.159:8100/venmo/";
+                window.location = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code&state="+ partyID + ":" + userID + "&redirect_uri=http://10.0.10.72:8080/venmo/";
                 console.log('this should redirect to venmo signup');
               }
             },
@@ -197,6 +196,7 @@
         });
       };
         $scope.loadRSVPStatus = function(){
+          console.log('is this it?');
           var rawPartyID = +localStorage.getItem('oneInvPartyID');
           var userID = +localStorage.getItem('userID');
           ViewPartyService.getOneParty(rawPartyID, userID).then(function(data){
@@ -216,10 +216,9 @@
     //INVITED PARTIES GET
     ///////////TURN INTO FUNCTION INIT/////
     $scope.getAllInvitedParties = function(){
-
       ViewPartyService.getInvitedParties(userID)
         .success(function(invData){
-          console.log('parties success', invData);
+          console.log('parties success', invData[0]);
           $scope.invitedParties = invData;
         })
         .error(function(data){
@@ -235,7 +234,7 @@
         var partyIdItem = +localStorage.getItem('oneInvPartyID');
         var userID = +localStorage.getItem('userID');
         ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
-          console.log('invite data',data.data[1]);
+          console.log('invite data',data);
           if(data.data[1].byob === true){
             console.log(' BYOB true');
             data.data[1].byob = "Yes";

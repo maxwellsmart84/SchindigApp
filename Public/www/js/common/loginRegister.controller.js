@@ -14,25 +14,22 @@
       $cordovaToast
     )
       {
-        // CORDOVA DEVICE//
-        var uuid;
-        $ionicPlatform.ready(function() {
-          var device = $cordovaDevice.getDevice();
-          uuid = device.uuid;
-          console.log("device uuid", device.uuid);
-      });
 
-      console.log("variable uuid", uuid);
 
 
         //LOGIN USER AND ROUTE
       $scope.login = function(username, password){
+        var vm = this;
+        vm.device = $cordovaDevice.getDevice();
+        // uuid = device.uuid;
+        console.log('login uuid', device.uuid);
+        var uuid = vm.device.uuid;
         var loginData = {
           user : {
             username: username,
             password: password
           },
-          device : uuid
+          device: uuid
         };
         LoginRegisterService.login(loginData);
       };
@@ -40,7 +37,6 @@
       $scope.signUp = function(){
         $state.go('createNewUser');
       };
-
 
 
       //DELETE TO TOP COMMENT
