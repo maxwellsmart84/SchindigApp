@@ -14,25 +14,28 @@
       $cordovaToast
     )
       {
-        // CORDOVA DEVICE//
-      //   var uuid;
-      //   $ionicPlatform.ready(function() {
-      //     var device = $cordovaDevice.getDevice();
-      //     uuid = device.uuid;
-      //     console.log("device uuid", device.uuid);
-      // });
-      //
-      // console.log("variable uuid", uuid);
+        // console.log('cordova getting device', $cordovaDevice.getUUID());
+
+      //cordova
+        var uuid;
+        $ionicPlatform.ready(function() {
+          var device = $cordovaDevice.getDevice();
+          console.log('what is this', device.uuid);
+          uuid = device.uuid;
+          console.log("device uuid", uuid);
+      });
+
 
 
         //LOGIN USER AND ROUTE
       $scope.login = function(username, password){
+        console.log('login uuid', uuid);
         var loginData = {
           user : {
             username: username,
             password: password
           },
-          // device : uuid
+          device: uuid
         };
         LoginRegisterService.login(loginData);
       };
@@ -46,7 +49,6 @@
       $scope.dog = function (){
         $state.go('hostedParty');
       };
-
 
       //DELETE TO TOP COMMENT
       $scope.createNewUserToast = function(){

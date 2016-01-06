@@ -10,17 +10,10 @@
       $stateParams,
       $ionicPlatform,
       $cordovaDevice,
-      NavigationService
+      NavigationService,
+      LoginRegisterService
 
     ){
-
-      var uuid;
-      $ionicPlatform.ready(function() {
-        var device = $cordovaDevice.getDevice();
-        uuid = device.uuid;
-        console.log("navigation uuid", device.uuid);
-        LoginRegisterService.uuidAuth(uuid);
-    });
 
         //TOP LEVEL NAVIGATION//
       $scope.wizardGo = function(){
@@ -38,8 +31,11 @@
       };
           //LOGOUT USER//
       $scope.logOut = function (){
+        var device = $cordovaDevice.getDevice();
+        console.log('what device? ', device.uuid);
+        var dataUUID = device.uuid;
         var deviceData = {
-          device: uuid
+          device: dataUUID
         };
         console.log("logout data", deviceData);
         NavigationService.logOutUser(deviceData);

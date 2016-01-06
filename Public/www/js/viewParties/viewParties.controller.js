@@ -71,7 +71,7 @@
             {
               text: 'Ok',
               onTap: function(){
-                window.location = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code&state="+ partyID + ":" + userID + "&redirect_uri=http://104.236.244.159:8100/venmo/";
+                window.location = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code&state="+ partyID + ":" + userID + "&redirect_uri=http://10.0.10.72:8080/venmo/";
                 console.log('this should redirect to venmo signup');
               }
             },
