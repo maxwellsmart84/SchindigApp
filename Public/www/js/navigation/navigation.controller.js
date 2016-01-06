@@ -37,7 +37,7 @@
         var deviceData = {
           device: dataUUID
         };
-        console.log("logout data", deviceData);
+        console.log("logout data", deviceData.device);
         NavigationService.logOutUser(deviceData);
         $state.go("login");
       };

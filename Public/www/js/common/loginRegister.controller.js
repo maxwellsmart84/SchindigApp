@@ -17,19 +17,23 @@
         // console.log('cordova getting device', $cordovaDevice.getUUID());
 
       //cordova
-        var uuid;
-        $ionicPlatform.ready(function() {
-          var device = $cordovaDevice.getDevice();
-          console.log('what is this', device.uuid);
-          uuid = device.uuid;
-          console.log("device uuid", uuid);
-      });
+      //   var uuid;
+      //   $ionicPlatform.ready(function() {
+      //     var device = $cordovaDevice.getDevice();
+      //     console.log('what is this', device.uuid);
+      //     uuid = device.uuid;
+      //     console.log("device uuid", uuid);
+      // });
 
 
 
         //LOGIN USER AND ROUTE
       $scope.login = function(username, password){
-        console.log('login uuid', uuid);
+        var vm = this;
+        vm.device = $cordovaDevice.getDevice();
+        // uuid = device.uuid;
+        console.log('login uuid', device.uuid);
+        var uuid = vm.device.uuid;
         var loginData = {
           user : {
             username: username,

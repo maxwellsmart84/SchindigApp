@@ -12,7 +12,6 @@
       var logOutUser = function(data) {
         return $http.post(logOutUrl, data);
       };
-
         return {
           logOutUser: logOutUser
         };

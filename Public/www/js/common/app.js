@@ -28,9 +28,11 @@
         $http.get(ip + "/validate/" +uuid).success(function(data){
             console.log('response from validate route', data);
             if (data === 0) {
+              console.log('failure uuid');
               $state.go('login');
             }
             else {
+              console.log('success uuid');
               localStorage.setItem('userID', data);
               $state.go('home');
             }
