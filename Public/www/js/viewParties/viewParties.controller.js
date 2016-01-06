@@ -18,21 +18,15 @@
 
       var vm = this;
 
-      ///PATCH TO STRETCH STATUS//
-      $scope.pledgeStretch = function(stretchValue){
+      ///PATCH TO STRETCH STATUS// VENMO STUFF ///
+      $scope.venmoCheck = function(){
         var userID = +localStorage.getItem('userID');
-        var partyID = +localStorage.getItem('partyID');
         ViewPartyService.userGet(userID).then(function(data){
           console.log('DONDE ESTA LA DATA', data.data.venmoID);
-
-          var amount = stretchValue;
           if(data.data.venmoID != null){
-            // ViewPartyService.venmoPay(partyID, userID, amount).then(function(data){
-              console.log('what venmoPay');
-            // })
+            $scope.venmoPay();
           } else {
-            // $scope.venmoShow();
-            console.log('there is no venmo data', amount);
+            $scope.venmoShow();
             ViewPartyService.venmoGet(partyID, userID).then(function(data){
               console.log('there is no VEnDMO', data);
             },function error(data) {
@@ -41,11 +35,10 @@
             return
           }
         });
-        // var pledgePopup = $ionicPopup.show ({
-        //   title:"How Much Would You Like To Pitch In?"
-        //   template:
-        // })
-        //
+      };
+      $scope.pledgeStretch = function(stretchValue){
+        var userID = +localStorage.getItem('userID');
+        var partyID = +localStorage.getItem('partyID');
         $scope.invPartyOne.stretchStatus += stretchValue;
         var stretchStatusValue = $scope.invPartyOne.stretchStatus;
         var partyID = +localStorage.getItem('oneInvPartyID');
@@ -58,19 +51,66 @@
         ViewPartyService.patchStretchStatus(patchData)
           .success(function(data){
             console.log('success stretch', data);
-            $scope.chipIn = true;
-            $scope.stretchInput = false;
             $scope.loadOneInvParty();
         });
       };
 
-      $scope.chipIn = true;
-      $scope.stretchInput = false;
-      $scope.showStretchInput = function(){
-        $scope.stretchInput = true;
-        $scope.chipIn = false;
-        console.log('WHERE ARE WE NOW');
+      $scope.venmoRealMoney = function(stretchAmount){
+        var userID = +localStorage.getItem('userID');
+        var partyID = +localStorage.getItem('oneInvPartyID');
+        ViewPartyService.venmoPay(partyID, userID, stretchAmount).then(function(data){
+          console.log('payment was successful');
+        });
       };
+      $scope.venmoShow = function(){
+        var userID = +localStorage.getItem('userID');
+        var partyID = +localStorage.getItem('partyID');
+        var venmoPopup = $ionicPopup.show ({
+          title: 'We are temporarily redirecting you to Venmo!',
+          buttons: [
+            {
+              text: 'Ok',
+              onTap: function(){
+                window.location = "https://api.venmo.com/v1/oauth/authorize?client_id=3361&scope=make_payments%20access_profile&response_type=code&state="+ partyID + ":" + userID + "&redirect_uri=http://104.236.244.159:8100/venmo/";
+                console.log('this should redirect to venmo signup');
+              }
+            },
+            {
+              text: 'Leave me!',
+              onTap: function(){
+                venmoPopup.close();
+                console.log('I am Staying On this page');
+              }
+            }
+          ]
+        });
+      };
+
+      $scope.venmoPay = function() {
+        $scope.data = {};
+        var venmoPayPopup = $ionicPopup.show({
+          template: '<input type="number" placeholder="Your Venmo Account Will Be Charged" ng-model="data.stretchValue">',
+          title: 'How much would you like to Chip In?',
+          scope: $scope,
+          buttons: [
+            { text: 'Cancel' },
+            {
+              text: '<b>Submit</b>',
+              type: 'button-positive',
+              onTap: function() {
+                console.log('what is this value', $scope.data.stretchValue);
+                console.log('good job');
+                var stretchAmount = $scope.data.stretchValue;
+                $scope.pledgeStretch(stretchAmount);
+                $scope.venmoRealMoney(stretchAmount);
+              }
+            }
+          ]
+        });
+      };
+
+
+      ///////hiding and showing//////
 
       $scope.showInviteVar = false;
       $scope.showFavorVar = true;
@@ -95,27 +135,9 @@
     //THIS IS PROBABLY USED, BLAKE IS STUPID
     //THIS IS DEFINITELY NOT USED, MAX..
     //MAX WON THIS ARGUMENT
+    //
+    //
 
-
-    $scope.venmoShow = function(){
-      var venmoPopup = $ionicPopup.show ({
-        title: 'We are temporarily redirecting you to Venmo!',
-        buttons: [
-          {
-            text: 'Ok',
-            onTap: function(){
-              console.log('this should redirect to venmo signup');
-            }
-          },
-          {
-            text: 'Leave me here!',
-            onTap: function(){
-              console.log('I am Staying On this page');
-            }
-          }
-        ]
-      });
-    };
     ///RSVP///
 
     $scope.rsvpShow = function(){
@@ -174,6 +196,7 @@
         });
       };
         $scope.loadRSVPStatus = function(){
+          console.log('is this it?');
           var rawPartyID = +localStorage.getItem('oneInvPartyID');
           var userID = +localStorage.getItem('userID');
           ViewPartyService.getOneParty(rawPartyID, userID).then(function(data){
@@ -193,10 +216,9 @@
     //INVITED PARTIES GET
     ///////////TURN INTO FUNCTION INIT/////
     $scope.getAllInvitedParties = function(){
-
       ViewPartyService.getInvitedParties(userID)
         .success(function(invData){
-          console.log('parties success', invData);
+          console.log('parties success', invData[0]);
           $scope.invitedParties = invData;
         })
         .error(function(data){
@@ -212,7 +234,7 @@
         var partyIdItem = +localStorage.getItem('oneInvPartyID');
         var userID = +localStorage.getItem('userID');
         ViewPartyService.getOneParty(partyIdItem, userID).then(function(data){
-          console.log('invite data',data.data[1]);
+          console.log('invite data',data);
           if(data.data[1].byob === true){
             console.log(' BYOB true');
             data.data[1].byob = "Yes";

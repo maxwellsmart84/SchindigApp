@@ -1,46 +1,50 @@
 <ion-view class="wizard" >
-   <ion-nav-bar class="bar-stable">
+   <ion-nav-bar class= "bar-stable">
    </ion-nav-bar>
    <div class= "bar bar-header">
      <div class="wizardHeader">
-       <div class="schinDigCont">
-         <button class="button schinDigHome button-positive">
-           <i class="icon ion-ios-telephone"></i>
-         </button>
-       </div>
-       <h1 class= "title-text-wrap"><span class="wizardTextViewHeader">LET'S GET THIS PARTY STARTED</span></h1>
+       <h1 class= "wizardTextViewHeader">
+         <span class="wizardTextViewHeader"><h1>Create Party</h1></span>
+       </h1>
      </div>
     </div>
+    <ion-padding></ion-padding>
     <ion-content>
-     <ion-padding>
+      <div class="mainIconVic">
+        <span class="victorianIcon mainIcon">3<i>Z</i>4</span>
+      </div>
+      <label class= 'favorText item-text-wrap'>
+        <span>
+          ANSWER ALL THESE QUESTIONS TO GET THE PARTY STARTED
+        </span>
+      </label>
        <ion-item class="item-input item-select">
-        <div class="item-text-wrap input-label">
+          <div class="item-text-wrap input-label">
           WHAT KIND OF PARTY?
-        </div>
+          </div>
         <select ng-required ng-model="partyType" ng-change='getValue(partyType)'>
-          <option ng-repeat="item in wizardItems.data track by $index" value='{{item}}'>{{item.partyType}}</option>
+          <option ng-repeat="item in wizardItems.data track by $index" value='{{item}}'><div class="item-text-wrap">{{item.partyType}}</div></option>
         </select>
       </ion-item>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">PARTY NAME:</span>
-        <input ng-model="partyName" type="text" placeholder="NAME THAT PARTY">
+      <label class="item item-input">
+        <span class="item-text-wrap input-label">PARTY NAME:</span>
+        <input ng-model="partyName" type="text">
       </label>
       <label class="item item-input">
          <span class="item-text-wrap input-label">WHERE?</span>
-         <ion-google-place class="wizard" placeholder= "ADDRESS, ZIP" ng-model="location"></ion-google-place>
+         <ion-google-place ng-model="location"></ion-google-place>
       </label>
       <label class="item item-input">
-         <span class="item-text-wrap input-label">DATE | TIME:</span>
-         <input class="wizardDateTime" placeholder= "Pick a Date and Time" ng-model="partyDate" type="datetime-local">
+         <span class="item-text-wrap input-label">DATE TIME:</span>
+         <input class="wizardDateTime" ng-model="partyDate" type="datetime-local">
        </label>
        <div class="buttonWrap">
           <button
           ng-click="newWizPartyPost(partyType, location, partyName, partyDate)"
           class="bar bar-footer button button-full button-assertive">
-          Submit
+            <span class="victorianIcon">y</span><span id="submitText">Submit</span><span class="victorianIcon">u</span>
          </button>
        </div>
-  </ion-padding>
  </ion-content>
 </ion-view>
 

@@ -7,22 +7,22 @@
       </div>
     </div>
   <ion-content class="managePartyContent" ng-init="loadOne()">
-    <div class="button-bar">
-    <button
-      ng-click="goToManageFavor()"
-      class="button manageButton">
-      EDIT Favors
-    </button>
-    <button
-      ng-click="goToManageInvites()"
-      class="button inviteButton">
-      EDIT Invites
-    </button>
-  </div>
+    <div class="manageButtonBar button-bar">
+      <button
+        ng-click="goToManageFavor()"
+        class="button manageButton">
+        Favors
+      </button>
+      <button
+        ng-click="goToManageInvites()"
+        class="button inviteButton">
+        Invites
+      </button>
+    </div>
     <ion-list>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right manageItem">
-            {{oneParty.partyName}}
+            <strong>Name: <br></strong>{{oneParty.partyName}}
             <button
               ng-hide="edit"
               ng-click="edit = true"
@@ -65,7 +65,7 @@
       </ion-item>
       <ion-item>
         <div ng-show="!edit" class="item-icon-right manageItem">
-            <strong>Edit Location</strong>
+            <strong>Location: <br></strong><div class="item-text-wrap">{{oneParty.local}}</div>
             <button
               ng-hide="edit"
               ng-click="edit = true"
@@ -73,7 +73,7 @@
             </button>
         </div>
         <div ng-show="edit" class="item-icon-right manageItem">
-          <ion-google-place placeholder= "Enter an Address, Apt#, and ZIP" ng-model="local"></ion-google-place>
+          <ion-google-place placeholder= "Address, Zip" ng-model="local"></ion-google-place>
             <button
               ng-click="edit = false; editData(partyName, description, local.formatted_address, themeVal, doggy, parking, partyDate);"
               class="button-icon icon ion-ios-checkmark">
@@ -119,6 +119,16 @@
           </button>
         </div>
       </ion-item>
+      <div class="button-bar goHomeButtonBar">
+        <button
+          ng-click="goHome();"
+          class="button-small button-full addFavorsButton submitFavorsButton">
+            Back to Home
+        </button>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>
       <!-- <ion-toggle
         ng-click="themeCheck = !themeCheck"
         ng-checked="oneParty.themeCheck"
@@ -147,6 +157,3 @@
           </strong>
         </div>
       </ion-toggle> -->
-    </ion-list>
-  </ion-content>
-</ion-view>

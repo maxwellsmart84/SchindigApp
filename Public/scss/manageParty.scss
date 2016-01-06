@@ -13,14 +13,33 @@ $White: #e0e0e0;
 $Cream: #dddcbe;
 $LightOrange: #DD7A14;
 $DullRed: #cb2d2d;
-
+.submitFavorsButton{
+  text-align: center;
+}
 .manageParty {
   display: flex;
   background-color: $Cream;
   background-size: 100%;
   background-position: top;
   font-style: "Righteous";
-
+  .bar-height {
+    height:130px;
+  }
+  .bar-header{
+    height: 130px;
+  }
+  .inviteMore{
+    text-align: center;
+  }
+  .title{
+    height:130px;
+    .title-center{
+      height:130px;
+      .header-item {
+        height:130px;
+      }
+    }
+  }
   .list {
     .item {
       border: 5px, solid, white;
@@ -64,10 +83,7 @@ $DullRed: #cb2d2d;
       border-radius: 10px;
       font-style: "Righteous";
       padding-bottom: 0;
-
     }
-
-
 
     .manageItem{
       background-color: $Brown;
@@ -160,7 +176,8 @@ $DullRed: #cb2d2d;
       align-items: center;
       background-color:$LightOrange;
       border-radius: 15px;
-
+      text-align: center;
+      flex-wrap: wrap;
     }
     .manageButton{
       border-radius: 20px;
@@ -169,8 +186,20 @@ $DullRed: #cb2d2d;
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
-      display: flex;
-      justify-content: center;
+      text-align: center;
+    }
+    .goHomeButtonBar{
+      margin: 0 auto;
+    }
+    .submitFavorButtonBar{
+      margin: 0 auto;
+      margin-top: -7px;
+      margin-bottom: 18px;
+    }
+    .manageButtonBar{
+      margin: 0 auto;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     .inviteButton{
       border-radius: 20px;
@@ -180,10 +209,13 @@ $DullRed: #cb2d2d;
       font-size: 1.4rem;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
-      display: flex;
-      justify-content: center;
+      text-align: center;
+    }
+    .button-full{
+      text-align: center;
     }
     .button-small {
+      text-align: center;
       border-radius: 20px;
       border:solid $LightOrange 3px;
       background-color: $Brown;
@@ -191,8 +223,7 @@ $DullRed: #cb2d2d;
       font-size: 1.3rem;
       text-shadow: -2px 2px 0px $DullPink;
       height:12vh;
-      display: flex;
-      justify-content: center;
+      text-align: center;
     }
   }
   ion-item{

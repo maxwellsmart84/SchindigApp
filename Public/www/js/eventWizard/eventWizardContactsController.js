@@ -13,11 +13,11 @@
     ){
       var vm = this;
        //CORDOVA CONTACTS AND INVITATIONS //
+       vm.contactsArray =[];
        $scope.getContactList = function() {
              $cordovaContacts
              .find({})
              .then(function(result) {
-               vm.contactsArray =[];
                var stringData = JSON.stringify(result);
                var parseData = JSON.parse(stringData);
                _.each(parseData, function(el){
@@ -26,13 +26,16 @@
                    phone: el.phoneNumbers[0].value
                  }
                  parsed = JSON.parse(el.id);
-                 console.log('this should be a name', el.name.formatted);
+                //  console.log('this should be a name', el.name.formatted);
+                //  console.log('this should be a phonue number', el.phoneNumbers[0].value);
                  vm.contactsArray.push(oneUser)
                });
-               $scope.contactName = vm.contactsArray;
+
             }, function(error){
               console.log('error', error);
             });
+            $scope.contactName = vm.contactsArray;
+            // console.log('THIS IS A NAME', vm.contactsArray[0].name);
        };
         $scope.isChecked = false;
 
@@ -47,7 +50,7 @@
            console.log('myelements', myElements.length);
             _.each(myElements, function(el,idx,array){
               parsed = JSON.parse(el.id);
-              console.log(parsed.name);
+              console.log('parsed name',parsed);
               vm.contactArray.push(parsed);
             });
             vm.contactDataArray = [];
@@ -94,7 +97,7 @@
                 EventWizardService
                   .updateWizData(data).success(function(data){
                     console.log('data', data);
-                     $state.go('manageParty');
+                     $state.go('home');
                 });
               }
               else {

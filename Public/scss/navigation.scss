@@ -6,6 +6,23 @@ $fontRighteous: 'Righteous';
 $fontDamion:'Damion';
 $fontMarker: "Permanent Marker";
 
+$Brown: #594544;
+$Gold: #FFB312;
+$Pink: #FF66A6;
+$DullPink: #E26291;
+$Green: #C1C71F;
+$Blue: #00B3A0;
+$Yellow: #FAF700;
+$DullYellow: #dfd823;
+$Orange: #F63B09;
+$Red: #F60024;
+$PinkFire: #F7007B;
+$White: #e0e0e0;
+$Cream: #dddcbe;
+$LightOrange: #DD7A14;
+$DullRed: #cb2d2d;
+
+
 
 
 @font-face {
@@ -108,18 +125,18 @@ $fontMarker: "Permanent Marker";
 
 #manage {
   position: relative;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   letter-spacing: 1.5px;
-  left:.5%;
+  left:2.5%;
   top:20%;
 }
 
 #manageWordParty{
   position: relative;
-  font-size: 2.7rem;
+  font-size: 2.4rem;
   top:25%;
-  left:1%;
-  letter-spacing: 5px;
+  left:3%;
+  letter-spacing: 3px;
 
 }
 
@@ -130,10 +147,10 @@ $fontMarker: "Permanent Marker";
   line-height: 7vh;
   color: rgba(#fee820, 0.95);
   font-weight: bold;
-  text-shadow:   0px 0px 15px #ff0e0e,
-                  0px 0px 15px #fa0eff,
-                -5px 10px 2px rgba(#f6d76a, 0.87),
-                 -10px 20px 2px rgba(#fff7ad, 0.64),
+  text-shadow:   -7px 5px 1px $Gold,
+                 -9px 10px 1px $LightOrange,
+                 -14px 15px 1px $DullRed,
+                 -16px 20px 1px $DullPink;
 
 
 }
@@ -161,7 +178,9 @@ $fontMarker: "Permanent Marker";
   // //   margin-top: 5%;
   // //   width: 80%;
   // }
-
+  .item{
+    padding: 10px;
+  }
   h1{
     text-align: center;
   }
@@ -170,28 +189,43 @@ $fontMarker: "Permanent Marker";
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 90px;
     color:black;
-    text-shadow: 0px 0px 7px black;
+    text-shadow: 0px 0px 3px black;
     font-family: "Righteous";
     text-align:  center;
-    h1 {
-      font-size: 4rem;
+    img {
+    width: 80%;
     }
     .logoImg {
-      height: 20vh;
-      width:35%;
+      height: 30vh;
+      width:50%;
     }
+  }
+  .buttonStuff{
+    width: 90%;
+    margin: 0 auto;
   }
   .loginStuff{
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
     color:white;
+    margin: 0 auto;
+    width: 70%;
     .input-label{
       color:white;
-      padding-left: 4px;
+      padding: 0;
       font-family: "Righteous";
+      width: 80%;
     }
+
     input {
       background-color: white;
+      text-align: center;
+      width: 50px;
+      padding: 0;
+    }
+    .userNameAndPassword{
+      width: 50px;
+
     }
   }
 }
@@ -202,7 +236,7 @@ $fontMarker: "Permanent Marker";
   }
   .topCreateBar{
     text-align: center;
-    background-image: url("../img/miamiSkyline.jpg");
+    background-color:black;
     padding: 10px;
     color: white;
   }

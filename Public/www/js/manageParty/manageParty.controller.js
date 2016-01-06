@@ -18,17 +18,21 @@
       var userID = {
         userID: rawUserID
       }
-      ManagePartyService.getHostedParties(userID)
-        .success(function(data){
-          $scope.hostedParties = data;
-          console.log('party one ',data);
-        })
-        .error(function(data){
-          console.log('error');
-        })
+      $scope.getAllHostedParties = function(){
+        ManagePartyService.getHostedParties(userID)
+          .success(function(data){
+            $scope.hostedParties = data;
+            console.log('GETTING ALL PARTIES ',data);
+          })
+          .error(function(data){
+            console.log('error');
+          })
+      };
+      $scope.goHome = function(){
+        $state.go('home');
+      };
       $scope.onPartyDelete = function(item){
-        console.log($scope.hostedParties.indexOf(item));
-
+        console.log('DELETED PARTY', item);
         var rawUserID = +localStorage.getItem('userID');
         var partyDeleteID = item.partyID;
         var partyDeleteData = {
@@ -48,7 +52,7 @@
         $scope.onePartyFavor.splice($scope.onePartyFavor.indexOf(item), 1);
         ManagePartyService.deleteFavorFromParty(listDelete)
           .then(function(data){
-            console.log('deleted',data);
+            console.log('DELETED FAVOR',data);
             $scope.loadOneFavorBrowse();
           })
         };
@@ -68,8 +72,9 @@
         ManagePartyService
           .getOneHostedParty(rawPartyID, userID)
             .then(function(data){
-              console.log('data?', data.data[1]);
+              console.log('data?', data.data);
               $scope.oneParty = data.data[1];
+              $scope.inviteList = data.data[2];
               $scope.showInviteVar = false;
         });
       };
@@ -77,7 +82,7 @@
         var rawPartyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.getPartyFavor(rawPartyID)
           .then(function(data){
-            console.log('load favors',data);
+            console.log('LOADING ONE PARTY FAVORS',data.data);
             $scope.onePartyFavor = data.data;
         });
       };
@@ -150,32 +155,39 @@
         console.log('invite var', $scope.showInviteVar);
       };
 
-
+      $scope.favorBrowseVar = false;
+      $scope.favorViewVar = true;
       $scope.goToFavorBrowse = function(){
         $timeout($scope.loadOneFavorBrowse(), 3000)
-        $state.go('manageFavorBrowse');
+        $scope.favorBrowseVar = true;
+        $scope.favorViewVar = false;
       };
+      $scope.goToFavorView = function(){
+        $scope.favorViewVar = true;
+        $scope.favorBrowseVar = false;
+      }
       $scope.loadOneFavorBrowse = function(){
         var partyID = +localStorage.getItem('OnePartyID');
         ManagePartyService.oneFavorBrowse(partyID)
           .success(function(data){
             $scope.loadOneFavor();
             $scope.browseFavors = data;
-            console.log('datadooddadadad', $scope.browseFavors);
+            console.log('FAVORS YOU ARE NOT BRINGING', data);
         });
       };
       vm.favorArray = [];
       $scope.favorCheck = false;
       $scope.pushToFavorArray = function(data){
-       var myElements = document.getElementsByClassName('yes');
+       var myElements = document.getElementsByClassName('thisCheck');
+       console.log('how many are in this', myElements);
         _.each(myElements, function(el,idx,array){
+          console.log('CONTACT OBJECTS', el);
           var parsed = JSON.parse(el.id);
           vm.favorArray.push(parsed);
         });
         var partyID = +localStorage.getItem('partyID');
         var rawUserID = +localStorage.getItem('userID');
         var data = {
-          userID: rawUserID,
           partyID: partyID,
           favorDump: vm.favorArray
         };
