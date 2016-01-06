@@ -25,6 +25,7 @@
 }
 .bar {
   background-color: transparent;
+
 }
 .wizardDateTime {
   font-family: serif;
@@ -67,6 +68,16 @@
     background-color: #680E34;
     text-transform: uppercase;
     color:white;
+    .victorianIcon {
+      font-family: 'HipsterIcons';
+      font-size: 3.5rem;
+      padding-top: 40px;
+      color:white;
+      i {
+      margin-left: 8%;
+      margin-right: 7%;
+      font-size: 3.5rem;
+      }
     #submitText {
       font-size: 3rem;
       padding-left: 10px;
@@ -181,5 +192,4 @@
       text-transform: uppercase;
     }
   }
-
 }

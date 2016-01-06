@@ -8,7 +8,7 @@
 
     var ip = "http://10.0.10.72:8080";
 
-    // var ip = "http://10.0.10.72:8080";
+    // var ip = "http://104.236.244.159:8100";
 
 
     var viewHostedPartiesURL = ip + '/parties/host';

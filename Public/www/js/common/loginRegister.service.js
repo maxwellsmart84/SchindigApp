@@ -8,6 +8,9 @@
 
       var ip = "http://10.0.10.72:8080";
 
+      // var ip = "http://104.236.244.159:8100";
+
+
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
 
@@ -31,9 +34,6 @@
                   $state.go('home');
                 }
               });
-          }).error(function(data){
-              console.log('data', data.message);
-              $cordovaToast.show(data.message, 'short', 'bottom');
           });
       };
       var createUser = function(data) {
@@ -43,7 +43,7 @@
             $state.go('login');
           }).error(function(data){
             console.log('error', data);
-            $cordovaToast.show(data.message, 'long', 'bottom')
+            // $cordovaToast.show(data.message, 'long', 'bottom');
           });
       };
       return {

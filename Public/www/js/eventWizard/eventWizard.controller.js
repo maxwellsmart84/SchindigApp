@@ -41,6 +41,7 @@
     // };
     $scope.newWizPartyPost = function(partyType, local, partyName, partyDate){
       var rawUserID = +localStorage.getItem('userID');
+      console.log("This is the user ID", rawUserID);
       if(local === undefined){
         // $cordovaToast.show('All Fields Required', 'short', 'bottom')
       } else {
@@ -53,10 +54,12 @@
           },
           userID: rawUserID
         };
+        console.log("THis is the object being sent", item);
         item.party.partyDate = JSON.stringify(item.party.partyDate);
         item.party.partyDate = JSON.parse(item.party.partyDate);
         EventWizardService.newWizPartyPost(item)
           .success(function(data){
+            console.log("data sent", data);
             localStorage.setItem('partyID', data.partyID);
             // $cordovaToast.show('Party Created.'+' Finish the details here, or edit your party in Manage Parties', 'short', 'bottom')
             $state.go('details');
