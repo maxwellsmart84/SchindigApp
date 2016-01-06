@@ -161,14 +161,6 @@ public class Methods extends MainController {
                 LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 3000,
                 0.0, true, true, theme, "Valet");
         parties.save(grad);
-        ArrayList<Favor> findAll = (ArrayList<Favor>) favors.findAll();
-        findAll.stream().filter(fav -> fav.partyType.equals(grad.partyType)).forEach(fav -> {
-            FavorList addFav = new FavorList();
-            addFav.favor = fav;
-            addFav.party = grad;
-            addFav.claimed = false;
-            favlists.save(addFav);
-        });
         Invite x = new Invite();
         x.party = grad;
         x.user = blake;

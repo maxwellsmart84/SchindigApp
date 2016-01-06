@@ -572,11 +572,9 @@ public class MainController {
             ArrayList<Party> partyList = new ArrayList();
             for (Invite invite : inviteList) {
                 if (u.email.equals(invite.email)) {
-                    if (invite.email != null && invite.user != invite.party.host)
-                        partyList.add(invite.party);
+                    partyList.add(invite.party);
                 } else if (u.phone.equals(invite.phone)) {
-                    if (invite.phone != null && invite.user != invite.party.host)
-                        partyList.add(invite.party);
+                    partyList.add(invite.party);
                 }
             }
             return partyList;
