@@ -434,7 +434,7 @@ public class MainController {
                 }
                 party.rsvpStatus = rsvp.rsvpStatus;
             } else {
-                party.rsvpStatus = "You're the host!";
+                party.rsvpStatus = "Host";
             }
             parties.save(party);
             ArrayList<Object> payload = new ArrayList<>();

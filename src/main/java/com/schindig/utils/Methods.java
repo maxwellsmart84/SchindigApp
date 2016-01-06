@@ -167,7 +167,7 @@ public class Methods extends MainController {
         x.name = blake.firstName.concat(" ").concat(blake.lastName);
         x.phone = blake.phone;
         x.email = blake.email;
-        x.rsvpStatus = "You're the host!";
+        x.rsvpStatus = "Host";
         invites.save(x);
 
         userBuild.stream().forEach(user -> {
