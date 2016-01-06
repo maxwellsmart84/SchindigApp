@@ -156,7 +156,7 @@ public class MainController {
         newUser.userID = (int)(Math.random() * 100000 * 100000);
         newUser.username = user.username.toLowerCase();
         newUser.phone = user.phone;
-        newUser.password = PasswordHash.createHash(user.password.toLowerCase());
+        newUser.password = user.password.toLowerCase();
         newUser.email = user.email.toLowerCase();
         newUser.firstName = user.firstName;
         newUser.lastName = user.lastName;
@@ -219,7 +219,7 @@ public class MainController {
         User user = users.findOneByUsername(p.user.username.toLowerCase());
         if (user == null) {
             response.sendError(401, "Username not found.");
-        } else if (PasswordHash.validatePassword(p.user.password.toLowerCase(), user.password)) {
+        } else if (!p.user.password.toLowerCase().equals(user.password)) {
             response.sendError(403, "Credentials do not match our records.");
         } else {
             Auth a = auth.findByDevice(p.device);
