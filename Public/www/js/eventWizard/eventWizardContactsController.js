@@ -13,6 +13,8 @@
     ){
       var vm = this;
        //CORDOVA CONTACTS AND INVITATIONS //
+              ////NG CORDOVA FINDS CONTACTS BY NO FILTER AND RETURNS ALL CONTACTS///////
+              ////IN PHONE HARDWARE/////
        vm.contactsArray =[];
        $scope.getContactList = function() {
              $cordovaContacts
@@ -26,8 +28,6 @@
                    phone: el.phoneNumbers[0].value
                  }
                  parsed = JSON.parse(el.id);
-                //  console.log('this should be a name', el.name.formatted);
-                //  console.log('this should be a phonue number', el.phoneNumbers[0].value);
                  vm.contactsArray.push(oneUser)
                });
 
@@ -35,11 +35,14 @@
               console.log('error', error);
             });
             $scope.contactName = vm.contactsArray;
-            // console.log('THIS IS A NAME', vm.contactsArray[0].name);
        };
-        $scope.isChecked = false;
+
+
+
 
         ////PUSH TO CONTACT ARRAY////
+            //////BUILDS AN ARRAY OF ALL SELECTED CONTACTS///////
+        $scope.isChecked = false;
         vm.contactArray = [];
         var myElements = '';
         var parsed = '';
@@ -47,20 +50,18 @@
           myElements = '';
           vm.contactArray = [];
           myElements = document.getElementsByClassName('true');
-           console.log('myelements', myElements.length);
             _.each(myElements, function(el,idx,array){
               parsed = JSON.parse(el.id);
-              console.log('parsed name',parsed);
               vm.contactArray.push(parsed);
             });
             vm.contactDataArray = [];
-            console.log('how long is this', vm.contactArray.length);
         };
-        ///CONTACT DOM STUFF
+        ///SENDS CONTACTS TO DB ////
+            ////SUCCESS FUNCTION RUNS BACK TO SPLASH PAGE/////
+            ////UPDATES CURRENT PARTY'S INVITE LIST WHILE SENDING OUT SMS TO ALL PHONE NUMBERS////
         vm.contactDataArray=[];
         var contactData = {};
         var data = {};
-
         $scope.showConfirm = function() {
           vm.contactDataArray = [];
           if(vm.contactArray === []){
@@ -80,9 +81,6 @@
                    name: el.name,
                    phone: el.phone
                 };
-                console.log('this is the name', el.name);
-                console.log('pre-lenght',vm.contactDataArray.length)
-                console.log('elnameformatte', el.phone);
                 vm.contactDataArray.push(contactData);
                 data = {
                   inviteDump: vm.contactDataArray,
@@ -92,16 +90,14 @@
                 };
               });
               vm.contactArray = [];
-              console.log('thisi s the lenght',data.inviteDump.length);
-              console.log('thisi s OTHER lenght',vm.contactDataArray.length);
-                EventWizardService
-                  .updateWizData(data).success(function(data){
-                    console.log('data', data);
-                     $state.go('home');
+              $state.go('home');
+              EventWizardService
+                .updateWizData(data).success(function(data){
+                  console.log('data', data);
                 });
               }
               else {
-                alert("There was an error");
+                alert("No one wants to come anyway..");
               }
             });
           }
