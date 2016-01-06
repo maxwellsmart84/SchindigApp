@@ -519,6 +519,7 @@ public class MainController {
               }
               if (parameters.inviteDump != null) {
                   for (Invite invite : parameters.inviteDump) {
+                      response.sendError(200, "Invites sent!");
                       Methods.newInvite(invite, invites, check);
                       Methods.msgGateway(invite, check.host, check);
                       invite.sent = true;
