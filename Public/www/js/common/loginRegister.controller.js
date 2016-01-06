@@ -15,8 +15,6 @@
     )
       {
 
-
-
         //LOGIN USER AND ROUTE
       $scope.login = function(username, password){
         var vm = this;
@@ -31,7 +29,9 @@
           },
           device: uuid
         };
-        LoginRegisterService.login(loginData);
+        LoginRegisterService.login(loginData).then(function(data){
+          console.log('is this my userid', data);
+        });
       };
 
       $scope.signUp = function(){

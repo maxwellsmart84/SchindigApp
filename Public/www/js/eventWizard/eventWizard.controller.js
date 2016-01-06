@@ -54,7 +54,6 @@
           },
           userID: rawUserID
         };
-        console.log("THis is the object being sent", item);
         item.party.partyDate = JSON.stringify(item.party.partyDate);
         item.party.partyDate = JSON.parse(item.party.partyDate);
         EventWizardService.newWizPartyPost(item)
@@ -134,5 +133,5 @@
          $state.go('favors');
        });
      };
-    })
+   });
 }());

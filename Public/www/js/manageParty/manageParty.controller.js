@@ -86,14 +86,14 @@
             $scope.onePartyFavor = data.data;
         });
       };
-      // $scope.loadInvitedPeople = function(){
-      //   var rawPartyID = +localStorage.getItem('OnePartyID');
-      //   console.log('what is this id', rawPartyID);
-      //   ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
-      //     console.log('load invited people', data);
-      //     $scope.inviteList = data.data;
-      //   });
-      // };
+      $scope.loadInvitedPeople = function(){
+        var rawPartyID = +localStorage.getItem('OnePartyID');
+        console.log('what is this id', rawPartyID);
+        ManagePartyService.getInvitedPeeps(rawPartyID).then(function(data){
+          console.log('load invited people', data);
+          $scope.inviteList = data.data;
+        });
+      };
       $scope.goToManageFavor = function(){
         $state.go('manageFavor')
       };
