@@ -9219,11 +9219,11 @@ a.button {
     text-shadow: 0px 0px 3px black;
     font-family: "Righteous";
     text-align: center; }
-    .login .logo h1 {
-      font-size: 4rem; }
+    .login .logo img {
+      width: 80%; }
     .login .logo .logoImg {
-      height: 20vh;
-      width: 35%; }
+      height: 30vh;
+      width: 50%; }
   .login .buttonStuff {
     width: 90%;
     margin: 0 auto; }
