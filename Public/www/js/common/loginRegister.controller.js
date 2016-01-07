@@ -14,13 +14,11 @@
       $cordovaToast
     )
       {
-
-        //LOGIN USER AND ROUTE
+        //LOGIN USER AND ROUTE///
+            ////TAKES UUID AND STORES USER ID ON LOCAL STORAGE.
       $scope.login = function(username, password){
         var vm = this;
         vm.device = $cordovaDevice.getDevice();
-        // uuid = device.uuid;
-        console.log('login uuid', device.uuid);
         var uuid = vm.device.uuid;
         var loginData = {
           user : {
@@ -37,7 +35,6 @@
       $scope.signUp = function(){
         $state.go('createNewUser');
       };
-
 
       //DELETE TO TOP COMMENT
       $scope.createNewUserToast = function(){
