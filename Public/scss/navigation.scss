@@ -1,11 +1,9 @@
-
 $fontMonoton:'Monoton';
 $fontMonofett: 'Monofett';
 $fontFredoka: 'Fredoka+One';
 $fontRighteous: 'Righteous';
 $fontDamion:'Damion';
 $fontMarker: "Permanent Marker";
-
 $Brown: #594544;
 $Gold: #FFB312;
 $Pink: #FF66A6;
@@ -21,10 +19,6 @@ $White: #e0e0e0;
 $Cream: #dddcbe;
 $LightOrange: #DD7A14;
 $DullRed: #cb2d2d;
-
-
-
-
 @font-face {
     font-family: 'Showboat';
     src:url('fonts/Showboat.ttf.woff') format('woff'),
@@ -34,7 +28,6 @@ $DullRed: #cb2d2d;
     font-weight: normal;
     font-style: normal;
 }
-
 .splashHome{
   img {
     width:70vw;
@@ -45,14 +38,11 @@ $DullRed: #cb2d2d;
     transform:rotate(90deg);
   }
 }
-
-
 .homePage {
   border-style: solid;
   border-color: #f1f1f1;
   border-width: 2px;
 }
-
 #party {
   letter-spacing: 2px;
   text-align: left;
@@ -62,8 +52,6 @@ $DullRed: #cb2d2d;
   position: relative;
   bottom:13%;
   right:30%;
-
-
 }
 #host {
   text-align: center;
@@ -77,7 +65,6 @@ $DullRed: #cb2d2d;
   position: relative;
   top: -6%;
 }
-
 #homeHostPartyBtn {
   background-image: url("../img/homeHostParty1.jpg");
   background-position: center;
@@ -94,7 +81,6 @@ $DullRed: #cb2d2d;
   float: left;
   padding-bottom: 40px;
 }
-
 #homeAllPartyBtn{
   clear:both;
   background-image: url("../img/viewParties1.jpg");
@@ -110,9 +96,7 @@ $DullRed: #cb2d2d;
   color:#ff94d7;
   text-shadow: 0 0 2px #ff94d7, 0 0 5px #ff94d7, 0 0 6px #ff94d7;
   font-weight: 500;
-
 }
-
 #homeManagePartyBtn {
   background-image: url("../img/manageParty1.jpg");
   height:37.5vh;
@@ -120,9 +104,7 @@ $DullRed: #cb2d2d;
   text-align: center;
   background-repeat: no-repeat;
   background-position: -20px -110px;
-
 }
-
 #manage {
   position: relative;
   font-size: 2.1rem;
@@ -130,16 +112,13 @@ $DullRed: #cb2d2d;
   left:2.5%;
   top:20%;
 }
-
 #manageWordParty{
   position: relative;
   font-size: 2.4rem;
   top:25%;
   left:3%;
   letter-spacing: 3px;
-
 }
-
 .managePartyText {
   position:relative;
   font-family: $fontRighteous;
@@ -151,10 +130,7 @@ $DullRed: #cb2d2d;
                  -9px 10px 1px $LightOrange,
                  -14px 15px 1px $DullRed,
                  -16px 20px 1px $DullPink;
-
-
 }
-
 #homeProfileBtn {
   background-image: url("../img/miamiSkyline.jpg");
   background-repeat: no-repeat;
@@ -164,9 +140,7 @@ $DullRed: #cb2d2d;
   height:37.5vh;
   font-family: $fontMarker;
   text-align: left;
-
   }
-
 .profileWords {
   font-size: 2.9em;
   color:#c1f6f3;
@@ -216,7 +190,6 @@ $DullRed: #cb2d2d;
       font-family: "Righteous";
       width: 80%;
     }
-
     input {
       background-color: white;
       text-align: center;
@@ -225,7 +198,6 @@ $DullRed: #cb2d2d;
     }
     .userNameAndPassword{
       width: 50px;
-
     }
   }
 }

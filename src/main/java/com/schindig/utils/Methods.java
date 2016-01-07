@@ -3,6 +3,7 @@ import com.schindig.AppConfig;
 import com.schindig.controllers.MainController;
 import com.schindig.entities.*;
 import com.schindig.services.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -12,11 +13,16 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.*;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 /**
@@ -24,54 +30,155 @@ import java.util.*;
  */
 public class Methods extends MainController {
 
-    public static void script(UserRepo users, FavorRepo favors) {
-        User josh = new User();
-        josh.lastName = "Roberson";
-        josh.firstName = "Joshua";
-        josh.username = "agronis";
-        josh.email = "agronis@icloud.com";
-        josh.phone = "8438643494";
-        josh.password = "agronis";
+    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
+        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
 
-        User eliz = new User();
-        eliz.firstName = "Elizabeth";
-        eliz.lastName = "Lewis";
-        eliz.username = "erlewis";
-        eliz.password = "elizabeth";
-        eliz.phone = "8034644711";
-        eliz.email = "erlewis288@gmail.com";
+    public static void script(UserRepo users, FavorRepo favors, PartyRepo parties, FavorListRepo favlists, InviteRepo invites, WizardRepo wizard, AuthRepo auth) {
+        long wizCheck = wizard.count();
+        ArrayList<String> partyTypes = new ArrayList<>();
+        ArrayList<String> subTypes = new ArrayList<>();
+        if (wizCheck == 0) {
+            String fileContent = Methods.readFile("wizard.csv");
 
-        User blake = new User("blake182", "pass", "Blake", "Guillo", "erlewis288@gmail.com", "8034644711");
-        User max = new User("max", "pass", "Max", "Krause", "email", "phone");
-        users.save(blake);
-        users.save(max);
-        users.save(eliz);
-        users.save(josh);
+            String[] lines = fileContent.split("\n");
 
-        Favor pong = new Favor();
-        pong.favorName = "Ping Pong Balls";
-        pong.partyType = "Graduation";
-        pong.useCount = 100;
-        favors.save(pong);
-        Favor a = new Favor();
-        a.partyType = "Graduation";
-        a.favorName = "Alcohol";
-        a.useCount = 99;
-        favors.save(a);
-        Favor b = new Favor();
-        b.favorName = "Cards Against Humanity";
-        b.partyType = "Graduation";
-        b.useCount = 98;
-        Favor c = new Favor();
-        c.favorName = "More Alcohol";
-        c.partyType = "Graduation";
-        c.useCount = 97;
-        favors.save(c);
-        Favor d = new Favor();
-        d.favorName = "Video Games";
-        d.partyType = "Graduation";
-        d.useCount = 96;
-        favors.save(d);
+            for (String line : lines) {
+                Wizard wiz = new Wizard();
+                String[] columns = line.split(",");
+                String partyType = columns[0];
+                String partyMod = columns[1];
+                partyTypes.add(columns[0]);
+                if (columns[1] != null) {
+                    subTypes.add(columns[1]);
+                }
+                if (columns[1] == null) {
+                    partyMod = "empty";
+                }
+                Wizard check = wizard.findOneByPartyType(partyType);
+                if (check == null) {
+                    Wizard test = new Wizard();
+                    test.partyType = partyType;
+                    ArrayList<String> subType = new ArrayList<>();
+                    subType.add(partyMod);
+                    test.subType = subType;
+                    wizard.save(test);
+                } else if (check.partyType.equals(partyType)) {
+                    check.subType.add(partyMod);
+                    wizard.save(check);
+                } else {
+                    wiz.partyType = partyType;
+                    wiz.subType.add(partyMod);
+                    wizard.save(wiz);
+                }
+            }
+        }
+
+        long catCheck = favors.count();
+        if (catCheck == 0) {
+            String fileContent = Methods.readFile("catalog.csv");
+
+            String[] lines = fileContent.split("\n");
+
+
+            for (String line : lines) {
+                Favor fav = new Favor();
+                String[] columns = line.split(",");
+                fav.favorName = columns[0];
+                fav.partyType = columns[1];
+                favors.save(fav);
+            }
+        }
+
+        ArrayList<User> userBuild = (ArrayList<User>) users.findAll();
+        if (userBuild.size() < 10) {
+
+            User admin = new User("admin", "pass", "The", "Admin", "schindig.app@gmail.com", "1234567890");
+            users.save(admin);
+
+            String fileContent = Methods.readFile("users.csv");
+
+            String[] lines = fileContent.split("\n");
+            for (String line : lines) {
+                String randomNumber = RandomStringUtils.randomNumeric(10);
+                String[] columns = line.split(",");
+                User u = new User(columns[0], columns[1], columns[2], columns[3], columns[2].concat(columns[4]), randomNumber);
+                userBuild.add(u);
+                users.save(u);
+            }
+            String description = "Three long months, sleepless nights and lots of ping pong have led us to this point.";
+            String theme = "Recognize our hard work!";
+            String local = "17 Princess St, Charleston SC 29464";
+            String stretchName = "Earth, Wind & Fire";
+
+            User blake = new User();
+            blake.username = "blake182";
+            blake.password = "pass";
+            blake.firstName = "Blake";
+            blake.lastName = "Guillo";
+            blake.email = "erlewis288@gmail.com";
+            blake.phone = "8034644711";
+
+            User joshua = new User();
+            joshua.username = "agro";
+            joshua.password = "pass";
+            joshua.firstName = "Joshua";
+            joshua.lastName = "Roberson";
+            joshua.email = "agronis@icloud.com";
+            joshua.phone = "8439019708";
+            users.save(blake);
+            users.save(joshua);
+
+            Favor pong = new Favor();
+            pong.favorName = "Ping Pong Balls";
+            pong.partyType = "Graduation";
+            pong.useCount = 100;
+            favors.save(pong);
+            Favor a = new Favor();
+            a.partyType = "Graduation";
+            a.favorName = "Alcohol";
+            a.useCount = 99;
+            favors.save(a);
+            Favor b = new Favor();
+            b.favorName = "Cards Against Humanity";
+            b.partyType = "Graduation";
+            b.useCount = 98;
+            Favor c = new Favor();
+            c.favorName = "More Alcohol";
+            c.partyType = "Graduation";
+            c.useCount = 97;
+            favors.save(c);
+            Favor d = new Favor();
+            d.favorName = "Video Games";
+            d.partyType = "Graduation";
+            d.useCount = 96;
+            favors.save(d);
+
+            Party grad = new Party(blake, "The Iron Party", "Graduation", description, null,
+                    LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 3000,
+                    0.0, true, true, theme, "Valet");
+            parties.save(grad);
+            Invite x = new Invite();
+            x.party = grad;
+            x.user = blake;
+            x.name = blake.firstName.concat(" ").concat(blake.lastName);
+            x.phone = blake.phone;
+            x.email = blake.email;
+            x.rsvpStatus = "Host";
+            invites.save(x);
+
+            userBuild.stream().forEach(user -> {
+                Invite i = new Invite();
+                i.party = grad;
+                i.user = user;
+                i.rsvpStatus = "Maybe";
+                i.phone = user.phone;
+                i.email = user.email;
+                i.name = user.firstName.concat(" ").concat(String.valueOf(user.lastName.charAt(0)).toUpperCase()).concat(".");
+                invites.save(i);
+            });
+        }
     }
 
     public static String readFile(String fileName) {
@@ -93,12 +200,13 @@ public class Methods extends MainController {
         invite.party = p;
 
         invite.email = i.email;
-        invite.phone = i.phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").replace("+1", "");
+        invite.phone = i.phone.replace("(", "").replace(")", "").replaceAll("-", "").replaceAll(" ", "").replace("+1", "");
         if (i.name.contains(" ")) {
             String[] newName = i.name.split(" ");
             i.name = newName[0].concat(" "+String.valueOf(newName[1].charAt(0)).toUpperCase()+".");
         }
         invite.name = i.name;
+        invite.rsvpStatus = "RSVP";
         inv.save(invite);
     }
 
@@ -121,24 +229,23 @@ public class Methods extends MainController {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
         if (user.phone!=null) {
+            user.phone = user.phone.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("-", "").replace(" ", "").trim();
+            user.phone = user.phone.replace(" ", "");
             MimeMessage attMsg = mailSender.createMimeMessage();
             MimeMessageHelper att = new MimeMessageHelper(attMsg);
             att.setFrom("schindig.app@gmail.com");
             att.setTo(user.phone+"@txt.att.net");
-            att.setReplyTo(host.email);
             att.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
             mailSender.send(attMsg);
             MimeMessage vzwMsg = mailSender.createMimeMessage();
             MimeMessageHelper vzw = new MimeMessageHelper(vzwMsg);
             vzw.setFrom("schindig.app@gmail.com");
-            vzw.setReplyTo(host.email);
             vzw.setTo(user.phone+"@vtext.com");
             vzw.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
             mailSender.send(vzwMsg);
             MimeMessage sprintMsg = mailSender.createMimeMessage();
             MimeMessageHelper sprint = new MimeMessageHelper(sprintMsg);
             sprint.setFrom("schindig.app@gmail.com");
-            sprint.setReplyTo(host.email);
             sprint.setTo(user.phone+"@messaging.sprintpcs.com");
             sprint.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
             mailSender.send(sprintMsg);

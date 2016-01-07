@@ -1,6 +1,5 @@
 Garbage Bags,Generic
 Cooler,Graduation
-Ice,Generic
 Ice,Graduation
 Toilet Paper,Generic
 Charcoal,Cookout
@@ -34,7 +33,6 @@ Beer,Generic
 Cognac,Generic
 Sake,Generic
 Bitters,Generic
-Ping Pong Balls,Graduation
 Beach Towels,Generic
 Bottled Water,Graduation
 Uber ride funds,Generic
@@ -43,11 +41,11 @@ Cookie Sheets,Generic
 Toaster Oven,Generic
 Cutting Boards,Generic
 Solo Cups,Graduation
-Folding Table,Generic
-Folding Chairs,Generic
+Folding Table,Cookout
+Folding Chairs,Cookout
 Blender,Generic
 Bluetooth Speakers,Generic
-Candles,Generic
+Candles,Birthday Party
 Polaroid Camera,Graduation
 Christmas Wreath,Christmas
 Christmas Tree Stand,Christmas
@@ -59,11 +57,11 @@ Salsa,Generic
 Salsa,Cookout
 Cheese Dip,Generic
 Soft Drinks,Graduation
-Pizza,Potluck Dinner
-Quesadillas,Generic
-Lasagna,Generic
-Spaghetti,Generic
-Raviolis,Generic
+Pizza,Graduation
+Quesadillas,Potluck Dinner
+Lasagna,Potluck Dinner
+Spaghetti,Potluck Dinner
+Raviolis,Potluck Dinner
 Tortollini,Potluck Dinner
 Burritos,Potluck Dinner
 Tacos,Potluck Dinner
@@ -73,17 +71,16 @@ Steak,Potluck Dinner
 Chips & Dip,Graduation
 Macaroni and Cheese,Potluck Dinner
 Bean Dip,Cookout
-Pita Chips,Generic
-Pita Bread,Generic
+Pita Chips,Cookout
 Cheese Board,Potluck Dinner
 Charcuterie Tray,Potluck Dinner
 Hot Dogs,Cookout
 Burgers,Cookout
 Condiments,Cookout
 Pickles,Cookout
-Guacamole,Generic
-Mashed Potatoes,Generic
-Deviled Eggs,Generic
+Guacamole,Cookout
+Mashed Potatoes,Potluck Dinner
+Deviled Eggs,Cookout
 Bacon Wrapped Asparagus,Generic
 Cookies,Birthday Party
 Brownies,Birthday Party
@@ -91,7 +88,7 @@ Pie,Birthday Party
 Ice Cream,Birthday Party
 Cheesecake,Birthday Party
 DJ,Generic
-Keg,Generic
+Keg,Graduation
 Bouncer,Generic
 Birthday Cake,Birthday Party
 Cupcakes,Graduation

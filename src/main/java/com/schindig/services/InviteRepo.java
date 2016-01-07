@@ -24,5 +24,5 @@ public interface InviteRepo extends CrudRepository<Invite, Integer> {
     @Query("SELECT i FROM Invite i WHERE party = ?1 AND user = ?1")
     Invite findByPartyAndUser(Party party, User user);
 
-    Invite findByPartyAndEmail(Party party, String email);
+    Invite findByPartyAndPhone(Party party, String email);
 }
