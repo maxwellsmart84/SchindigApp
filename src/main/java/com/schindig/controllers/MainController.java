@@ -154,7 +154,7 @@ public class MainController {
             response.sendError(400, "Email is already associated to an account.");
         }
 
-        response.sendError(200, "Account successfully created.");
+
         User newUser = new User();
         newUser.username = user.username.toLowerCase();
         newUser.phone = user.phone;
