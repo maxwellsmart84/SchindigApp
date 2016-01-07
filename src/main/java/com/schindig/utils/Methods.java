@@ -200,7 +200,7 @@ public class Methods extends MainController {
         invite.party = p;
 
         invite.email = i.email;
-        invite.phone = i.phone.replace("(", "").replace(")", "").replaceAll("-", "").replaceAll(" ", "").replace("+1", "");
+        invite.phone = i.phone.replaceAll("[^0-9]","");
         if (i.name.contains(" ")) {
             String[] newName = i.name.split(" ");
             i.name = newName[0].concat(" "+String.valueOf(newName[1].charAt(0)).toUpperCase()+".");
@@ -235,19 +235,19 @@ public class Methods extends MainController {
             MimeMessageHelper att = new MimeMessageHelper(attMsg);
             att.setFrom("schindig.app@gmail.com");
             att.setTo(user.phone+"@txt.att.net");
-            att.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
+            att.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! RSVP @ https://github.com/Schindig/SchindigApp!");
             mailSender.send(attMsg);
             MimeMessage vzwMsg = mailSender.createMimeMessage();
             MimeMessageHelper vzw = new MimeMessageHelper(vzwMsg);
             vzw.setFrom("schindig.app@gmail.com");
             vzw.setTo(user.phone+"@vtext.com");
-            vzw.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
+            vzw.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! RSVP @ https://github.com/Schindig/SchindigApp!");
             mailSender.send(vzwMsg);
             MimeMessage sprintMsg = mailSender.createMimeMessage();
             MimeMessageHelper sprint = new MimeMessageHelper(sprintMsg);
             sprint.setFrom("schindig.app@gmail.com");
             sprint.setTo(user.phone+"@messaging.sprintpcs.com");
-            sprint.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! Go to http://www.schindig.com/app to RSVP!");
+            sprint.setText("Hey "+user.name+"! "+host.firstName+" just invited you to their party! RSVP @ https://github.com/Schindig/SchindigApp!");
             mailSender.send(sprintMsg);
 //            MimeMessage tmoMsg = mailSender.createMimeMessage();
 //            MimeMessageHelper tmo = new MimeMessageHelper(tmoMsg);
