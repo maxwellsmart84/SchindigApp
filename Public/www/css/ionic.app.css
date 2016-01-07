@@ -9220,10 +9220,10 @@ a.button {
     font-family: "Righteous";
     text-align: center; }
     .login .logo img {
-      width: 80%; }
+      width: 60%; }
     .login .logo .logoImg {
-      height: 30vh;
-      width: 50%; }
+      height: 20vh;
+      width: 40%; }
   .login .buttonStuff {
     width: 90%;
     margin: 0 auto; }

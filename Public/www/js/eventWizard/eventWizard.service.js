@@ -5,14 +5,11 @@
     .module('eventWizard')
     .factory('EventWizardService', function($http, $state){
 
-<<<<<<< HEAD
       // var ip = "http://10.0.10.72:8080";
 
       var ip = "http://104.236.244.159:8100";
 
-=======
-      var ip = "http://104.236.244.159:8100";
->>>>>>> 2257766221ce6fbd7a0a9ae2f05eb16207c9897e
+
 
       var wizCreateUrl = ip + "/party/create";
       var wizUpdateUrl = ip + "/party/update";
