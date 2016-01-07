@@ -3,7 +3,7 @@
     <ion-nav-back-button class='button button-small icon-left ion-chevron-left button-clear button-dark'>
     </ion-nav-back-button>
   </ion-nav-bar>
-  <div class="bar bar-header">
+  <div class="bar">
     <div class="wizardHeader">
       <h1 class= "wizardTextViewHeader">
       <span class="wizardTextViewHeader"><h1>STRETCH GOAL</h1></span>
@@ -33,7 +33,7 @@
       </label>
       <label class="item item-input item-floating-label">
         <span class= "input-label">COST?</span>
-        <input ng-model="stretchGoal" type="number">{{stretchGoal | currency}}
+        <input ng-model="stretchGoal" placeholder="How Much?" type="number">{{stretchGoal | currency}}
       </label>
       <button
         ng-click="stretchGoalData(stretchGoal, stretchName)"

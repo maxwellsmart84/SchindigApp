@@ -1,7 +1,7 @@
 <ion-view class="manageParty" ng-init="loadOneFavor()">
   <ion-nav-bar>
   </ion-nav-bar>
-  <div class="bar bar-header">
+  <div class="bar">
     <div class="managePartyHeader">
       <h1 class="title-text-wrap"><span class="managePartyHeader">Let's Manage Favors</span></h1>
     </div>
@@ -9,14 +9,14 @@
    <ion-content class="managePartyContent" ng-show="favorViewVar">
     <div class="manageButtonBar button-bar">
        <button
-         ng-click="goToFavorView();"
+         ng-click="goToFavorView();loadOneFavor();"
          class=" button-small manageButton button">
           <strong>REMOVE <br> FAVORS</strong>
        </button>
        <button
          ng-click="goToFavorBrowse();"
          class="button-small manageButton button">
-         <strong>ADD MORE <br>FAVORS</strong>
+         <strong>ADD <br>FAVORS</strong>
 
        </button>
    </div>
@@ -36,21 +36,21 @@
    <ion-content ng-show="favorBrowseVar" class="managePartyContent" >
      <div class="manageButtonBar button-bar">
         <button
-          ng-click="goToFavorView();"
+          ng-click="goToFavorView();loadOneFavor();"
           class=" button-small manageButton button">
            <strong>REMOVE <br> FAVORS</strong>
         </button>
         <button
           ng-click="loadOneFavorBrowse();goToFavorBrowse();"
           class="button-small manageButton button">
-          <strong>ADD MORE <br> FAVORS</strong>
+          <strong>ADD <br> FAVORS</strong>
         </button>
     </div>
     <div class="button-bar submitFavorButtonBar">
       <button
-        ng-click="pushToFavorArray();loadOneFavor();goToFavorView();"
+        ng-click="pushToFavorArray();loadOneFavor();loadOneFavorBrowse();goToFavorView();"
         class="button-small button-full addFavorsButton submitFavorsButton">
-          Submit Selected Favors
+          SUBMIT SELECTED FAVORS
       </button>
     </div>
 
