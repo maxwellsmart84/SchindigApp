@@ -107,80 +107,78 @@ public class Methods extends MainController {
                 userBuild.add(u);
                 users.save(u);
             }
+            String description = "Three long months, sleepless nights and lots of ping pong have led us to this point.";
+            String theme = "Recognize our hard work!";
+            String local = "17 Princess St, Charleston SC 29464";
+            String stretchName = "Earth, Wind & Fire";
+
+            User blake = new User();
+            blake.username = "blake182";
+            blake.password = "pass";
+            blake.firstName = "Blake";
+            blake.lastName = "Guillo";
+            blake.email = "erlewis288@gmail.com";
+            blake.phone = "8034644711";
+
+            User joshua = new User();
+            joshua.username = "agro";
+            joshua.password = "pass";
+            joshua.firstName = "Joshua";
+            joshua.lastName = "Roberson";
+            joshua.email = "agronis@icloud.com";
+            joshua.phone = "8439019708";
+            users.save(blake);
+            users.save(joshua);
+
+            Favor pong = new Favor();
+            pong.favorName = "Ping Pong Balls";
+            pong.partyType = "Graduation";
+            pong.useCount = 100;
+            favors.save(pong);
+            Favor a = new Favor();
+            a.partyType = "Graduation";
+            a.favorName = "Alcohol";
+            a.useCount = 99;
+            favors.save(a);
+            Favor b = new Favor();
+            b.favorName = "Cards Against Humanity";
+            b.partyType = "Graduation";
+            b.useCount = 98;
+            Favor c = new Favor();
+            c.favorName = "More Alcohol";
+            c.partyType = "Graduation";
+            c.useCount = 97;
+            favors.save(c);
+            Favor d = new Favor();
+            d.favorName = "Video Games";
+            d.partyType = "Graduation";
+            d.useCount = 96;
+            favors.save(d);
+
+            Party grad = new Party(blake, "The Iron Party", "Graduation", description, null,
+                    LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 3000,
+                    0.0, true, true, theme, "Valet");
+            parties.save(grad);
+            Invite x = new Invite();
+            x.party = grad;
+            x.user = blake;
+            x.name = blake.firstName.concat(" ").concat(blake.lastName);
+            x.phone = blake.phone;
+            x.email = blake.email;
+            x.rsvpStatus = "Host";
+            invites.save(x);
+
+            userBuild.stream().forEach(user -> {
+                Invite i = new Invite();
+                i.party = grad;
+                i.user = user;
+                i.rsvpStatus = "Maybe";
+                i.phone = user.phone;
+                i.email = user.email;
+                i.name = user.firstName.concat(" ").concat(String.valueOf(user.lastName.charAt(0)).toUpperCase()).concat(".");
+                invites.save(i);
+            });
         }
-
-        String description = "Three long months, sleepless nights and lots of ping pong have led us to this point.";
-        String theme = "Recognize our hard work!";
-        String local = "17 Princess St, Charleston SC 29464";
-        String stretchName = "Earth, Wind & Fire";
-
-        User blake = new User();
-        blake.username = "blake182";
-        blake.password = "pass";
-        blake.firstName = "Blake";
-        blake.lastName = "Guillo";
-        blake.email = "erlewis288@gmail.com";
-        blake.phone = "8034644711";
-
-        User joshua = new User("joshua", "pass", "Josh", "Roberson", "agronis@icloud.com", "8439019708");
-        joshua.username = "agro";
-        joshua.password = "pass";
-        joshua.firstName = "Joshua";
-        joshua.lastName = "Roberson";
-        joshua.email = "agronis@icloud.com";
-        joshua.phone = "8439019708";
-        users.save(blake);
-        users.save(joshua);
-
-        Favor pong = new Favor();
-        pong.favorName = "Ping Pong Balls";
-        pong.partyType = "Graduation";
-        pong.useCount = 100;
-        favors.save(pong);
-        Favor a = new Favor();
-        a.partyType = "Graduation";
-        a.favorName = "Alcohol";
-        a.useCount = 99;
-        favors.save(a);
-        Favor b = new Favor();
-        b.favorName = "Cards Against Humanity";
-        b.partyType = "Graduation";
-        b.useCount = 98;
-        Favor c = new Favor();
-        c.favorName = "More Alcohol";
-        c.partyType = "Graduation";
-        c.useCount = 97;
-        favors.save(c);
-        Favor d = new Favor();
-        d.favorName = "Video Games";
-        d.partyType = "Graduation";
-        d.useCount = 96;
-        favors.save(d);
-
-        Party grad = new Party(blake, "The Iron Party", "Graduation", description, null,
-                LocalDateTime.now(), String.valueOf(LocalDateTime.now().plusDays(2)), local, stretchName, 3000,
-                0.0, true, true, theme, "Valet");
-        parties.save(grad);
-        Invite x = new Invite();
-        x.party = grad;
-        x.user = blake;
-        x.name = blake.firstName.concat(" ").concat(blake.lastName);
-        x.phone = blake.phone;
-        x.email = blake.email;
-        x.rsvpStatus = "Host";
-        invites.save(x);
-
-        userBuild.stream().forEach(user -> {
-            Invite i = new Invite();
-            i.party = grad;
-            i.user = user;
-            i.rsvpStatus = "Maybe";
-            i.phone = user.phone;
-            i.email = user.email;
-            i.name = user.firstName.concat(" ").concat(String.valueOf(user.lastName.charAt(0)).toUpperCase()).concat(".");
-            invites.save(i);
-        });
-
     }
 
     public static String readFile(String fileName) {
