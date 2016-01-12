@@ -6,10 +6,10 @@
     .module('schindig')
     .factory('LoginRegisterService', function($http, $state, $cordovaDevice, $cordovaToast){
       // var ip = "http://10.0.10.72:8100";
-      var ip = "http://104.236.244.159:8100";
+      // var ip = "http://104.236.244.159:8100";
       // var ip = http://10.0.10.72:8100"
       // var ip = "http://104.236.244.159:8100";
-
+      var ip = "192.168.43.99";
 
       var registerUrl = ip + '/user/create';
       var loginUrl = ip + '/user/login';
