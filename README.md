@@ -10,20 +10,20 @@
 <p>Blake Guilloud - Front End Developer</p>
 <p>Joshua Roberson - Java Developer</p>
 
-<h1>Technologies:</h1> 
-Spring
-Javascript
-AngularJS
-Underscore
-Ionic
-ngCordova
-Gulp
-Ionic/Cordova
-OAuth 2.0
-Amazon API:  Product Advertising & Login and Pay (Stretch)
-Facebook API: Login (Stretch)
-Google+ API: Login (Stretch)
-Venmo API (Stretch)
-PostgreSQL
-Hibernate / JPA
-ScribeJava
+<h1>Technologies:</h1>
+<p>Spring</p>
+<p>Javascript</p>
+<p>AngularJS</p>
+<p>Underscore</p>
+<p>Ionic</p>
+<p>ngCordova</p>
+<p>Gulp</p>
+<p>Ionic/Cordova</p>
+<p>OAuth 2.0</p>
+<p>Venmo API</p>
+<p>Amazon API:  Product Advertising & Login and Pay (Stretch)</p>
+<p>Facebook API: Login (Stretch)</p>
+<p>Google+ API: Login (Stretch)</p>
+<p>PostgreSQL</p>
+<p>Hibernate / JPA</p>
+<p>ScribeJava</p>
