@@ -1,12 +1,8 @@
 package com.schindig.controllers;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.schindig.entities.*;
 import com.schindig.services.*;
 import com.schindig.utils.Methods;
 import com.schindig.utils.Parameters;
-import com.schindig.utils.PasswordHash;
-import com.schindig.utils.Venmo;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
@@ -14,22 +10,15 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.Console;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -519,7 +508,7 @@ public class MainController {
               }
               if (parameters.inviteDump != null) {
                   for (Invite invite : parameters.inviteDump) {
-                      response.sendError(200, "Invites sent!");
+//                      response.sendError(200, "Invites sent!");
                       Methods.newInvite(invite, invites, check);
                       Methods.msgGateway(invite, check.host, check);
                       invite.sent = true;
@@ -854,21 +843,20 @@ public class MainController {
 //        @Override
 //        public void init(FilterConfig filterConfig)throws ServletException {}
 //    }
-}
 
-/*
-    @RequestMapping(path = "/user/search", method = RequestMethod.GET)
-    public ArrayList<User> userSearch(@RequestBody User user) {
-        ArrayList<User> allresults = (ArrayList<User>) users.findAll();
-        ArrayList<User> results = allresults.stream()
-                .filter(u -> u.username.equalsIgnoreCase(user.username) ||
-                u.firstName.equalsIgnoreCase(user.firstName) ||
-                u.lastName.equalsIgnoreCase(user.lastName) ||
-                u.email.equalsIgnoreCase(user.email))
-                .collect(Collectors.toCollection(ArrayList<User>::new));
-        return results;
-    }
-    */
+    //    @RequestMapping(path = "/user/search", method = RequestMethod.GET)
+//    public ArrayList<User> userSearch(@RequestBody User user) {
+//        ArrayList<User> allresults = (ArrayList<User>) users.findAll();
+//        ArrayList<User> results = allresults.stream()
+//                .filter(u -> u.username.equalsIgnoreCase(user.username) ||
+//                u.firstName.equalsIgnoreCase(user.firstName) ||
+//                u.lastName.equalsIgnoreCase(user.lastName) ||
+//                u.email.equalsIgnoreCase(user.email))
+//                .collect(Collectors.toCollection(ArrayList<User>::new));
+//        return results;
+//    }
+
+//
 //    public void updateUserStats(User user) {
 //        HashMap<String, String> stats = user.stats;
 //            if (stats.get("partyCount")==null) {
@@ -894,3 +882,7 @@ public class MainController {
 //
 //        }
 //    }
+
+}
+
+
