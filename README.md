@@ -1,4 +1,3 @@
-# app
 <h1>Schindig</h1>
 
 
